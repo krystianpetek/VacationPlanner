@@ -5,6 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using VacationPlannerAPI.Models;
 using VacationPlannerAPI.Models.Authentication;
 
 namespace VacationPlannerAPI.Controllers
@@ -13,25 +14,25 @@ namespace VacationPlannerAPI.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        public static User user = new User();
+        public static UserPass user = new UserPass();
+        private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
 
-        public AuthenticationController(IConfiguration configuration)
+        public AuthenticationController(IConfiguration configuration, IUserService userService)
         {
             _configuration = configuration;
+            _userService = userService;
         }
 
         [HttpGet, Authorize]
         public ActionResult<object> GetMe()
         {
-            var userName = User?.Identity?.Name;
-            var userName2 = User?.FindFirst(ClaimTypes.Name);
-            var role = User.FindFirstValue(ClaimTypes.Role);
-            return Ok(new { userName, userName2, role });
+            var username = _userService.GetMyName();
+            return Ok(username);
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(UserDTO request)
+        public async Task<ActionResult<UserPass>> Register(User request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
             user.Username = request.Username;
@@ -42,7 +43,7 @@ namespace VacationPlannerAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(UserDTO request)
+        public async Task<ActionResult<string>> Login(User request)
         {
             if (user.Username != request.Username)
             {
@@ -54,33 +55,10 @@ namespace VacationPlannerAPI.Controllers
                 return BadRequest("Wrong password.");
             }
 
-            string token = CreateToken(user);
 
-            return Ok(token);
+            return Ok();
         }
 
-        private string CreateToken(User user)
-        {
-            List<Claim> claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, "Admin")
-            };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                _configuration.GetSection("AppSettings:Token").Value));
-
-            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddDays(1),
-                signingCredentials: cred);
-
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return jwt;
-        }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
