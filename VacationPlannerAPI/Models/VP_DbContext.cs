@@ -13,6 +13,7 @@ namespace VacationPlannerAPI.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserPassword>().HasIndex(x => x.Username).IsUnique();
+            
         }
     }
 }

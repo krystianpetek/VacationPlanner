@@ -12,8 +12,8 @@ using VacationPlannerAPI.Models;
 namespace VacationPlannerAPI.Migrations
 {
     [DbContext(typeof(VP_DbContext))]
-    [Migration("20220428111530_init")]
-    partial class init
+    [Migration("20220516211759_migracaj")]
+    partial class migracaj
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,9 +95,12 @@ namespace VacationPlannerAPI.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("login");
                 });

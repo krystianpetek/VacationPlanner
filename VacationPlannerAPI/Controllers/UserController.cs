@@ -50,7 +50,7 @@ namespace VacationPlannerAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(User request)
         { 
-            if (await dbContext.login.SingleOrDefaultAsync(q => q.Username == request.Username) == null)
+            if (await dbContext.login.SingleOrDefaultAsync(q => q.Username == request.Username) != null)
                 return BadRequest("User name already exist.");
 
             CreatePasswordHash(request.Password, out byte[] userHash, out byte[] userSalt);

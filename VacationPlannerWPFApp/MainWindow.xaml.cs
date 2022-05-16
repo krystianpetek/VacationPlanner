@@ -33,7 +33,7 @@ namespace VacationPlannerWPFApp
                     username = $"{loginTb.Text}",
                     password = $"{hasloTb.Text}"
                 }));
-                data.Headers.ContentType = new MediaTypeHeaderValue("application/json"); // <-
+                data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var response = client.PostAsync("https://localhost:7020/api/user/login", data).Result;
 
                 UserName = loginTb.Text;

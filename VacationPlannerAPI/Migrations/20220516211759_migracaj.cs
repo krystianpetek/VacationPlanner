@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VacationPlannerAPI.Migrations
 {
-    public partial class init : Migration
+    public partial class migracaj : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace VacationPlannerAPI.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false)
@@ -65,6 +65,12 @@ namespace VacationPlannerAPI.Migrations
                 name: "IX_employees_LoginUserId",
                 table: "employees",
                 column: "LoginUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_login_Username",
+                table: "login",
+                column: "Username",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
