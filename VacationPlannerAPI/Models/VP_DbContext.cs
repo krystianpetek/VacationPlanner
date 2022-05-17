@@ -12,12 +12,8 @@ namespace VacationPlannerAPI.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserPassword>().Property(x => x.UserId).IsRequired();
-            modelBuilder.Entity<UserPassword>().Property(x => x.Username).IsRequired();
-            modelBuilder.Entity<UserPassword>().HasKey(x => x.UserId);
             modelBuilder.Entity<UserPassword>().HasIndex(x => x.Username).IsUnique();
-
-
+            
         }
     }
 }

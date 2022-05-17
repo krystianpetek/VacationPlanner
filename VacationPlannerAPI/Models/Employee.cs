@@ -15,9 +15,5 @@ public class Employee
 
     public int NumberOfDays { get; set; }
 
-    public int AvailableNumberOfDays { get; set; }
-
     public virtual User Login { get; set; }
-    
-    public virtual List<ListOfRequest> listOfRequests { get; set; }
 }

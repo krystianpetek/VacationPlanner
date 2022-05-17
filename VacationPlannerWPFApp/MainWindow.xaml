@@ -15,8 +15,6 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
-        <ContentControl Content="{Binding SelectedViewModel}" ></ContentControl>
-        
         <Label
             x:Name="sprawdzLoginLbl"
             Margin="281,179,0,0"
@@ -58,15 +56,13 @@
                 Grid.Column="0"
                 Width="200"
                 Height="30"
-                Content="Home" 
-                Command="{Binding UpdateViewCommand}" CommandParameter="Home" />
+                Content="Home" />
             <Button
                 Grid.Row="1"
                 Grid.Column="1"
                 Width="200"
                 Height="30"
-                Content="Home2" 
-                Command="{Binding UpdateViewCommand}"  CommandParameter="Home2" />
+                Content="Home2" />
         </Grid>
     </Grid>
 </Window>
