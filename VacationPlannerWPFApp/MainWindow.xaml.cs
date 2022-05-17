@@ -6,6 +6,7 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text;
 using System.Windows;
+using VacationPlannerWPFApp.ViewModels;
 
 namespace VacationPlannerWPFApp
 {
@@ -18,6 +19,7 @@ namespace VacationPlannerWPFApp
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModels();
         }
         private const string key = "mojSekretnyKluczAPI";
         //private string bearer = "";
@@ -34,6 +36,7 @@ namespace VacationPlannerWPFApp
                     password = $"{hasloTb.Text}"
                 }));
                 data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
                 var response = client.PostAsync("https://localhost:7020/api/user/login", data).Result;
 
                 UserName = loginTb.Text;
