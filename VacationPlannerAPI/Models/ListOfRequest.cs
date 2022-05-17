@@ -9,9 +9,7 @@ namespace VacationPlannerAPI.Models
         [Required]
         public Employee Employee { get; set; }
         [Required]
-        public DateTime From { get; set; }
-        [Required]
-        public DateTime To { get; set; }
+        public DateTime DateOfRequest { get; set; }
         [Required]
         public TypeOfLeave TypeOfRequest { get; set; }
     }
