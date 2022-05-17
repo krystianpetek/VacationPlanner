@@ -7,5 +7,6 @@ namespace VacationPlannerWPFApp
     /// </summary>
     public partial class App : Application
     {
+        public const string key = "mojSekretnyKluczAPI";
     }
 }
