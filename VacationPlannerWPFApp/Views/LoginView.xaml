@@ -7,17 +7,55 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:VacationPlannerWPFApp.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodels="clr-namespace:VacationPlannerWPFApp.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
+    xmlns:viewmodels="clr-namespace:VacationPlannerWPFApp.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="focusLogin" TargetType="Label">
+            <Setter Property="Content" Value="" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Text.Length, ElementName=textbx}" Value="0">
+                    <Setter Property="Content" Value="Podaj login:" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <ControlTemplate x:Key="textBox" TargetType="TextBox">
+            <Border
+                Width="150"
+                Height="50"
+                Margin="5"
+                Padding="5"
+                Background="Transparent"
+                CornerRadius="5"
+                Cursor="IBeam"
+                Opacity="0.8">
+                <Grid>
+                    <Label
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="LightGray"
+                        Style="{StaticResource focusLogin}" />
+                    <TextBox
+                        Name="textbx"
+                        Width="auto"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        FontFamily="Microsoft Sans Serif"
+                        FontSize="15"
+                        Text="{Binding Login, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Resources>
     <Grid>
         <StackPanel>
             <Label HorizontalAlignment="Center" Content="{Binding Info, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox
-                Width="120"
-                HorizontalAlignment="Center"
-                Text="{Binding Login, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <TextBox HorizontalAlignment="Center" Template="{StaticResource textBox}" />
             <component:PasswordBind
                 Width="120"
                 HorizontalAlignment="Center"

@@ -10,10 +10,13 @@ namespace VacationPlannerWPFApp.Command
 {
     public class UpdateViewCommand : ICommand
     {
+        private LoginViewModel _loginViewModel;
         private MainViewModels viewModel;
         public UpdateViewCommand(MainViewModels viewModel)
         {
+            _loginViewModel = new LoginViewModel();
             this.viewModel = viewModel;
+            this.viewModel.SelectedViewModel = _loginViewModel;
         }
 
         public event EventHandler? CanExecuteChanged;
@@ -30,7 +33,7 @@ namespace VacationPlannerWPFApp.Command
             else if (parameter.ToString() == "Home2")
                 viewModel.SelectedViewModel = new Home2ViewModels();
             else if (parameter.ToString() == "Login")
-                viewModel.SelectedViewModel = new LoginViewModel();
+                viewModel.SelectedViewModel = _loginViewModel;
         }
     }
 }
