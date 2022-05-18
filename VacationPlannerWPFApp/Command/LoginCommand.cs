@@ -39,15 +39,8 @@ namespace VacationPlannerWPFApp.Command
                 }));
                 data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var response = client.PostAsync("https://localhost:7020/api/user/login", data).Result;
-
-
-                //List<Claim> claims = new List<Claim>() {
-                //    new Claim(ClaimTypes.Name, loginTb.Text),
-                //    new Claim(ClaimTypes.Role, "")
-                //};
-
+                
                 viewModel.Info = await response.Content.ReadAsStringAsync();
-
             }
         }
     }

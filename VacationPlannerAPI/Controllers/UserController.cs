@@ -31,13 +31,20 @@ namespace VacationPlannerAPI.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(User request)
         {
-            UserPassword userPassword = await dbContext.login.FirstOrDefaultAsync(q => q.Username == request.Username);
-            if (userPassword == null)
+            try
             {
-                return BadRequest("User not found.");
+                UserPassword? userPassword = await dbContext.login.FirstOrDefaultAsync(q => q.Username == request.Username);
+                if (userPassword == null)
+                {
+                    return BadRequest("User not found.");
+                }
+                if (!VerifyPasswordHash(request.Password, userPassword.PasswordHash, userPassword.PasswordSalt))
+                    return BadRequest("Wrong password.");
             }
-            if (!VerifyPasswordHash(request.Password, userPassword.PasswordHash, userPassword.PasswordSalt))
-                return BadRequest("Wrong password.");
+            catch(Exception e)
+            {
+                return "Błąd";
+            }
 
             List<Claim> claims = new List<Claim>() {
             new Claim(ClaimTypes.Name, request.Username),
