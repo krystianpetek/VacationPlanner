@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VacationPlannerAPI.Models;
+namespace VacationPlannerAPI.RestModels;
 
-public class Employee
+public class RestEmployee
 {
     [Required, Display(Name = "ID"), Key]
     public Guid Id { get; set; }
@@ -20,7 +20,4 @@ public class Employee
 
 
     public int AvailableNumberOfDays { get; set; }
-
-
-    public virtual UserLogin Login { get; set; }
 }

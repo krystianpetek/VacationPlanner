@@ -11,26 +11,27 @@ using VacationPlannerAPI.Models;
 
 namespace VacationPlannerAPI.Migrations
 {
-    [DbContext(typeof(VP_DbContext))]
-    [Migration("20220516211759_migracaj")]
-    partial class migracaj
+    [DbContext(typeof(VacationPlannerDbContext))]
+    [Migration("20220526200419_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("VacationPlannerAPI.Models.Employee", b =>
                 {
-                    b.Property<int>("EmployeeId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeId"), 1L, 1);
+                    b.Property<int>("AvailableNumberOfDays")
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -40,47 +41,24 @@ namespace VacationPlannerAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LoginUserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("LoginId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("NumberOfDays")
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeeId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("LoginUserId");
+                    b.HasIndex("LoginId");
 
-                    b.ToTable("employees");
+                    b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("VacationPlannerAPI.Models.User", b =>
+            modelBuilder.Entity("VacationPlannerAPI.Models.UserLogin", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("User");
-                });
-
-            modelBuilder.Entity("VacationPlannerAPI.Models.UserPassword", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
@@ -97,19 +75,19 @@ namespace VacationPlannerAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("login");
+                    b.ToTable("UsersLogin");
                 });
 
             modelBuilder.Entity("VacationPlannerAPI.Models.Employee", b =>
                 {
-                    b.HasOne("VacationPlannerAPI.Models.User", "Login")
+                    b.HasOne("VacationPlannerAPI.Models.UserLogin", "Login")
                         .WithMany()
-                        .HasForeignKey("LoginUserId")
+                        .HasForeignKey("LoginId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

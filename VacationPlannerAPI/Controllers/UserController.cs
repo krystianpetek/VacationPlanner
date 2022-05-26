@@ -5,8 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using VacationPlannerAPI.Authentication;
 using VacationPlannerAPI.Models;
-using VacationPlannerAPI.Models.Authentication;
+using VacationPlannerAPI.RestModels;
 
 namespace VacationPlannerAPI.Controllers
 {
@@ -15,9 +16,9 @@ namespace VacationPlannerAPI.Controllers
     [ApiKey]
     public class UserController : ControllerBase
     {
-        private readonly VP_DbContext dbContext;
+        private readonly VacationPlannerDbContext dbContext;
 
-        public UserController(VP_DbContext context)
+        public UserController(VacationPlannerDbContext context)
         {
             dbContext = context;
         }
@@ -25,15 +26,15 @@ namespace VacationPlannerAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<object>>> Get()
         {
-            return await dbContext.login.Select(q => q.Username).ToListAsync();
+            return await dbContext.UsersLogin.Select(q => q.Username).ToListAsync();
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(User request)
+        public async Task<ActionResult<string>> Login(RestUserLogin request)
         {
             try
             {
-                UserPassword? userPassword = await dbContext.login.FirstOrDefaultAsync(q => q.Username == request.Username);
+                UserLogin? userPassword = await dbContext.UsersLogin.FirstOrDefaultAsync(q => q.Username == request.Username);
                 if (userPassword == null)
                 {
                     return BadRequest("User not found.");
@@ -55,14 +56,14 @@ namespace VacationPlannerAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(User request)
+        public async Task<IActionResult> Register(RestUserLogin request)
         { 
-            if (await dbContext.login.SingleOrDefaultAsync(q => q.Username == request.Username) != null)
+            if (await dbContext.UsersLogin.SingleOrDefaultAsync(q => q.Username == request.Username) != null)
                 return BadRequest("User name already exist.");
 
             CreatePasswordHash(request.Password, out byte[] userHash, out byte[] userSalt);
 
-            await dbContext.login.AddAsync(new UserPassword() { Username = request.Username, PasswordHash = userHash, PasswordSalt = userSalt, Role = 0 });
+            await dbContext.UsersLogin.AddAsync(new UserLogin() { Username = request.Username, PasswordHash = userHash, PasswordSalt = userSalt, Role = 0 });
             await dbContext.SaveChangesAsync();
 
             return NoContent();
