@@ -1,10 +1,18 @@
 ﻿namespace VacationPlannerAPI.Models
 {
-    public class ListOfRequest
+    public class DayOffRequest
     {
-        public int ListOfRequestId { get; set; }
+
+        public Guid Id { get; set; }
+        
         public TypeOfLeave TypeOfRequest { get; set; }
-        public DateTime DateOfRequest { get; set; }
-        public Employee Employee { get; set; }
+
+        public DateTime DayOffRequestDate { get; set; }
+
+        public DateTime RequestDate { get; set; } = DateTime.Now;
+
+        public Guid EmployeeId { get; set; }
+
+        public virtual Employee Employee { get; set; }
     }
 }
