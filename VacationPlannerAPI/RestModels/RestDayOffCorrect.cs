@@ -2,10 +2,13 @@
 
 namespace VacationPlannerAPI.RestModels
 {
-    public class RestDayOffRequest
+    public class RestDayOffCorrect
     {
+        public Guid Id { get; set; }
+
         public TypeOfLeave TypeOfRequest { get; set; }
 
         public DateTime DayOffRequestDate { get; set; }
+
     }
 }

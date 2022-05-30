@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VacationPlannerAPI.Authentication;
 using VacationPlannerAPI.Database;
@@ -19,7 +18,25 @@ namespace VacationPlannerAPI.Controllers
             this.dbContext = dbContext;
         }
 
-        [HttpPost]
+        [HttpGet]
+        public async Task<ActionResult<List<DayOffRequest>>> GetAll()
+        {
+            var allRequests = await dbContext.DayOffRequests.ToListAsync();
+
+            return Ok(allRequests);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<RestDayOffRequest>>> GetById(Guid id)
+        {
+            var dayOffRequest = await dbContext.DayOffRequests.Where(x => x.EmployeeId == id).ToListAsync();
+            if (dayOffRequest.Count <= 0)
+                return NotFound();
+
+            return Ok(dayOffRequest);
+        }
+
+        [HttpPost("{id}")]
         public async Task<IActionResult> Post(Guid id, [FromBody] RestDayOffRequest request)
         {
             if (request == null)
@@ -40,26 +57,26 @@ namespace VacationPlannerAPI.Controllers
             return Created(dayOffRequest.Id.ToString(), dayOffRequest);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<RestDayOffRequest>>> GetById(Guid id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] RestDayOffCorrect correct)
         {
-            var dayOffRequest = await dbContext.DayOffRequests.Where(x=> x.EmployeeId == id).ToListAsync();
-            if(dayOffRequest.Count <= 0)
-                return NotFound();
+            if (correct == null)
+                return BadRequest();
 
-            return Ok(dayOffRequest);
+            var dayToChange = await dbContext.DayOffRequests.SingleOrDefaultAsync(q => q.Id == id);
+
+            if(dayToChange == null)
+                return BadRequest();
+
+            if (dayToChange.EmployeeId != correct.Id)
+                return BadRequest();
+
+            dayToChange.DayOffRequestDate = correct.DayOffRequestDate;
+            dayToChange.TypeOfRequest = correct.TypeOfRequest;
+
+            await dbContext.SaveChangesAsync();
+
+            return NoContent();
         }
-
-        [HttpGet]
-        public async Task<ActionResult<List<DayOffRequest>>> GetAll()
-        {
-            var allRequests = await dbContext.DayOffRequests.ToListAsync();
-
-            if (allRequests.Count <= 0)
-                return NotFound();
-
-            return Ok(allRequests);
-        }
-
     }
 }

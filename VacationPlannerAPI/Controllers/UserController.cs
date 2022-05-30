@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -43,7 +41,7 @@ namespace VacationPlannerAPI.Controllers
                 if (!VerifyPasswordHash(request.Password, userPassword.PasswordHash, userPassword.PasswordSalt))
                     return BadRequest("Wrong password.");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return $"Błąd + {e.Message}";
             }

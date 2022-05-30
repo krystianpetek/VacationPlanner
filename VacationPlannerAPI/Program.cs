@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using VacationPlannerAPI.Database;
-using VacationPlannerAPI.Models;
 
 const string ApiKeyName = "ApiKey";
 
