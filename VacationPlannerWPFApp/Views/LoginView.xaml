@@ -27,15 +27,13 @@
         </Style>
         <ControlTemplate x:Key="textBox" TargetType="TextBox">
             <Border
-                Width="150"
+                Width="200"
                 Height="50"
-                Margin="5"
-                Padding="5"
-                Background="Transparent"
+                Background="Gray"
                 CornerRadius="5"
                 Cursor="IBeam"
-                Opacity="0.8">
-                <Grid>
+                Opacity="1">
+                <Grid Background="#F4F6F7">
                     <Label
                         VerticalAlignment="Center"
                         Foreground="Black"
@@ -53,18 +51,23 @@
                         FontFamily="Microsoft Sans Serif"
                         FontSize="15"
                         Text="{Binding Login, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                    <Line
-                        Stroke="{StaticResource buttonColor}"
-                        X1="0"
-                        X2="140"
-                        Y1="32"
-                        Y2="32" />
                 </Grid>
             </Border>
         </ControlTemplate>
     </UserControl.Resources>
+
     <Grid>
-        <StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" Grid.Column="1">
             <Label HorizontalAlignment="Center" Content="{Binding Info, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox HorizontalAlignment="Center" Template="{StaticResource textBox}" />
             <component:PasswordBind

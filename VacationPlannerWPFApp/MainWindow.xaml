@@ -6,9 +6,9 @@
     xmlns:local="clr-namespace:VacationPlannerWPFApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="400"
-    Height="420"
-    mc:Ignorable="d">
+    Width="800"
+    Height="450"
+    mc:Ignorable="d" WindowStyle="ThreeDBorderWindow">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -20,10 +20,10 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <Button
                 Grid.Row="1"
