@@ -10,7 +10,7 @@ public class RestEmployee
     [Required(ErrorMessage = "Last name is required"), Display(Name = "Last name")]
     public string LastName { get; set; }
 
-    public int NumberOfDays { get; set; }
+    public int NumberOfDays { get; set; } 
 
     public int AvailableNumberOfDays { get; set; }
 

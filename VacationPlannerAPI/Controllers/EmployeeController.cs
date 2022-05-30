@@ -54,7 +54,7 @@ namespace VacationPlannerAPI.Controllers
                 NumberOfDays = employee.NumberOfDays,
                 AvailableNumberOfDays = employee.AvailableNumberOfDays,
                 Login = userLogin,
-                PasswordLastChanged = DateTime.MinValue,
+                PasswordLastChanged = null
             };
 
             dbContext.Employees.Add(newEmployee);
@@ -62,6 +62,35 @@ namespace VacationPlannerAPI.Controllers
 
             return Created(newEmployee.Id.ToString(), null);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> ChangePassword([FromBody] RestPasswordChange request)
+        {
+            if (request == null)
+                return BadRequest();
+
+            var user = await dbContext.UsersLogin.SingleOrDefaultAsync(q => q.Id == request.Id);
+            if (user == null)
+                return BadRequest("User doesn't exists");
+
+            CreatePasswordHash(request.OldPassword, out byte[] passwordHash, out byte[] passwordSalt);
+
+            if (user.PasswordHash != passwordHash || user.PasswordSalt != passwordSalt)
+                return BadRequest("Wrong old password!");
+
+            if (request.NewPassword != request.RepeatPassword)
+                return BadRequest("Password doesn't match, please type correct password!");
+
+            CreatePasswordHash(request.NewPassword, out byte[] newPasswordHash, out byte[] newPasswordSalt);
+
+            user.PasswordHash = newPasswordHash;
+            user.PasswordSalt = newPasswordSalt;
+
+            await dbContext.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         private UserLogin Register(RestUserLogin request)
         {
             if (request == null) return null;

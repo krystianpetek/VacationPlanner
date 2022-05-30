@@ -13,11 +13,14 @@ public class Employee
     [Required(ErrorMessage = "Last name is required"), Display(Name = "Last name")]
     public string LastName { get; set; }
 
-    public int NumberOfDays { get; set; }
+    [Required]
+    public int NumberOfDays { get; set; } 
 
     public int AvailableNumberOfDays { get; set; }
 
     public UserLogin Login { get; set; }
 
-    public DateTime PasswordLastChanged { get; set; }
+    public DateTime? PasswordLastChanged { get; set; }
+
+    public DateTime RegisterDate { get; set; } = DateTime.Now;
 }
