@@ -15,16 +15,16 @@ public class Employee
     [Display(Name = "Last name")]
     public string LastName { get; set; }
 
-    [Required]
     public int NumberOfDays { get; set; } 
 
     public int AvailableNumberOfDays { get; set; }
+    
+    public DateTime? PasswordLastChanged { get; set; }
+    
+    public DateTime RegisterDate { get; set; } = DateTime.Now;
     
     public Guid UserLoginId { get; set; }
     
     public UserLogin UserLogin { get; set; }
 
-    public DateTime? PasswordLastChanged { get; set; }
-
-    public DateTime RegisterDate { get; set; } = DateTime.Now;
 }

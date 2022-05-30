@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 using VacationPlannerAPI.Authentication;
+using VacationPlannerAPI.Database;
 using VacationPlannerAPI.Models;
 using VacationPlannerAPI.RestModels;
 
@@ -32,7 +33,7 @@ namespace VacationPlannerAPI.Controllers
             if (employee == null)
                 return BadRequest();
 
-            var exists = await dbContext.Employees.SingleOrDefaultAsync(q => q.Login.Username == employee.Username);
+            var exists = await dbContext.Employees.SingleOrDefaultAsync(q => q.UserLogin.Username == employee.Username);
             if(exists != null)
                 return BadRequest("Users already exists!");
 
@@ -53,7 +54,7 @@ namespace VacationPlannerAPI.Controllers
                 LastName = employee.LastName,
                 NumberOfDays = employee.NumberOfDays,
                 AvailableNumberOfDays = employee.AvailableNumberOfDays,
-                Login = userLogin,
+                UserLogin = userLogin,
                 PasswordLastChanged = null
             };
 

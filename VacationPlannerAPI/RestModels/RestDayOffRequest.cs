@@ -8,11 +8,5 @@ namespace VacationPlannerAPI.RestModels
         public TypeOfLeave TypeOfRequest { get; set; }
 
         public DateTime DayOffRequestDate { get; set; }
-
-        public DateTime RequestDate { get; set; } = DateTime.Now;
-
-        public Guid EmployeeId { get; set; }
-
-        public Employee Employee { get; set; }
     }
 }

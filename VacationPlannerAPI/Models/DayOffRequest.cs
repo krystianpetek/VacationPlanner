@@ -13,6 +13,6 @@
 
         public Guid EmployeeId { get; set; }
 
-        public virtual Employee Employee { get; set; }
+        public  Employee Employee { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using VacationPlannerAPI.Authentication;
+using VacationPlannerAPI.Database;
 using VacationPlannerAPI.Models;
 using VacationPlannerAPI.RestModels;
 
