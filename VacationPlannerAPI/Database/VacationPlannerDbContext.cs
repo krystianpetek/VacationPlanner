@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VacationPlannerAPI.Models;
 using VacationPlannerAPI.RestModels;
 
-namespace VacationPlannerAPI.Models
+namespace VacationPlannerAPI.Database
 {
     public class VacationPlannerDbContext : DbContext
     {
@@ -18,10 +19,11 @@ namespace VacationPlannerAPI.Models
             modelBuilder.Entity<UserLogin>().HasIndex(x => x.Username).IsUnique();
             modelBuilder.Entity<UserLogin>().HasKey(x => x.Id);
             modelBuilder.Entity<UserLogin>().Property(x => x.Id).IsRequired();
+            modelBuilder.Entity<UserLogin>().HasOne(x => x.Employee).WithOne(x => x.UserLogin);
             
             modelBuilder.Entity<Employee>().HasKey(x => x.Id);
             modelBuilder.Entity<Employee>().Property(x => x.Id).IsRequired();
-            
+
             modelBuilder.Entity<DayOffRequest>().HasKey(x => x.Id);
             modelBuilder.Entity<DayOffRequest>().Property(x => x.Id).IsRequired();
 

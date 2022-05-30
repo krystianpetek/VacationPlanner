@@ -13,13 +13,16 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <SolidColorBrush x:Key="buttonColor" Color="#42afa6"></SolidColorBrush>
-            <Style x:Key="focusLogin" TargetType="Label">
+        <SolidColorBrush x:Key="buttonColor" Color="#42afa6" />
+        <Style x:Key="focusLogin" TargetType="Label">
             <Setter Property="Content" Value="" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Text.Length, ElementName=textbx}" Value="0">
                     <Setter Property="Content" Value="Podaj login:" />
                 </DataTrigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Content" Value="" />
+                </Trigger>
             </Style.Triggers>
         </Style>
         <ControlTemplate x:Key="textBox" TargetType="TextBox">
@@ -35,10 +38,10 @@
                 <Grid>
                     <Label
                         VerticalAlignment="Center"
-                    Opacity="0.4"
                         Foreground="Black"
+                        Opacity="0.4"
                         Style="{StaticResource focusLogin}" />
-                    
+
                     <TextBox
                         Name="textbx"
                         Width="auto"
@@ -49,8 +52,13 @@
                         BorderThickness="0"
                         FontFamily="Microsoft Sans Serif"
                         FontSize="15"
-                        Text="{Binding Login, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <Line X1="0" Y1="32" X2="140" Y2="32" Stroke="{StaticResource buttonColor}"></Line>
+                        Text="{Binding Login, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <Line
+                        Stroke="{StaticResource buttonColor}"
+                        X1="0"
+                        X2="140"
+                        Y1="32"
+                        Y2="32" />
                 </Grid>
             </Border>
         </ControlTemplate>

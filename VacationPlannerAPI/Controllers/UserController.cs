@@ -44,7 +44,7 @@ namespace VacationPlannerAPI.Controllers
             }
             catch(Exception e)
             {
-                return "Błąd";
+                return $"Błąd + {e.Message}";
             }
 
             List<Claim> claims = new List<Claim>() {
@@ -56,14 +56,36 @@ namespace VacationPlannerAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RestUserLogin request)
-        { 
-            if (await dbContext.UsersLogin.SingleOrDefaultAsync(q => q.Username == request.Username) != null)
+        public async Task<IActionResult> Register([FromBody] RestUserLogin request)
+        {
+            if (request == null)
+                return BadRequest("Wrong data from request.");
+
+            if (await dbContext.UsersLogin.FirstOrDefaultAsync(q => q.Username == request.Username) != null)
                 return BadRequest("User name already exist.");
 
             CreatePasswordHash(request.Password, out byte[] userHash, out byte[] userSalt);
 
-            await dbContext.UsersLogin.AddAsync(new UserLogin() { Username = request.Username, PasswordHash = userHash, PasswordSalt = userSalt, Role = 0 });
+            Guid guid = Guid.NewGuid();
+            var userLogin = new UserLogin()
+            {
+                Id = guid,
+                Username = request.Username.ToLower(),
+                PasswordHash = userHash,
+                PasswordSalt = userSalt,
+                Role = 0,
+                Employee = new Employee()
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = String.Empty,
+                    LastName = String.Empty,
+                    NumberOfDays = 0,
+                    AvailableNumberOfDays = 0,
+                    UserLoginId = guid
+                }
+            };
+
+            await dbContext.UsersLogin.AddAsync(userLogin);
             await dbContext.SaveChangesAsync();
 
             return NoContent();
