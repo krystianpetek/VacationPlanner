@@ -13,7 +13,9 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
+        
         <SolidColorBrush x:Key="buttonColor" Color="#42afa6" />
+        
         <Style x:Key="focusLogin" TargetType="Label">
             <Setter Property="Content" Value="" />
             <Style.Triggers>
@@ -25,15 +27,15 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <ControlTemplate x:Key="textBox" TargetType="TextBox">
+        
+        <ControlTemplate x:Key="loginTextBox" TargetType="TextBox">
+
             <Border
                 Width="200"
                 Height="50"
-                Background="Gray"
-                CornerRadius="5"
                 Cursor="IBeam"
                 Opacity="1">
-                <Grid Background="#F4F6F7">
+                <Grid>
                     <Label
                         VerticalAlignment="Center"
                         Foreground="Black"
@@ -42,18 +44,21 @@
 
                     <TextBox
                         Name="textbx"
-                        Width="auto"
+                        Width="190"
                         HorizontalAlignment="Stretch"
-                        VerticalAlignment="Center"
+                        VerticalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
                         Background="Transparent"
                         BorderThickness="0"
                         FontFamily="Microsoft Sans Serif"
                         FontSize="15"
+                        Height="40"
                         Text="{Binding Login, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
             </Border>
         </ControlTemplate>
+        
     </UserControl.Resources>
 
     <Grid>
@@ -67,19 +72,27 @@
             <RowDefinition Height="3*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
+
         <StackPanel Grid.Row="1" Grid.Column="1">
+
             <Label HorizontalAlignment="Center" Content="{Binding Info, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox HorizontalAlignment="Center" Template="{StaticResource textBox}" />
+
+            <Border Background="#F4F6F7" BorderBrush="Gray" BorderThickness="1" CornerRadius="6">
+                <TextBox Margin="5" HorizontalAlignment="Center" Template="{StaticResource loginTextBox}" />
+            </Border>
             <component:PasswordBind
-                Width="120"
+                Width="200"
+                Margin="5"
                 HorizontalAlignment="Center"
-                Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
             <Button
+                Margin="5"
                 HorizontalAlignment="Center"
                 Command="{Binding LoginCommand}"
                 CommandParameter="Login"
                 Content="Button" />
+
         </StackPanel>
     </Grid>
 </UserControl>

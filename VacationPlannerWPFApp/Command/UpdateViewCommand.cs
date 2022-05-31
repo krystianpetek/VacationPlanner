@@ -33,7 +33,8 @@ namespace VacationPlannerWPFApp.Command
             else if (parameter.ToString() == "Home2")
                 viewModel.SelectedViewModel = new Home2ViewModels();
             else if (parameter.ToString() == "Login")
-                viewModel.SelectedViewModel = _loginViewModel;
+                viewModel.SelectedViewModel = _loginViewModel;               
+            
         }
     }
 }
