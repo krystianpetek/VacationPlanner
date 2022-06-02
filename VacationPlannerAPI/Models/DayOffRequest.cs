@@ -4,7 +4,7 @@
     {
 
         public Guid Id { get; set; }
-        
+
         public TypeOfLeave TypeOfRequest { get; set; }
 
         public DateTime DayOffRequestDate { get; set; }
@@ -13,6 +13,6 @@
 
         public Guid EmployeeId { get; set; }
 
-        public virtual Employee Employee { get; set; }
+        private Employee Employee { get; set; }
     }
 }

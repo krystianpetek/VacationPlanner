@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using VacationPlannerAPI.Authentication;
+using VacationPlannerAPI.Database;
 using VacationPlannerAPI.Models;
 using VacationPlannerAPI.RestModels;
 
@@ -42,9 +41,9 @@ namespace VacationPlannerAPI.Controllers
                 if (!VerifyPasswordHash(request.Password, userPassword.PasswordHash, userPassword.PasswordSalt))
                     return BadRequest("Wrong password.");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                return $"Błąd + {e.Message}";
+                return $"Error + {e.Message}";
             }
 
             List<Claim> claims = new List<Claim>() {
@@ -52,7 +51,7 @@ namespace VacationPlannerAPI.Controllers
             new Claim(ClaimTypes.Role, "")
             };
 
-            return Ok("IsOK");
+            return Ok("Logged in");
         }
 
         [HttpPost("register")]

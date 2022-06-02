@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VacationPlannerAPI.Models;
-using VacationPlannerAPI.RestModels;
 
 namespace VacationPlannerAPI.Database
 {
@@ -20,7 +19,7 @@ namespace VacationPlannerAPI.Database
             modelBuilder.Entity<UserLogin>().HasKey(x => x.Id);
             modelBuilder.Entity<UserLogin>().Property(x => x.Id).IsRequired();
             modelBuilder.Entity<UserLogin>().HasOne(x => x.Employee).WithOne(x => x.UserLogin);
-            
+
             modelBuilder.Entity<Employee>().HasKey(x => x.Id);
             modelBuilder.Entity<Employee>().Property(x => x.Id).IsRequired();
 

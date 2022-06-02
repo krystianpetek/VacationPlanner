@@ -1,10 +1,8 @@
 ﻿﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VacationPlannerWPFApp.ViewModels;
+using VacationPlannerWPFApp.ViewModels.Login;
 
 namespace VacationPlannerWPFApp.Command
 {
@@ -28,12 +26,13 @@ namespace VacationPlannerWPFApp.Command
 
         public void Execute(object? parameter)
         {
-            if (parameter.ToString() == "Home")
-                viewModel.SelectedViewModel = new HomeViewModels();
-            else if (parameter.ToString() == "Home2")
-                viewModel.SelectedViewModel = new Home2ViewModels();
+            if (parameter.ToString() == "Register")
+            {
+                _loginViewModel.Login = String.Empty;
+                viewModel.SelectedViewModel = new RegisterViewModel();
+            }
             else if (parameter.ToString() == "Login")
-                viewModel.SelectedViewModel = _loginViewModel;
+                viewModel.SelectedViewModel = _loginViewModel;            
         }
     }
 }

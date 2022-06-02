@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 using VacationPlannerAPI.Authentication;
+using VacationPlannerAPI.Database;
 using VacationPlannerAPI.Models;
 using VacationPlannerAPI.RestModels;
 
@@ -23,7 +24,7 @@ namespace VacationPlannerAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<object>>> Get()
         {
-            return await dbContext.Employees.Select(q => new { imie=q.FirstName, nazwisko=q.LastName } ).ToListAsync();
+            return await dbContext.Employees.Select(q => new { imie = q.FirstName, nazwisko = q.LastName }).ToListAsync();
         }
 
         [HttpPost]
@@ -32,8 +33,8 @@ namespace VacationPlannerAPI.Controllers
             if (employee == null)
                 return BadRequest();
 
-            var exists = await dbContext.Employees.SingleOrDefaultAsync(q => q.Login.Username == employee.Username);
-            if(exists != null)
+            var exists = await dbContext.Employees.SingleOrDefaultAsync(q => q.UserLogin.Username == employee.Username);
+            if (exists != null)
                 return BadRequest("Users already exists!");
 
             var userLogin = Register(
@@ -53,7 +54,7 @@ namespace VacationPlannerAPI.Controllers
                 LastName = employee.LastName,
                 NumberOfDays = employee.NumberOfDays,
                 AvailableNumberOfDays = employee.AvailableNumberOfDays,
-                Login = userLogin,
+                UserLogin = userLogin,
                 PasswordLastChanged = null
             };
 
@@ -63,25 +64,26 @@ namespace VacationPlannerAPI.Controllers
             return Created(newEmployee.Id.ToString(), null);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> ChangePassword([FromBody] RestPasswordChange request)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> ChangePassword(Guid id, [FromBody] RestPasswordChange request)
         {
             if (request == null)
                 return BadRequest();
 
-            var user = await dbContext.UsersLogin.SingleOrDefaultAsync(q => q.Id == request.Id);
+            var user = await dbContext.UsersLogin.SingleOrDefaultAsync(q => q.Id == id);
             if (user == null)
                 return BadRequest("User doesn't exists");
 
             CreatePasswordHash(request.OldPassword, out byte[] passwordHash, out byte[] passwordSalt);
 
-            if (user.PasswordHash != passwordHash || user.PasswordSalt != passwordSalt)
-                return BadRequest("Wrong old password!");
+            if (!VerifyPasswordHash(request.OldPassword, user.PasswordHash, user.PasswordSalt))
+                return BadRequest("Wrong password.");
 
             if (request.NewPassword != request.RepeatPassword)
                 return BadRequest("Password doesn't match, please type correct password!");
 
             CreatePasswordHash(request.NewPassword, out byte[] newPasswordHash, out byte[] newPasswordSalt);
+
 
             user.PasswordHash = newPasswordHash;
             user.PasswordSalt = newPasswordSalt;
@@ -98,7 +100,7 @@ namespace VacationPlannerAPI.Controllers
             var exists = dbContext.UsersLogin.SingleOrDefaultAsync(q => q.Username == request.Username);
             if (exists == null)
                 return null;
-                
+
             CreatePasswordHash(request.Password, out byte[] userHash, out byte[] userSalt);
 
             return new UserLogin()
@@ -117,6 +119,14 @@ namespace VacationPlannerAPI.Controllers
             {
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
+        }
+        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            using (var hmac = new HMACSHA512(passwordSalt))
+            {
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return computedHash.SequenceEqual(passwordHash);
             }
         }
     }

@@ -16,13 +16,14 @@ using System.Windows.Shapes;
 namespace VacationPlannerWPFApp.Views
 {
     /// <summary>
-    /// Interaction logic for HomeView.xaml
+    /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class LoginView : UserControl
     {
-        public HomeView()
+        public LoginView()
         {
             InitializeComponent();
         }
+
     }
 }

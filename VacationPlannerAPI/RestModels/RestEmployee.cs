@@ -18,11 +18,23 @@ public class RestEmployee
            DataType(DataType.Text)]
     public string LastName { get; set; }
 
-    public int NumberOfDays { get; set; } 
+    [Required(ErrorMessage = "Number of days is required"),
+            Display(Name = "Number of days")]
+    public int NumberOfDays { get; set; }
 
+    [Required(ErrorMessage = "Available number of days is required"),
+            Display(Name = "Available number of days")]
     public int AvailableNumberOfDays { get; set; }
 
+    [Required(ErrorMessage = "Username is required"),
+            Display(Name = "Username"),
+            MinLength(4),
+            DataType(DataType.Text)]
     public string Username { get; set; }
-    
+
+    [Required(ErrorMessage = "Password is required"),
+            Display(Name = "Password"),
+            MinLength(8),
+            DataType(DataType.Password)]
     public string Password { get; set; }
 }

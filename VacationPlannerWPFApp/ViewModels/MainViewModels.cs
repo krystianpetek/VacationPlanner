@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using VacationPlannerWPFApp.Command;
+using VacationPlannerWPFApp.ViewModels.Login;
 
 namespace VacationPlannerWPFApp.ViewModels
 {
@@ -24,6 +20,7 @@ namespace VacationPlannerWPFApp.ViewModels
             }
         }
         public ICommand UpdateViewCommand { get; set; }
+
         public MainViewModels()
         {
             UpdateViewCommand = new UpdateViewCommand(this);

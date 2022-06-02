@@ -7,8 +7,9 @@ using System.Windows.Input;
 using VacationPlannerWPFApp.Command;
 using VacationPlannerWPFApp.Models;
 using WPFUI.Common;
+using VacationPlannerWPFApp.ViewModels;
 
-namespace VacationPlannerWPFApp.ViewModels
+namespace VacationPlannerWPFApp.ViewModels.Login
 {
     public class LoginViewModel :BaseViewModels
     {
