@@ -1,23 +1,20 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using VacationPlannerWPFApp.ViewModels;
+using VacationPlannerWPFApp.ViewModels.Login;
 
 namespace VacationPlannerWPFApp.Command
 {
     public class LoginCommand : AsyncCommandBase
     {
         private LoginViewModel viewModel;
-
+        private MainWindow mainProgramWindow;
         public LoginCommand(LoginViewModel viewModel)
         {
             this.viewModel = viewModel;
+            mainProgramWindow = new MainWindow();
         }
 
         protected override async Task ExecuteAsync(object? parameter)
@@ -38,10 +35,19 @@ namespace VacationPlannerWPFApp.Command
                        username = $"{viewModel.Login}",
                        password = $"{viewModel.Password}"
                    }));
+
                    data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                    var response = client.PostAsync("https://localhost:7020/api/user/login", data).Result;
-
+                   data.Dispose();
                    viewModel.Info = await response.Content.ReadAsStringAsync();
+
+                   if(viewModel.Info == "IsOK")
+                   {
+                       mainProgramWindow.Dispatcher.Invoke(() => mainProgramWindow.ShowDialog());
+                       await Task.Delay(1000);
+                       viewModel.Password = String.Empty;
+                   }
+                   
                }
            });
         }

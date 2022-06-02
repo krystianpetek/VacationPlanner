@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VacationPlannerWPFApp.ViewModels
+namespace VacationPlannerWPFApp.ViewModels.Login
 {
-    public class Home2ViewModels : BaseViewModels
+    public class HomeViewModels : BaseViewModels
     {
     }
 }
