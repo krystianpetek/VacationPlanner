@@ -18,6 +18,7 @@ namespace VacationPlannerWPFApp
         public LoginScreen()
         {
             InitializeComponent();
+
             DataContext = new MainViewModels();
         }
     }

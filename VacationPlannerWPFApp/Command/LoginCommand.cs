@@ -38,14 +38,12 @@ namespace VacationPlannerWPFApp.Command
 
                    data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                    var response = client.PostAsync("https://localhost:7020/api/user/login", data).Result;
-                   data.Dispose();
                    viewModel.Info = await response.Content.ReadAsStringAsync();
 
-                   if(viewModel.Info == "IsOK")
+                   if(viewModel.Info == "Logged in")
                    {
                        mainProgramWindow.Dispatcher.Invoke(() => mainProgramWindow.ShowDialog());
-                       await Task.Delay(1000);
-                       viewModel.Password = String.Empty;
+                       await Task.Delay(2000);
                    }
                    
                }

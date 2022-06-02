@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VacationPlannerWPFApp.ViewModels.Login
 {
-    public class HomeViewModels : BaseViewModels
+    public class RegisterViewModel : BaseViewModels
     {
     }
 }

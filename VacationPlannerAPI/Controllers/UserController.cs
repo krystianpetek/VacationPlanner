@@ -43,7 +43,7 @@ namespace VacationPlannerAPI.Controllers
             }
             catch (Exception e)
             {
-                return $"Błąd + {e.Message}";
+                return $"Error + {e.Message}";
             }
 
             List<Claim> claims = new List<Claim>() {
@@ -51,7 +51,7 @@ namespace VacationPlannerAPI.Controllers
             new Claim(ClaimTypes.Role, "")
             };
 
-            return Ok("IsOK");
+            return Ok("Logged in");
         }
 
         [HttpPost("register")]

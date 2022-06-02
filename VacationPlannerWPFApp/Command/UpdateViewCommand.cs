@@ -10,7 +10,6 @@ namespace VacationPlannerWPFApp.Command
     {
         private LoginViewModel _loginViewModel;
         private MainViewModels viewModel;
-        private MainWindow model = new MainWindow();
         public UpdateViewCommand(MainViewModels viewModel)
         {
             _loginViewModel = new LoginViewModel();
@@ -27,8 +26,11 @@ namespace VacationPlannerWPFApp.Command
 
         public void Execute(object? parameter)
         {
-            if (parameter.ToString() == "Home")
-                viewModel.SelectedViewModel = new HomeViewModels();
+            if (parameter.ToString() == "Register")
+            {
+                _loginViewModel.Login = String.Empty;
+                viewModel.SelectedViewModel = new RegisterViewModel();
+            }
             else if (parameter.ToString() == "Login")
                 viewModel.SelectedViewModel = _loginViewModel;            
         }
