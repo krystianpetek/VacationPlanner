@@ -11,6 +11,7 @@ namespace VacationPlannerAPI.Database
         public DbSet<Employee> Employees { get; set; }
         public DbSet<UserLogin> UsersLogin { get; set; }
         public DbSet<DayOffRequest> DayOffRequests { get; set; }
+        public DbSet<Company> Companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

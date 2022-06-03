@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="VacationPlannerWPFApp.Views.LoginView"
+    x:Class="VacationPlannerWPFApp.Views.Login.LoginView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:component="clr-namespace:VacationPlannerWPFApp.Component"
@@ -120,7 +120,6 @@
             <Button
                 HorizontalAlignment="Center"
                 Command="{Binding LoginCommand}"
-                CommandParameter="Login"
                 Content="LOGIN"
                 Foreground="White" />
 

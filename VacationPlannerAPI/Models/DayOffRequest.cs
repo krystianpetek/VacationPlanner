@@ -1,8 +1,10 @@
-﻿namespace VacationPlannerAPI.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace VacationPlannerAPI.Models
 {
     public class DayOffRequest
     {
-
+        [Key]
         public Guid Id { get; set; }
 
         public TypeOfLeave TypeOfRequest { get; set; }
@@ -13,6 +15,7 @@
 
         public Guid EmployeeId { get; set; }
 
-        private Employee Employee { get; set; }
+        public Employee? Employee { get; set; }
+
     }
 }

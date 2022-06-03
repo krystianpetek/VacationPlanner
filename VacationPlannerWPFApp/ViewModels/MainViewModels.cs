@@ -23,7 +23,7 @@ namespace VacationPlannerWPFApp.ViewModels
 
         public MainViewModels()
         {
-            UpdateViewCommand = new UpdateViewCommand(this);
+            UpdateViewCommand = new LoginViewCommand(this);
         }
     }
 }

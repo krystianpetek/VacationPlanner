@@ -11,10 +11,10 @@ namespace VacationPlannerWPFApp.Command
     {
         private LoginViewModel viewModel;
         private MainWindow mainProgramWindow;
+
         public LoginCommand(LoginViewModel viewModel)
         {
             this.viewModel = viewModel;
-            mainProgramWindow = new MainWindow();
         }
 
         protected override async Task ExecuteAsync(object? parameter)

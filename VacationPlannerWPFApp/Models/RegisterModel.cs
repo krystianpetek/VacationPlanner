@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace VacationPlannerWPFApp.Models
 {
-    public class LoginModel
+    public class RegisterModel
     {
-        public string? Login { get; set; }
+        public string? Username { get; set; }
 
         public string? Password { get; set; }
 
