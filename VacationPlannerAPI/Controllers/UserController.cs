@@ -7,6 +7,7 @@ using VacationPlannerAPI.Authentication;
 using VacationPlannerAPI.Database;
 using VacationPlannerAPI.Models;
 using VacationPlannerAPI.RestModels;
+using VacationPlannerAPI.Services;
 
 namespace VacationPlannerAPI.Controllers
 {
@@ -16,10 +17,12 @@ namespace VacationPlannerAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly VacationPlannerDbContext dbContext;
+        private readonly IUserService userService;
 
         public UserController(VacationPlannerDbContext context)
         {
             dbContext = context;
+            userService = new UserService();
         }
 
         [HttpGet]
@@ -38,7 +41,7 @@ namespace VacationPlannerAPI.Controllers
                 {
                     return BadRequest("User not found.");
                 }
-                if (!VerifyPasswordHash(request.Password, userPassword.PasswordHash, userPassword.PasswordSalt))
+                if (!userService.VerifyPasswordHash(request.Password, userPassword.PasswordHash, userPassword.PasswordSalt))
                     return BadRequest("Wrong password.");
             }
             catch (Exception e)
@@ -52,60 +55,6 @@ namespace VacationPlannerAPI.Controllers
             };
 
             return Ok("Logged in");
-        }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RestUserLogin request)
-        {
-            if (request == null)
-                return BadRequest("Wrong data from request.");
-
-            if (await dbContext.UsersLogin.FirstOrDefaultAsync(q => q.Username == request.Username) != null)
-                return BadRequest("User name already exist.");
-
-            CreatePasswordHash(request.Password, out byte[] userHash, out byte[] userSalt);
-
-            Guid guid = Guid.NewGuid();
-            var userLogin = new UserLogin()
-            {
-                Id = guid,
-                Username = request.Username.ToLower(),
-                PasswordHash = userHash,
-                PasswordSalt = userSalt,
-                Role = 0,
-                Employee = new Employee()
-                {
-                    Id = Guid.NewGuid(),
-                    FirstName = String.Empty,
-                    LastName = String.Empty,
-                    NumberOfDays = 0,
-                    AvailableNumberOfDays = 0,
-                    UserLoginId = guid
-                }
-            };
-
-            await dbContext.UsersLogin.AddAsync(userLogin);
-            await dbContext.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-            }
-        }
-
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
         }
     }
 }

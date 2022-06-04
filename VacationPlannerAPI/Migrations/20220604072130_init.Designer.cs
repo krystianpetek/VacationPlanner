@@ -12,8 +12,8 @@ using VacationPlannerAPI.Database;
 namespace VacationPlannerAPI.Migrations
 {
     [DbContext(typeof(VacationPlannerDbContext))]
-    [Migration("20220530200643_initialmigrate")]
-    partial class initialmigrate
+    [Migration("20220604072130_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,30 @@ namespace VacationPlannerAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("VacationPlannerAPI.Models.Company", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AdministratorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RegisterDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdministratorId")
+                        .IsUnique();
+
+                    b.ToTable("Companies");
+                });
 
             modelBuilder.Entity("VacationPlannerAPI.Models.DayOffRequest", b =>
                 {
@@ -58,32 +82,47 @@ namespace VacationPlannerAPI.Migrations
                     b.Property<int>("AvailableNumberOfDays")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NumberOfDays")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("PasswordLastChanged")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserLoginId")
+                    b.Property<Guid?>("UserLoginId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("UserLoginId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserLoginId] IS NOT NULL");
 
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("VacationPlannerAPI.Models.RolePerson", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RolePerson");
                 });
 
             modelBuilder.Entity("VacationPlannerAPI.Models.UserLogin", b =>
@@ -93,15 +132,19 @@ namespace VacationPlannerAPI.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime?>("PasswordLastChanged")
+                        .HasColumnType("datetime2");
 
                     b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("RegisterDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -109,16 +152,30 @@ namespace VacationPlannerAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleId")
+                        .IsUnique();
+
                     b.HasIndex("Username")
                         .IsUnique();
 
                     b.ToTable("UsersLogin");
                 });
 
+            modelBuilder.Entity("VacationPlannerAPI.Models.Company", b =>
+                {
+                    b.HasOne("VacationPlannerAPI.Models.UserLogin", "Administrator")
+                        .WithOne()
+                        .HasForeignKey("VacationPlannerAPI.Models.Company", "AdministratorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Administrator");
+                });
+
             modelBuilder.Entity("VacationPlannerAPI.Models.DayOffRequest", b =>
                 {
                     b.HasOne("VacationPlannerAPI.Models.Employee", "Employee")
-                        .WithMany()
+                        .WithMany("DayOffRequests")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -128,19 +185,45 @@ namespace VacationPlannerAPI.Migrations
 
             modelBuilder.Entity("VacationPlannerAPI.Models.Employee", b =>
                 {
-                    b.HasOne("VacationPlannerAPI.Models.UserLogin", "UserLogin")
-                        .WithOne("Employee")
-                        .HasForeignKey("VacationPlannerAPI.Models.Employee", "UserLoginId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("VacationPlannerAPI.Models.Company", "Company")
+                        .WithMany("Employees")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("VacationPlannerAPI.Models.UserLogin", "UserLogin")
+                        .WithOne()
+                        .HasForeignKey("VacationPlannerAPI.Models.Employee", "UserLoginId");
+
+                    b.Navigation("Company");
 
                     b.Navigation("UserLogin");
                 });
 
             modelBuilder.Entity("VacationPlannerAPI.Models.UserLogin", b =>
                 {
-                    b.Navigation("Employee")
+                    b.HasOne("VacationPlannerAPI.Models.RolePerson", "Role")
+                        .WithOne("UserLogin")
+                        .HasForeignKey("VacationPlannerAPI.Models.UserLogin", "RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("VacationPlannerAPI.Models.Company", b =>
+                {
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("VacationPlannerAPI.Models.Employee", b =>
+                {
+                    b.Navigation("DayOffRequests");
+                });
+
+            modelBuilder.Entity("VacationPlannerAPI.Models.RolePerson", b =>
+                {
+                    b.Navigation("UserLogin");
                 });
 #pragma warning restore 612, 618
         }

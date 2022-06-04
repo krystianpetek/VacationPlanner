@@ -2,7 +2,7 @@
 
 namespace VacationPlannerAPI.RestModels
 {
-    public class RestCompany
+    public class RestCompanyRequest
     {
         public string? CompanyName { get; set; }
 

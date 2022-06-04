@@ -7,13 +7,15 @@ namespace VacationPlannerAPI.Models
         [Key]
         public Guid Id { get; set; }
 
-        public string? CompanyName { get; set; }
-
-        public Guid AdministratorId { get; set; }
-
-        public UserLogin? Administrator { get; set; }
+        public string CompanyName { get; set; }
 
         public DateTime RegisterDate { get; set; } = DateTime.Now;
+        
+        public Guid AdministratorId { get; set; }
+
+        public virtual UserLogin? Administrator { get; set; }
+
+        public virtual ICollection<Employee>? Employees { get; set; }
 
     }
 }

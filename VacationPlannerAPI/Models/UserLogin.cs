@@ -15,8 +15,10 @@ namespace VacationPlannerAPI.Models
 
         public DateTime? PasswordLastChanged { get; set; }
 
-        public RolePerson? Role { get; set; }
+        public DateTime RegisterDate { get; set; } = DateTime.Now;
 
-        public Employee? Employee { get; set; }
+
+        public Guid RoleId { get; set; }
+        public virtual RolePerson? Role { get; set; }
     }
 }

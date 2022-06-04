@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using VacationPlannerAPI.Authentication;
 using VacationPlannerAPI.Database;
+using VacationPlannerAPI.Models;
+using VacationPlannerAPI.RestModels;
 using VacationPlannerAPI.Services;
 
 namespace VacationPlannerAPI.Controllers
@@ -10,37 +13,65 @@ namespace VacationPlannerAPI.Controllers
     [Route("api/[controller]")]
     public class CompanyController : ControllerBase
     {
-        private readonly VacationPlannerDbContext dbContext;
+        private readonly VacationPlannerDbContext context;
         private readonly IUserService userService;
 
-        public CompanyController(VacationPlannerDbContext context)
+        public CompanyController(VacationPlannerDbContext context, IUserService userService)
         {
-            dbContext = context;
-            userService = new UserService();
+            this.context = context;
+            this.userService = userService;
         }
 
-
-        private UserLogin Register(RestUserLogin request)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<RestCompanyResponse>>> Get()
         {
-            if (request == null) return null;
+            return await context.Companies.Select(q => new RestCompanyResponse() { CompanyName = q.CompanyName }).ToListAsync();
+        }
 
-            var exists = dbContext.UsersLogin.SingleOrDefaultAsync(q => q.Username == request.Username);
-            if (exists == null)
-                return null;
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<RestCompanyResponse>>> GetById([FromRoute] Guid id)
+        {
+            return await context.Companies.Where(q => q.Id == id).Select(q => new RestCompanyResponse() { CompanyName = q.CompanyName }).ToListAsync();
+        }
 
-            CreatePasswordHash(request.Password, out byte[] userHash, out byte[] userSalt);
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody] RestCompanyRequest request)
+        {
+            if (request == null)
+                return BadRequest("Wrong data from request.");
 
-            return new UserLogin()
+            if (await context.UsersLogin.FirstOrDefaultAsync(q => q.Username == request.Username) != null)
+                return BadRequest("User name already exist.");
+
+            var newCompany = RestCompanyRegister(request);
+
+            await context.Companies.AddAsync(newCompany);
+            await context.SaveChangesAsync();
+
+            return Created(newCompany.Id.ToString(), null); // ToDo
+        }
+
+        private Company RestCompanyRegister(RestCompanyRequest request)
+        {
+            userService.CreatePasswordHash(request.Password!, out byte[] userHash, out byte[] userSalt);
+
+            Guid guidLogin = Guid.NewGuid();
+            var newCompany = new Company()
             {
                 Id = Guid.NewGuid(),
-                Username = request.Username,
-                PasswordHash = userHash,
-                PasswordSalt = userSalt,
-                PasswordLastChanged = null,
-                Role = new RolePerson { Id = Guid.NewGuid(), Role = Role.Employee }
+                CompanyName = request.CompanyName,
+                Administrator = new UserLogin()
+                {
+                    Id = guidLogin,
+                    Username = request.Username,
+                    Role = new RolePerson() { Id = Guid.NewGuid(), Role = Role.Administrator},
+                    PasswordSalt = userSalt,
+                    PasswordHash = userHash,
+                    PasswordLastChanged = DateTime.Now
+                },
+                AdministratorId = guidLogin
             };
+            return newCompany;
         }
-
-        
     }
 }

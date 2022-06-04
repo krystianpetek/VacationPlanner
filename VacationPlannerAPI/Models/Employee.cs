@@ -17,7 +17,14 @@ public class Employee
 
     public DateTime RegisterDate { get; set; } = DateTime.Now;
 
-    public Guid UserLoginId { get; set; }
 
-    public UserLogin? UserLogin { get; set; }
+    public Guid? UserLoginId { get; set; }
+
+    public Guid CompanyId { get; set; }
+
+    public virtual UserLogin? UserLogin { get; set; }
+
+    public virtual Company? Company { get; set; }
+
+    public virtual ICollection<DayOffRequest>? DayOffRequests { get; set; }
 }

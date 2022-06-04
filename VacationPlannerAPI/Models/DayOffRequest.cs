@@ -13,9 +13,10 @@ namespace VacationPlannerAPI.Models
 
         public DateTime RequestDate { get; set; } = DateTime.Now;
 
+
         public Guid EmployeeId { get; set; }
 
-        public Employee? Employee { get; set; }
+        public virtual Employee? Employee { get; set; }
 
     }
 }
