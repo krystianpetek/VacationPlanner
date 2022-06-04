@@ -2,18 +2,10 @@
     x:Class="VacationPlannerWPFApp.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:viewModels="clr-namespace:VacationPlannerWPFApp.ViewModels.Login"
-    xmlns:views="clr-namespace:VacationPlannerWPFApp.Views.Login"
-    xmlns:viewsApp="clr-namespace:VacationPlannerWPFApp.Views.Application"
     StartupUri="LoginScreen.xaml">
 
     <Application.Resources>
-        <DataTemplate DataType="{x:Type viewModels:RegisterViewModel}">
-            <views:RegisterView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
-            <views:LoginView />
-        </DataTemplate>
+
         <SolidColorBrush x:Key="colorBlue" Color="#007AFF" />
 
     </Application.Resources>

@@ -37,7 +37,7 @@ namespace VacationPlannerAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RestCompanyRequest request)
         {
-            if (request == null)
+            if ( request is null || string.IsNullOrEmpty(request.CompanyName) || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
                 return BadRequest("Wrong data from request.");
 
             if (await context.UsersLogin.FirstOrDefaultAsync(q => q.Username == request.Username) != null)
@@ -48,7 +48,7 @@ namespace VacationPlannerAPI.Controllers
             await context.Companies.AddAsync(newCompany);
             await context.SaveChangesAsync();
 
-            return Created(newCompany.Id.ToString(), null); // ToDo
+            return CreatedAtAction(nameof(GetById), "Company", new { id = newCompany.Id },$"{newCompany.CompanyName} account created.");
         }
 
         private Company RestCompanyRegister(RestCompanyRequest request)

@@ -3,18 +3,20 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using VacationPlannerWPFApp.Models.Login;
 using VacationPlannerWPFApp.ViewModels.Login;
 
-namespace VacationPlannerWPFApp.Command
+namespace VacationPlannerWPFApp.Command.Login
 {
     public class LoginCommand : AsyncCommandBase
     {
         private LoginViewModel viewModel;
-        private MainWindow mainProgramWindow;
+        private MainScreen mainProgramWindow;
 
         public LoginCommand(LoginViewModel viewModel)
         {
             this.viewModel = viewModel;
+            mainProgramWindow = new MainScreen();
         }
 
         protected override async Task ExecuteAsync(object? parameter)
@@ -38,12 +40,13 @@ namespace VacationPlannerWPFApp.Command
 
                    data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                    var response = client.PostAsync("https://localhost:7020/api/user/login", data).Result;
-                   viewModel.Info = await response.Content.ReadAsStringAsync();
+                   var claimsResponse = await response.Content.ReadAsStringAsync();
+                   var json = JsonConvert.DeserializeObject<ClaimsToWPF>(claimsResponse);
 
-                   if(viewModel.Info == "Logged in")
+                   if(json.Message == "Logged in")
                    {
                        mainProgramWindow.Dispatcher.Invoke(() => mainProgramWindow.ShowDialog());
-                       await Task.Delay(2000);
+                       mainProgramWindow.claims = json;
                    }
                    
                }

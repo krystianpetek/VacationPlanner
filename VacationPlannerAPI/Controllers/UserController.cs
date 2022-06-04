@@ -32,29 +32,25 @@ namespace VacationPlannerAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(RestUserLogin request)
+        public async Task<ActionResult<ClaimsToWPF>> Login(RestUserLogin request)
         {
-            try
+            if (request is null || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
+                return BadRequest("Wrong data from request.");
+
+            UserLogin? userPassword = await dbContext.UsersLogin.Include(q=>q.Role).FirstOrDefaultAsync(q => q.Username == request.Username);
+            if (userPassword == null)
             {
-                UserLogin? userPassword = await dbContext.UsersLogin.FirstOrDefaultAsync(q => q.Username == request.Username);
-                if (userPassword == null)
-                {
-                    return BadRequest("User not found.");
-                }
-                if (!userService.VerifyPasswordHash(request.Password, userPassword.PasswordHash, userPassword.PasswordSalt))
-                    return BadRequest("Wrong password.");
+                return BadRequest("User not found.");
             }
-            catch (Exception e)
-            {
-                return $"Error + {e.Message}";
-            }
+            if (!userService.VerifyPasswordHash(request.Password, userPassword.PasswordHash, userPassword.PasswordSalt))
+                return BadRequest("Wrong password.");
 
             List<Claim> claims = new List<Claim>() {
-            new Claim(ClaimTypes.Name, request.Username),
-            new Claim(ClaimTypes.Role, "")
+            new Claim(ClaimTypes.Name, userPassword.Username),
+            new Claim(ClaimTypes.Role, userPassword.Role.Role.ToString())
             };
 
-            return Ok("Logged in");
+            return Ok(new ClaimsToWPF { Message = "Logged in", Id = userPassword.Id, Role = userPassword.Role.Role.ToString(), Username = userPassword.Username});
         }
     }
 }

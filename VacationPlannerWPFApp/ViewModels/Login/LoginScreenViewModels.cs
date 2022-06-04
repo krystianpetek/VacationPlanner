@@ -1,10 +1,9 @@
 ﻿using System.Windows.Input;
-using VacationPlannerWPFApp.Command;
-using VacationPlannerWPFApp.ViewModels.Login;
+using VacationPlannerWPFApp.Command.Login;
 
-namespace VacationPlannerWPFApp.ViewModels
+namespace VacationPlannerWPFApp.ViewModels.Login
 {
-    public class MainViewModels : BaseViewModels
+    public class LoginScreenViewModels : BaseViewModels
     {
         private BaseViewModels _selectedViewModel = new LoginViewModel();
         public BaseViewModels SelectedViewModel
@@ -21,7 +20,7 @@ namespace VacationPlannerWPFApp.ViewModels
         }
         public ICommand UpdateViewCommand { get; set; }
 
-        public MainViewModels()
+        public LoginScreenViewModels()
         {
             UpdateViewCommand = new LoginViewCommand(this);
         }

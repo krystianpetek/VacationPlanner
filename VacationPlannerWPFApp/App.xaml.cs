@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Windows;
 
 namespace VacationPlannerWPFApp
 {
@@ -8,5 +10,8 @@ namespace VacationPlannerWPFApp
     public partial class App : Application
     {
         public const string key = "mojSekretnyKluczAPI";
+        IServiceCollection services;
+    
     }
+
 }

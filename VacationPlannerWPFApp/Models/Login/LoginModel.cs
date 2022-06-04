@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VacationPlannerWPFApp.Models
+namespace VacationPlannerWPFApp.Models.Login
 {
     public class LoginModel
     {

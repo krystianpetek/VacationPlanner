@@ -12,7 +12,7 @@ using VacationPlannerAPI.Database;
 namespace VacationPlannerAPI.Migrations
 {
     [DbContext(typeof(VacationPlannerDbContext))]
-    [Migration("20220604072130_init")]
+    [Migration("20220604093437_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,28 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using VacationPlannerWPFApp.Models.Login;
+using VacationPlannerWPFApp.ViewModels.HomeApp;
 
 namespace VacationPlannerWPFApp
 {
     /// <summary>
     /// Interaction logic for TwoWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainScreen : Window
     {
-        public MainWindow()
+        public ClaimsToWPF claims = new ClaimsToWPF() { Id = Guid.NewGuid(), Message = "Not logged", Role = null, Username = null };
+        public MainScreen()
         {
             InitializeComponent();
+            DataContext = new MainScreenViewModels();
         }
 
         protected override void OnClosing(CancelEventArgs e)

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VacationPlannerWPFApp.ViewModels.Application
+namespace VacationPlannerWPFApp.ViewModels.HomeApp
 {
-    internal class HomeAppViewModel
+    internal class ShowAllDayOffAppViewModel
     {
     }
 }

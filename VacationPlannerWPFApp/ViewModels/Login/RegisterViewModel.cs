@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using VacationPlannerWPFApp.Command;
-using VacationPlannerWPFApp.Models;
+﻿using System.Windows.Input;
+using VacationPlannerWPFApp.Command.Login;
+using VacationPlannerWPFApp.Models.Login;
 
 namespace VacationPlannerWPFApp.ViewModels.Login
 {
@@ -19,6 +14,16 @@ namespace VacationPlannerWPFApp.ViewModels.Login
             registerModel = new RegisterModel();
         }
 
+        public string CompanyName
+        {
+            get => registerModel.CompanyName!;
+            set
+            {
+                registerModel.CompanyName = value;
+                OnPropertyChanged(nameof(CompanyName));
+            }
+        }
+        
         public string Username
         {
             get => registerModel.Username!;

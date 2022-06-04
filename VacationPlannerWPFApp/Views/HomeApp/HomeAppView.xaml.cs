@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VacationPlannerWPFApp.Views.Application
+namespace VacationPlannerWPFApp.Views.HomeApp
 {
     /// <summary>
     /// Interaction logic for HomeAppView.xaml

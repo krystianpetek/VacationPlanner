@@ -37,7 +37,7 @@ namespace VacationPlannerAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> Register(RestEmployeeRequest request)
         {
-            if (request == null)
+            if (request is null || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
                 return BadRequest("Wrong data from request.");
 
             if (await context.UsersLogin.FirstOrDefaultAsync(q => q.Username == request.Username) != null)
@@ -48,7 +48,7 @@ namespace VacationPlannerAPI.Controllers
             context.Employees.Add(newEmployee);
             await context.SaveChangesAsync();
 
-            return Created(newEmployee.Id.ToString(), null);  // ToDo
+            return CreatedAtAction(nameof(GetById), "Company", new { id = newEmployee.Id }, $"{newEmployee.UserLogin!.Username}, account created.");
         }
 
         [HttpPut("{id}")]
@@ -70,7 +70,6 @@ namespace VacationPlannerAPI.Controllers
                 return BadRequest("Password doesn't match, please type correct password!");
 
             userService.CreatePasswordHash(request.NewPassword, out byte[] newPasswordHash, out byte[] newPasswordSalt);
-
 
             user.PasswordHash = newPasswordHash;
             user.PasswordSalt = newPasswordSalt;

@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using VacationPlannerWPFApp.Command;
-using VacationPlannerWPFApp.Models;
-using WPFUI.Common;
-using VacationPlannerWPFApp.ViewModels;
+﻿using System.Windows.Input;
+using VacationPlannerWPFApp.Command.Login;
+using VacationPlannerWPFApp.Models.Login;
 
 namespace VacationPlannerWPFApp.ViewModels.Login
 {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using VacationPlannerWPFApp.ViewModels;
 using VacationPlannerWPFApp.ViewModels.Login;
 
-namespace VacationPlannerWPFApp.Command
+namespace VacationPlannerWPFApp.Command.Login
 {
     public class RegisterCommand : AsyncCommandBase
     {
@@ -35,12 +35,13 @@ namespace VacationPlannerWPFApp.Command
 
                     var data = new StringContent(JsonConvert.SerializeObject(new
                     {
+                        companyName = $"{viewModel.CompanyName}",
                         username = $"{viewModel.Username}",
                         password = $"{viewModel.Password}"
                     }));
 
                     data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                    var response = client.PostAsync("https://localhost:7020/api/company/register", data).Result;
+                    var response = client.PostAsync("https://localhost:7020/api/Company", data).Result;
                     viewModel.Info = await response.Content.ReadAsStringAsync();
                 }
             });
