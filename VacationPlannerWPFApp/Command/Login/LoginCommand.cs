@@ -44,7 +44,7 @@ namespace VacationPlannerWPFApp.Command.Login
                    data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                    var response = client.PostAsync("https://localhost:7020/api/user/login", data).Result;
                    var claimsResponse = await response.Content.ReadAsStringAsync();
-                   var json = JsonConvert.DeserializeObject<ClaimsToWPF>(claimsResponse);
+                   var json = JsonConvert.DeserializeObject<AccountModel>(claimsResponse);
                    File.WriteAllText("save.txt", claimsResponse);
                    if(json.Message == "Logged in")
                    {

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using VacationPlannerWPFApp.Command.Login;
+using VacationPlannerWPFApp.Models.HomeApp;
 using VacationPlannerWPFApp.Models.Login;
 using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
@@ -13,12 +14,14 @@ namespace VacationPlannerWPFApp.ViewModels
         private LoginModel loginModel = new LoginModel();
         public ICommand LoginCommand { get; set; }
 
-        public LoginViewModel(NavigationStore navigationStore)
+        public LoginViewModel(AccountStore accountStore, NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            LoginCommand = new LoginCommand(
-                this, 
-                new NavigationService<AccountViewModel>(_navigationStore, () => new AccountViewModel(_navigationStore) ));
+            NavigationService<AccountViewModel> navigationService =new(
+                    navigationStore, 
+                    () => new AccountViewModel(accountStore, navigationStore));
+
+            LoginCommand = new LoginCommand(this, accountStore, navigationService);
         }
 
         public string Username

@@ -99,7 +99,7 @@
                         HorizontalAlignment="Center"
                         Background="#F1F3F4"
                         BorderThickness="0"
-                        Text="{Binding Login, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
             </Border>
 

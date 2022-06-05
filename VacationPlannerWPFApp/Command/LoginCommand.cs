@@ -17,24 +17,27 @@ namespace VacationPlannerWPFApp.Command.Login
     public class LoginCommand : CommandBase
     {
         private readonly LoginViewModel _viewModel;
+        private readonly AccountStore _accountStore;
         private readonly NavigationService<AccountViewModel> _navigationService;
 
-        public LoginCommand(LoginViewModel viewModel, NavigationService<AccountViewModel> navigationService)
+        public LoginCommand(LoginViewModel viewModel, AccountStore accountStore, NavigationService<AccountViewModel> navigationService)
         {
             _viewModel = viewModel;
+            _accountStore = accountStore;
             _navigationService = navigationService;
         }
 
         public override void Execute(object? parameter)
         {
             MessageBox.Show($"Logging in {_viewModel.Username}");
+            var account = Login().Result;
+            _accountStore.CurrentAccount = account;
             _navigationService.Navigate();
         }
 
-        private async Task Login ()
+        private async Task<AccountModel> Login ()
         {
-           await Task.Run(async () =>
-           {
+               AccountModel json;
                using (HttpClient client = new HttpClient())
                {
                    client.DefaultRequestHeaders.Add("ApiKey", App.key);
@@ -48,10 +51,10 @@ namespace VacationPlannerWPFApp.Command.Login
                    data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                    var response = client.PostAsync("https://localhost:7020/api/user/login", data).Result;
                    var claimsResponse = await response.Content.ReadAsStringAsync();
-                   var json = JsonConvert.DeserializeObject<ClaimsToWPF>(claimsResponse);
-                   File.WriteAllText("save.txt", claimsResponse);
+                   json = JsonConvert.DeserializeObject<AccountModel>(claimsResponse);
                }
-           });
+               return json;
+           
         }
     }
 }
