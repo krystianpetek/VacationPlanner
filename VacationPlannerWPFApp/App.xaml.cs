@@ -16,7 +16,9 @@ namespace VacationPlannerWPFApp
         protected override void OnStartup(StartupEventArgs e)
         {
             NavigationStore navigationStore = new NavigationStore();
+
             navigationStore.CurrentViewModel = new HomeViewModel(navigationStore);
+
             MainWindow = new MainScreen()
             {
                 DataContext = new MainViewModel(navigationStore)

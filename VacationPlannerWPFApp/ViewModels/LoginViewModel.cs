@@ -1,16 +1,19 @@
 ﻿using System.Windows.Input;
 using VacationPlannerWPFApp.Command.Login;
 using VacationPlannerWPFApp.Models.Login;
+using VacationPlannerWPFApp.Stores;
 
 namespace VacationPlannerWPFApp.ViewModels
 {
     public class LoginViewModel :ViewModelBase
     {
+        NavigationStore _navigationStore;
         
         private LoginModel loginModel;
 
-        public LoginViewModel()
+        public LoginViewModel(NavigationStore navigationStore)
         {
+            _navigationStore = navigationStore;
             LoginCommand = new LoginCommand(this);
             loginModel = new LoginModel();
         }

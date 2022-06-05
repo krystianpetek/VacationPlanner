@@ -6,11 +6,11 @@ namespace VacationPlannerWPFApp.ViewModels
 {
     public class HomeViewModel : ViewModelBase
     {
-        public ICommand NavigateHomeCommand { get; }
+        public ICommand NavigateCommand { get; }
 
         public HomeViewModel(NavigationStore navigationStore)
         {
-            NavigateHomeCommand = new NavigateHomeCommand(navigationStore);
+            NavigateCommand = new NavigateCommand<AccountViewModel>(navigationStore, () => new AccountViewModel(navigationStore));
         }
     }
 }

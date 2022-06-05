@@ -10,12 +10,12 @@ namespace VacationPlannerWPFApp.Command.Login
     {
         private LoginViewModel _loginViewModel;
         private LoginScreenViewModels viewModel;
-        public LoginViewCommand(LoginScreenViewModels viewModel)
-        {
-            _loginViewModel = new LoginViewModel();
-            this.viewModel = viewModel;
-            this.viewModel.SelectedViewModel = _loginViewModel;
-        }
+        //public LoginViewCommand(LoginScreenViewModels viewModel)
+        //{
+        //    _loginViewModel = new LoginViewModel();
+        //    this.viewModel = viewModel;
+        //    this.viewModel.SelectedViewModel = _loginViewModel;
+        //}
 
         public event EventHandler? CanExecuteChanged;
 
@@ -26,13 +26,13 @@ namespace VacationPlannerWPFApp.Command.Login
 
         public void Execute(object? parameter)
         {
-            if (parameter!.ToString() == "Register")
-            {
-                _loginViewModel.Login = String.Empty;
-                viewModel.SelectedViewModel = new RegisterViewModel();
-            }
-            else if (parameter.ToString() == "Login")
-                viewModel.SelectedViewModel = _loginViewModel;            
+            //if (parameter!.ToString() == "Register")
+            //{
+            //    _loginViewModel.Login = String.Empty;
+            //    viewModel.SelectedViewModel = new RegisterViewModel();
+            //}
+            //else if (parameter.ToString() == "Login")
+            //    viewModel.SelectedViewModel = _loginViewModel;            
         }
     }
 }

@@ -19,6 +19,9 @@
                 <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
                     <viewsApp:HomeView />
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:AccountViewModel}">
+                    <viewsApp:AccountView />
+                </DataTemplate>
                 <DataTemplate DataType="{x:Type viewModels:RegisterViewModel}">
                     <viewsLogin:RegisterView />
                 </DataTemplate>

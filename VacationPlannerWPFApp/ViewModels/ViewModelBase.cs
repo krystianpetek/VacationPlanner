@@ -12,9 +12,10 @@ namespace VacationPlannerWPFApp.ViewModels
     public class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
         public ClaimsToWPF claims = new ClaimsToWPF() { Id = Guid.NewGuid(),Message = "Not logged", Role = null, Username = null};
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         public virtual void Dispose() { }
+        
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)
         {
