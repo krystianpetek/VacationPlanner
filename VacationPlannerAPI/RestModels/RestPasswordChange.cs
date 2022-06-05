@@ -8,18 +8,19 @@ namespace VacationPlannerAPI.RestModels
             Display(Name = "Old password"),
             MinLength(8),
             DataType(DataType.Password)]
-        public string OldPassword { get; set; }
+        public string? OldPassword { get; set; }
 
         [Required(ErrorMessage = "New password is required"),
             Display(Name = "New password"),
             MinLength(8),
             DataType(DataType.Password)]
-        public string NewPassword { get; set; }
+        public string? NewPassword { get; set; }
 
         [Required(ErrorMessage = "Repeat password is required"),
             Display(Name = "Repeat password"),
             MinLength(8),
             DataType(DataType.Password)]
-        public string RepeatPassword { get; set; }
+        public string? RepeatPassword { get; set; }
+
     }
 }

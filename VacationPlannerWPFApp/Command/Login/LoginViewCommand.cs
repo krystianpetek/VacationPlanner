@@ -4,13 +4,13 @@ using System.Windows.Input;
 using VacationPlannerWPFApp.ViewModels;
 using VacationPlannerWPFApp.ViewModels.Login;
 
-namespace VacationPlannerWPFApp.Command
+namespace VacationPlannerWPFApp.Command.Login
 {
-    public class UpdateViewCommand : ICommand
+    public class LoginViewCommand : ICommand
     {
         private LoginViewModel _loginViewModel;
-        private MainViewModels viewModel;
-        public UpdateViewCommand(MainViewModels viewModel)
+        private LoginScreenViewModels viewModel;
+        public LoginViewCommand(LoginScreenViewModels viewModel)
         {
             _loginViewModel = new LoginViewModel();
             this.viewModel = viewModel;
@@ -26,7 +26,7 @@ namespace VacationPlannerWPFApp.Command
 
         public void Execute(object? parameter)
         {
-            if (parameter.ToString() == "Register")
+            if (parameter!.ToString() == "Register")
             {
                 _loginViewModel.Login = String.Empty;
                 viewModel.SelectedViewModel = new RegisterViewModel();

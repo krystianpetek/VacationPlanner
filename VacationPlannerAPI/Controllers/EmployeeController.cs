@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
+using VacationPlannerAPI.Services;
 using VacationPlannerAPI.Authentication;
 using VacationPlannerAPI.Database;
 using VacationPlannerAPI.Models;
@@ -14,120 +13,97 @@ namespace VacationPlannerAPI.Controllers
     [Route("api/[controller]")]
     public class EmployeeController : ControllerBase
     {
-        private readonly VacationPlannerDbContext dbContext;
+        private readonly VacationPlannerDbContext context;
+        private readonly IUserService userService;
 
-        public EmployeeController(VacationPlannerDbContext context)
+        public EmployeeController(VacationPlannerDbContext context, IUserService userService)
         {
-            dbContext = context;
+            this.context = context;
+            this.userService = userService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<object>>> Get()
+        public async Task<ActionResult<IEnumerable<RestEmployeeResponse>>> Get()
         {
-            return await dbContext.Employees.Select(q => new { imie = q.FirstName, nazwisko = q.LastName }).ToListAsync();
+            return await context.Employees.Select(q => new RestEmployeeResponse() { FirstName = q.FirstName, LastName = q.LastName} ).ToListAsync();
+        }
+        
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<RestEmployeeResponse>>> GetById(Guid id)
+        {
+            return await context.Employees.Where(q=>q.Id == id).Select(q => new RestEmployeeResponse() { FirstName = q.FirstName, LastName = q.LastName} ).ToListAsync();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(RestEmployee employee)
+        public async Task<ActionResult> Register(Guid companyId, [FromBody] RestEmployeeRequest request)
         {
-            if (employee == null)
-                return BadRequest();
+            if (request is null || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
+                return BadRequest("Wrong data from request.");
 
-            var exists = await dbContext.Employees.SingleOrDefaultAsync(q => q.UserLogin.Username == employee.Username);
-            if (exists != null)
-                return BadRequest("Users already exists!");
+            if (await context.UsersLogin.FirstOrDefaultAsync(q => q.Username == request.Username) != null)
+                return BadRequest("User name already exist.");
 
-            var userLogin = Register(
-                    new RestUserLogin()
-                    {
-                        Username = employee.Username,
-                        Password = employee.Password
-                    });
+            var newEmployee = RestEmployeeRegister(request);
+            newEmployee.CompanyId = companyId;
 
-            if (userLogin == null)
-                return BadRequest();
+            context.Employees.Add(newEmployee);
+            await context.SaveChangesAsync();
 
-            var newEmployee = new Employee()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                NumberOfDays = employee.NumberOfDays,
-                AvailableNumberOfDays = employee.AvailableNumberOfDays,
-                UserLogin = userLogin,
-                PasswordLastChanged = null
-            };
-
-            dbContext.Employees.Add(newEmployee);
-            await dbContext.SaveChangesAsync();
-
-            return Created(newEmployee.Id.ToString(), null);
+            return CreatedAtAction(nameof(GetById), "Company", new { id = newEmployee.Id }, $"{newEmployee.UserLogin!.Username}, account created.");
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> ChangePassword(Guid id, [FromBody] RestPasswordChange request)
+        public async Task<ActionResult> ChangePassword([FromRoute] Guid id, [FromBody] RestPasswordChange request)
         {
             if (request == null)
                 return BadRequest();
 
-            var user = await dbContext.UsersLogin.SingleOrDefaultAsync(q => q.Id == id);
+            var user = await context.UsersLogin.SingleOrDefaultAsync(q => q.Id == id);
             if (user == null)
                 return BadRequest("User doesn't exists");
 
-            CreatePasswordHash(request.OldPassword, out byte[] passwordHash, out byte[] passwordSalt);
+            userService.CreatePasswordHash(request.OldPassword, out byte[] passwordHash, out byte[] passwordSalt);
 
-            if (!VerifyPasswordHash(request.OldPassword, user.PasswordHash, user.PasswordSalt))
+            if (!userService.VerifyPasswordHash(request.OldPassword, user.PasswordHash, user.PasswordSalt))
                 return BadRequest("Wrong password.");
 
             if (request.NewPassword != request.RepeatPassword)
                 return BadRequest("Password doesn't match, please type correct password!");
 
-            CreatePasswordHash(request.NewPassword, out byte[] newPasswordHash, out byte[] newPasswordSalt);
-
+            userService.CreatePasswordHash(request.NewPassword, out byte[] newPasswordHash, out byte[] newPasswordSalt);
 
             user.PasswordHash = newPasswordHash;
             user.PasswordSalt = newPasswordSalt;
 
-            await dbContext.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private UserLogin Register(RestUserLogin request)
+        private Employee RestEmployeeRegister(RestEmployeeRequest request)
         {
-            if (request == null) return null;
+            userService.CreatePasswordHash(request.Password!, out byte[] passwordHash, out byte[] passwordSalt);
 
-            var exists = dbContext.UsersLogin.SingleOrDefaultAsync(q => q.Username == request.Username);
-            if (exists == null)
-                return null;
-
-            CreatePasswordHash(request.Password, out byte[] userHash, out byte[] userSalt);
-
-            return new UserLogin()
+            Guid userId = Guid.NewGuid();
+            Guid roleId = Guid.NewGuid();
+            var newEmployee = new Employee()
             {
                 Id = Guid.NewGuid(),
-                Username = request.Username,
-                PasswordHash = userHash,
-                PasswordSalt = userSalt,
-                Role = Role.Employee
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                NumberOfDays = request.NumberOfDays,
+                AvailableNumberOfDays = request.AvailableNumberOfDays,
+                UserLogin = new UserLogin()
+                {
+                    Id = userId,
+                    Username = request.Username,
+                    Role = new RolePerson() { Id = Guid.NewGuid(), Role = Role.Employee },
+                    PasswordHash = passwordHash,
+                    PasswordSalt = passwordSalt,
+                },
+                UserLoginId = userId
             };
-        }
-
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-            }
-        }
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
+            return newEmployee;
         }
     }
 }

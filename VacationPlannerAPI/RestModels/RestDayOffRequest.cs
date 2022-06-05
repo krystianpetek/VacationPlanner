@@ -7,5 +7,6 @@ namespace VacationPlannerAPI.RestModels
         public TypeOfLeave TypeOfRequest { get; set; }
 
         public DateTime DayOffRequestDate { get; set; }
+
     }
 }

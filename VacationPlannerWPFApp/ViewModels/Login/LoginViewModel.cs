@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using VacationPlannerWPFApp.Command;
-using VacationPlannerWPFApp.Models;
-using WPFUI.Common;
-using VacationPlannerWPFApp.ViewModels;
+﻿using System.Windows.Input;
+using VacationPlannerWPFApp.Command.Login;
+using VacationPlannerWPFApp.Models.Login;
 
 namespace VacationPlannerWPFApp.ViewModels.Login
 {
@@ -19,42 +12,33 @@ namespace VacationPlannerWPFApp.ViewModels.Login
         public LoginViewModel()
         {
             LoginCommand = new LoginCommand(this);
-            this.loginModel = new LoginModel();
+            loginModel = new LoginModel();
         }
 
         public string Login
         {
-            get
-            {
-                return this.loginModel.Login;
-            }
+            get => loginModel.Login!;
             set
             {
-                this.loginModel.Login = value;
+                loginModel.Login = value;
                 OnPropertyChanged(nameof(Login));
             }
         }
         public string Password
         {
-            get
-            {
-                return this.loginModel.Password;
-            }
+            get => loginModel.Password!;
             set
             {
-                this.loginModel.Password = value;
+                loginModel.Password = value;
                 OnPropertyChanged(nameof(Password));
             }
         }
         public string Info
         {
-            get
-            {
-                return this.loginModel.Info;
-            }
+            get => loginModel.Info!;
             set
             {
-                this.loginModel.Info = value;
+                loginModel.Info = value;
                 OnPropertyChanged(nameof(Info));
             }
         }

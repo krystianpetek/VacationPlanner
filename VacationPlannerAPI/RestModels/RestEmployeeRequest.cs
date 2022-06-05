@@ -2,21 +2,21 @@
 
 namespace VacationPlannerAPI.RestModels;
 
-public class RestEmployee
+public class RestEmployeeRequest
 {
     [Required(ErrorMessage = "First name is required"),
            Display(Name = "First name"),
            MinLength(4),
            MaxLength(30),
            DataType(DataType.Text)]
-    public string FirstName { get; set; }
+    public string? FirstName { get; set; }
 
     [Required(ErrorMessage = "Last name is required"),
            Display(Name = "Last name"),
            MinLength(4),
            MaxLength(50),
            DataType(DataType.Text)]
-    public string LastName { get; set; }
+    public string? LastName { get; set; }
 
     [Required(ErrorMessage = "Number of days is required"),
             Display(Name = "Number of days")]
@@ -30,11 +30,12 @@ public class RestEmployee
             Display(Name = "Username"),
             MinLength(4),
             DataType(DataType.Text)]
-    public string Username { get; set; }
+    public string? Username { get; set; }
 
     [Required(ErrorMessage = "Password is required"),
             Display(Name = "Password"),
             MinLength(8),
             DataType(DataType.Password)]
-    public string Password { get; set; }
+    public string? Password { get; set; }
+
 }

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VacationPlannerWPFApp.Views
+namespace VacationPlannerWPFApp.Views.Login
 {
     /// <summary>
     /// Interaction logic for LoginView.xaml

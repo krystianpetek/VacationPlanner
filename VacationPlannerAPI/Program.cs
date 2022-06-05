@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using VacationPlannerAPI.Database;
+using VacationPlannerAPI.Services;
 
 const string ApiKeyName = "ApiKey";
 
@@ -13,6 +14,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddDbContext<VacationPlannerDbContext>(config => config.UseSqlServer(builder.Configuration.GetConnectionString("VP_DbContext")));
 builder.Services.AddSwaggerGen(c =>
 {

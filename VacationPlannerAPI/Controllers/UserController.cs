@@ -7,6 +7,7 @@ using VacationPlannerAPI.Authentication;
 using VacationPlannerAPI.Database;
 using VacationPlannerAPI.Models;
 using VacationPlannerAPI.RestModels;
+using VacationPlannerAPI.Services;
 
 namespace VacationPlannerAPI.Controllers
 {
@@ -16,10 +17,12 @@ namespace VacationPlannerAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly VacationPlannerDbContext dbContext;
+        private readonly IUserService userService;
 
         public UserController(VacationPlannerDbContext context)
         {
             dbContext = context;
+            userService = new UserService();
         }
 
         [HttpGet]
@@ -29,83 +32,25 @@ namespace VacationPlannerAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(RestUserLogin request)
+        public async Task<ActionResult<ClaimsToWPF>> Login(RestUserLogin request)
         {
-            try
-            {
-                UserLogin? userPassword = await dbContext.UsersLogin.FirstOrDefaultAsync(q => q.Username == request.Username);
-                if (userPassword == null)
-                {
-                    return BadRequest("User not found.");
-                }
-                if (!VerifyPasswordHash(request.Password, userPassword.PasswordHash, userPassword.PasswordSalt))
-                    return BadRequest("Wrong password.");
-            }
-            catch (Exception e)
-            {
-                return $"Error + {e.Message}";
-            }
-
-            List<Claim> claims = new List<Claim>() {
-            new Claim(ClaimTypes.Name, request.Username),
-            new Claim(ClaimTypes.Role, "")
-            };
-
-            return Ok("Logged in");
-        }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RestUserLogin request)
-        {
-            if (request == null)
+            if (request is null || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
                 return BadRequest("Wrong data from request.");
 
-            if (await dbContext.UsersLogin.FirstOrDefaultAsync(q => q.Username == request.Username) != null)
-                return BadRequest("User name already exist.");
-
-            CreatePasswordHash(request.Password, out byte[] userHash, out byte[] userSalt);
-
-            Guid guid = Guid.NewGuid();
-            var userLogin = new UserLogin()
+            UserLogin? userPassword = await dbContext.UsersLogin.Include(q=>q.Role).FirstOrDefaultAsync(q => q.Username == request.Username);
+            if (userPassword == null)
             {
-                Id = guid,
-                Username = request.Username.ToLower(),
-                PasswordHash = userHash,
-                PasswordSalt = userSalt,
-                Role = 0,
-                Employee = new Employee()
-                {
-                    Id = Guid.NewGuid(),
-                    FirstName = String.Empty,
-                    LastName = String.Empty,
-                    NumberOfDays = 0,
-                    AvailableNumberOfDays = 0,
-                    UserLoginId = guid
-                }
+                return BadRequest("User not found.");
+            }
+            if (!userService.VerifyPasswordHash(request.Password, userPassword.PasswordHash, userPassword.PasswordSalt))
+                return BadRequest("Wrong password.");
+
+            List<Claim> claims = new List<Claim>() {
+            new Claim(ClaimTypes.Name, userPassword.Username),
+            new Claim(ClaimTypes.Role, userPassword.Role.Role.ToString())
             };
 
-            await dbContext.UsersLogin.AddAsync(userLogin);
-            await dbContext.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-            }
-        }
-
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
+            return Ok(new ClaimsToWPF { Message = "Logged in", Id = userPassword.Id, Role = userPassword.Role.Role.ToString(), Username = userPassword.Username});
         }
     }
 }

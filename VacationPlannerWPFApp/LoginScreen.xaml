@@ -5,9 +5,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:VacationPlannerWPFApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Vacation Planner by Krystian Petek"
+    xmlns:viewModels="clr-namespace:VacationPlannerWPFApp.ViewModels.Login"
+    xmlns:views="clr-namespace:VacationPlannerWPFApp.Views.Login"
+    Title="Vacation Planner by Krystian Petek - Login Screen"
     Width="400"
-    Height="430"
+    Height="500"
     ResizeMode="NoResize"
     mc:Ignorable="d">
     <Grid>
@@ -38,7 +40,16 @@
             </Style>
         </Grid.Resources>
 
-        <ContentControl Content="{Binding SelectedViewModel}" />
+        <ContentControl Content="{Binding SelectedViewModel}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type viewModels:RegisterViewModel}">
+                    <views:RegisterView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
+                    <views:LoginView />
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
