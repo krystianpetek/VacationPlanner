@@ -5,17 +5,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:VacationPlannerWPFApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModels="clr-namespace:VacationPlannerWPFApp.ViewModels.HomeApp"
-    xmlns:viewsApp="clr-namespace:VacationPlannerWPFApp.Views.HomeApp"
+    xmlns:viewModels="clr-namespace:VacationPlannerWPFApp.ViewModels"
+    xmlns:viewsApp="clr-namespace:VacationPlannerWPFApp.Views"
     Title="Vacation Planner by Krystian Petek - Main App"
     Width="800"
-    Height="450"
+    Height="600"
+    FontFamily="Microsoft Sans Serif"
+    FontSize="20"
+    ResizeMode="NoResize"
     mc:Ignorable="d">
     <Grid>
-        <ContentControl Content="{Binding SelectedViewModel}">
+        <ContentControl Content="{Binding CurrentViewModel}">
             <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type viewModels:HomeAppViewModel}">
-                    <viewsApp:HomeAppView />
+                <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
+                    <viewsApp:HomeView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:AccountViewModel}">
+                    <viewsApp:AccountView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:RegisterViewModel}">
+                    <viewsApp:RegisterView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
+                    <viewsApp:LoginView />
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>

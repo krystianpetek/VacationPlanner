@@ -4,7 +4,6 @@ using System.IO;
 using System.Windows;
 using VacationPlannerWPFApp.Models.Login;
 using VacationPlannerWPFApp.ViewModels;
-using VacationPlannerWPFApp.ViewModels.HomeApp;
 
 namespace VacationPlannerWPFApp
 {
@@ -16,14 +15,9 @@ namespace VacationPlannerWPFApp
         public MainScreen()
         {
             InitializeComponent();
-            DataContext = new MainScreenViewModels();
+
         }
 
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            e.Cancel = true;
-            this.Visibility = Visibility.Hidden;
-        }
 
     }
 }

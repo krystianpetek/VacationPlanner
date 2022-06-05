@@ -7,7 +7,6 @@ using System.Security.Claims;
 using System.Text;
 using System.Windows;
 using VacationPlannerWPFApp.ViewModels;
-using VacationPlannerWPFApp.ViewModels.Login;
 
 namespace VacationPlannerWPFApp
 {
@@ -19,8 +18,6 @@ namespace VacationPlannerWPFApp
         public LoginScreen()
         {
             InitializeComponent();
-
-            DataContext = new LoginScreenViewModels();
         }
     }
 }

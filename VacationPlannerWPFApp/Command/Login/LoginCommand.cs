@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 using VacationPlannerWPFApp.Models.HomeApp;
 using VacationPlannerWPFApp.Models.Login;
 using VacationPlannerWPFApp.ViewModels;
-using VacationPlannerWPFApp.ViewModels.Login;
 
 namespace VacationPlannerWPFApp.Command.Login
 {
-    public class LoginCommand : AsyncCommandBase
+    public class LoginCommand2 : AsyncCommandBase
     {
         private LoginViewModel viewModel;
         private MainScreen mainProgramWindow;
-        public LoginCommand(LoginViewModel viewModel)
+        public LoginCommand2(LoginViewModel viewModel)
         {
             mainProgramWindow = new MainScreen();
             this.viewModel = viewModel;
@@ -37,14 +36,14 @@ namespace VacationPlannerWPFApp.Command.Login
 
                    var data = new StringContent(JsonConvert.SerializeObject(new
                    {
-                       username = $"{viewModel.Login}",
+                       username = $"{viewModel.Username}",
                        password = $"{viewModel.Password}"
                    }));
 
                    data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                    var response = client.PostAsync("https://localhost:7020/api/user/login", data).Result;
                    var claimsResponse = await response.Content.ReadAsStringAsync();
-                   var json = JsonConvert.DeserializeObject<ClaimsToWPF>(claimsResponse);
+                   var json = JsonConvert.DeserializeObject<AccountModel>(claimsResponse);
                    File.WriteAllText("save.txt", claimsResponse);
                    if(json.Message == "Logged in")
                    {
