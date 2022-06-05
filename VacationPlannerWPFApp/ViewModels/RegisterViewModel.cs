@@ -1,19 +1,24 @@
 ﻿using System.Windows.Input;
+using VacationPlannerWPFApp.Command;
 using VacationPlannerWPFApp.Command.Login;
 using VacationPlannerWPFApp.Models.Login;
+using VacationPlannerWPFApp.Services;
 
 namespace VacationPlannerWPFApp.ViewModels
 {
     public class RegisterViewModel : ViewModelBase
     {
-        private RegisterModel registerModel;
+        private RegisterModel registerModel = new RegisterModel();
+        public ICommand NavigateCommand { get; set; }
+        public ICommand RegisterCommand { get; set; }
 
-        public RegisterViewModel()
+        public RegisterViewModel(NavigationService<HomeViewModel> homeNavigationService)
         {
             RegisterCommand = new RegisterCommand(this);
-            registerModel = new RegisterModel();
-        }
 
+            NavigateCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
+        }
+        
         public string CompanyName
         {
             get => registerModel.CompanyName!;
@@ -52,6 +57,5 @@ namespace VacationPlannerWPFApp.ViewModels
                 OnPropertyChanged(nameof(Info));
             }
         }
-        public ICommand RegisterCommand { get; set; }
     }
 }

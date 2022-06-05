@@ -49,13 +49,20 @@ namespace VacationPlannerWPFApp
             return new NavigationService<HomeViewModel>(
                 _navigationStore,
                 () => new HomeViewModel(_navigationBarViewModel, CreateLoginNavigationService()));
+        } 
+        
+        private NavigationService<RegisterViewModel> CreateRegisterNavigationService()
+        {
+            return new NavigationService<RegisterViewModel>(
+                _navigationStore,
+                () => new RegisterViewModel(CreateHomeNavigationService()));
         }
 
         private NavigationService<LoginViewModel> CreateLoginNavigationService()
         {
             return new NavigationService<LoginViewModel>(
                 _navigationStore,
-                () => new LoginViewModel(_accountStore, CreateAccountNavigationService()));
+                () => new LoginViewModel(CreateRegisterNavigationService(),CreateHomeNavigationService(),_accountStore, CreateAccountNavigationService()));
         }
 
         private NavigationService<AccountViewModel> CreateAccountNavigationService()

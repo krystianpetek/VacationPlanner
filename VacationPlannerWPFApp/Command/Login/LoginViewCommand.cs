@@ -2,14 +2,13 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VacationPlannerWPFApp.ViewModels;
-using VacationPlannerWPFApp.ViewModels.Login;
 
 namespace VacationPlannerWPFApp.Command.Login
 {
     public class LoginViewCommand : ICommand
     {
         private LoginViewModel _loginViewModel;
-        private LoginScreenViewModels viewModel;
+        //private LoginScreenViewModels viewModel;
         //public LoginViewCommand(LoginScreenViewModels viewModel)
         //{
         //    _loginViewModel = new LoginViewModel();

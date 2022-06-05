@@ -7,7 +7,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using VacationPlannerWPFApp.ViewModels;
-using VacationPlannerWPFApp.ViewModels.Login;
 
 namespace VacationPlannerWPFApp.Command.Login
 {

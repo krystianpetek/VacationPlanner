@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using VacationPlannerWPFApp.Models.HomeApp;
 using VacationPlannerWPFApp.Models.Login;
 using VacationPlannerWPFApp.ViewModels;
-using VacationPlannerWPFApp.ViewModels.Login;
 
 namespace VacationPlannerWPFApp.Command.Login
 {

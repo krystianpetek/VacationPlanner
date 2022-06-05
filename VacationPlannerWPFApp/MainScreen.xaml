@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:VacationPlannerWPFApp.ViewModels"
     xmlns:viewsApp="clr-namespace:VacationPlannerWPFApp.Views"
-    xmlns:viewsLogin="clr-namespace:VacationPlannerWPFApp.Views.Login"
     Title="Vacation Planner by Krystian Petek - Main App"
     Width="1024"
     Height="768"
@@ -23,10 +22,10 @@
                     <viewsApp:AccountView />
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type viewModels:RegisterViewModel}">
-                    <viewsLogin:RegisterView />
+                    <viewsApp:RegisterView />
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
-                    <viewsLogin:LoginView />
+                    <viewsApp:LoginView />
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>

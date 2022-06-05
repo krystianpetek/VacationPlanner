@@ -13,16 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VacationPlannerWPFApp.Views.Login
+namespace VacationPlannerWPFApp.Views
 {
     /// <summary>
-    /// Interaction logic for HomeView.xaml
+    /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class RegisterView : UserControl
+    public partial class LoginView : UserControl
     {
-        public RegisterView()
+        public LoginView()
         {
             InitializeComponent();
         }
+
     }
 }

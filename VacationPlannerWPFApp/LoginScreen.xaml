@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:VacationPlannerWPFApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:VacationPlannerWPFApp.ViewModels"
-    xmlns:views="clr-namespace:VacationPlannerWPFApp.Views.Login"
+    xmlns:views="clr-namespace:VacationPlannerWPFApp.Views"
     Title="Vacation Planner by Krystian Petek - Login Screen"
     Width="400"
     Height="500"

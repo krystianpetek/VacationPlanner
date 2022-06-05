@@ -1,16 +1,12 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Windows;
 using VacationPlannerWPFApp.Models.HomeApp;
-using VacationPlannerWPFApp.Models.Login;
 using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
 using VacationPlannerWPFApp.ViewModels;
-using VacationPlannerWPFApp.ViewModels.Login;
 
 namespace VacationPlannerWPFApp.Command.Login
 {
