@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using VacationPlannerWPFApp.ViewModels;
 
 namespace VacationPlannerWPFApp.Command.Login
 {
-    public class LoginCommand : CommandBase
+    public class LoginCommand : AsyncCommandBase
     {
         private readonly LoginViewModel _viewModel;
         private readonly AccountStore _accountStore;
@@ -23,34 +24,52 @@ namespace VacationPlannerWPFApp.Command.Login
             _navigationService = navigationService;
         }
 
-        public override void Execute(object? parameter)
+        protected override async Task ExecuteAsync(object? parameter)
         {
-            MessageBox.Show($"Logging in {_viewModel.Username}");
-            var account = Login().Result;
-            _accountStore.CurrentAccount = account;
+            AccountModel account = null;
+            try
+            {
+                account = await Login();
+                if (account.Role is null)
+                {
+                    _viewModel.Info = account.Message;
+                    return;
+                }
+            }
+            catch (Exception ex) {
+            }
+
+                _accountStore.CurrentAccount = account;
             _navigationService.Navigate();
         }
 
-        private async Task<AccountModel> Login ()
+        private async Task<AccountModel> Login()
         {
-               AccountModel json;
-               using (HttpClient client = new HttpClient())
-               {
-                   client.DefaultRequestHeaders.Add("ApiKey", App.key);
+            AccountModel json = new AccountModel();
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("ApiKey", App.key);
 
-                   var data = new StringContent(JsonConvert.SerializeObject(new
-                   {
-                       username = $"{_viewModel.Username}",
-                       password = $"{_viewModel.Password}"
-                   }));
+                var data = new StringContent(JsonConvert.SerializeObject(new
+                {
+                    username = $"{_viewModel.Username}",
+                    password = $"{_viewModel.Password}"
+                }));
 
-                   data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                   var response = client.PostAsync("https://localhost:7020/api/user/login", data).Result;
-                   var claimsResponse = await response.Content.ReadAsStringAsync();
-                   json = JsonConvert.DeserializeObject<AccountModel>(claimsResponse);
-               }
-               return json;
-           
+                data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = client.PostAsync("https://localhost:7020/api/user/login", data).Result;
+                var claimsResponse = await response.Content.ReadAsStringAsync();
+                try
+                {
+                    json = JsonConvert.DeserializeObject<AccountModel>(claimsResponse);
+                }
+                catch (Exception ex)
+                {
+                    json.Message = claimsResponse;
+                }
+            }
+            return json;
+
         }
     }
 }

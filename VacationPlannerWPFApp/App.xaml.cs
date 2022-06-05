@@ -17,17 +17,28 @@ namespace VacationPlannerWPFApp
         
         private readonly AccountStore _accountStore;
         private readonly NavigationStore _navigationStore;
-        private readonly NavigationBarViewModel _navigationBarViewModel;
+        private readonly HomeNavigationBarViewModel _navigationBarViewModel;
+        private readonly LoginNavigationBarViewModel _loginNavigationBarViewModel;
+        private readonly RegisterNavigationBarViewModel _registerNavigationBarViewModel;
 
         public App()
         {
             _accountStore = new AccountStore();
             _navigationStore = new NavigationStore();
-            _navigationBarViewModel = new NavigationBarViewModel(
+
+            _navigationBarViewModel = new HomeNavigationBarViewModel(
                 CreateHomeNavigationService(),
                 CreateAccountNavigationService(),
                 CreateLoginNavigationService()
                 );
+
+            _loginNavigationBarViewModel = new LoginNavigationBarViewModel(
+                CreateHomeNavigationService(),
+                CreateRegisterNavigationService());
+
+            _registerNavigationBarViewModel = new RegisterNavigationBarViewModel(
+                CreateHomeNavigationService(),
+                CreateLoginNavigationService());
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -55,14 +66,14 @@ namespace VacationPlannerWPFApp
         {
             return new NavigationService<RegisterViewModel>(
                 _navigationStore,
-                () => new RegisterViewModel(CreateHomeNavigationService()));
+                () => new RegisterViewModel(_registerNavigationBarViewModel, CreateHomeNavigationService()));
         }
 
         private NavigationService<LoginViewModel> CreateLoginNavigationService()
         {
             return new NavigationService<LoginViewModel>(
                 _navigationStore,
-                () => new LoginViewModel(CreateRegisterNavigationService(),CreateHomeNavigationService(),_accountStore, CreateAccountNavigationService()));
+                () => new LoginViewModel(_loginNavigationBarViewModel, _accountStore, CreateAccountNavigationService())); ;
         }
 
         private NavigationService<AccountViewModel> CreateAccountNavigationService()

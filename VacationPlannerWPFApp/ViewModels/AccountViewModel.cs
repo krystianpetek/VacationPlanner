@@ -19,9 +19,9 @@ namespace VacationPlannerWPFApp.ViewModels
         public Guid Id => _accountStore.CurrentAccount.Id = default;
         public string Username => _accountStore.CurrentAccount?.Username;
         public string Role => _accountStore.CurrentAccount?.Role;
-        public NavigationBarViewModel NavigationBarViewModel { get; }
+        public HomeNavigationBarViewModel NavigationBarViewModel { get; }
 
-        public AccountViewModel(NavigationBarViewModel navigationBarViewModel, AccountStore accountStore, NavigationService<HomeViewModel> homeNavigationService)
+        public AccountViewModel(HomeNavigationBarViewModel navigationBarViewModel, AccountStore accountStore, NavigationService<HomeViewModel> homeNavigationService)
         {
             _accountStore = accountStore;
             NavigationBarViewModel = navigationBarViewModel;

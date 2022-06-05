@@ -9,9 +9,9 @@ namespace VacationPlannerWPFApp.ViewModels
     {
         public ICommand NavigateCommand { get; }
 
-        public NavigationBarViewModel NavigationBarViewModel { get; }
+        public HomeNavigationBarViewModel NavigationBarViewModel { get; }
 
-        public HomeViewModel(NavigationBarViewModel navigationBarViewModel, NavigationService<LoginViewModel> loginNavigationService)
+        public HomeViewModel(HomeNavigationBarViewModel navigationBarViewModel, NavigationService<LoginViewModel> loginNavigationService)
         {
             NavigationBarViewModel = navigationBarViewModel;
 

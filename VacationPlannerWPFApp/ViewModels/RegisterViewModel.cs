@@ -9,11 +9,14 @@ namespace VacationPlannerWPFApp.ViewModels
     public class RegisterViewModel : ViewModelBase
     {
         private RegisterModel registerModel = new RegisterModel();
+        public RegisterNavigationBarViewModel RegisterNavigationBarViewModel { get; }
         public ICommand NavigateCommand { get; set; }
         public ICommand RegisterCommand { get; set; }
 
-        public RegisterViewModel(NavigationService<HomeViewModel> homeNavigationService)
+        public RegisterViewModel(RegisterNavigationBarViewModel _registerNavigationBarViewModel, NavigationService<HomeViewModel> homeNavigationService)
         {
+            RegisterNavigationBarViewModel = _registerNavigationBarViewModel;
+
             RegisterCommand = new RegisterCommand(this);
 
             NavigateCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);

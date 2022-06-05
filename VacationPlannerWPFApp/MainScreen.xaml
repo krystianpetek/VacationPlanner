@@ -8,8 +8,10 @@
     xmlns:viewModels="clr-namespace:VacationPlannerWPFApp.ViewModels"
     xmlns:viewsApp="clr-namespace:VacationPlannerWPFApp.Views"
     Title="Vacation Planner by Krystian Petek - Main App"
-    Width="1024"
-    Height="768"
+    Width="800"
+    Height="600"
+    FontFamily="Microsoft Sans Serif"
+    FontSize="20"
     ResizeMode="NoResize"
     mc:Ignorable="d">
     <Grid>
