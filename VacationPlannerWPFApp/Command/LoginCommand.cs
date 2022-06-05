@@ -4,27 +4,31 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Windows;
 using VacationPlannerWPFApp.Models.HomeApp;
 using VacationPlannerWPFApp.Models.Login;
+using VacationPlannerWPFApp.Services;
+using VacationPlannerWPFApp.Stores;
 using VacationPlannerWPFApp.ViewModels;
 using VacationPlannerWPFApp.ViewModels.Login;
 
 namespace VacationPlannerWPFApp.Command.Login
 {
-    public class LoginCommand2 : AsyncCommandBase
+    public class LoginCommand : CommandBase
     {
-        private LoginViewModel viewModel;
-        private MainScreen mainProgramWindow;
-        public LoginCommand2(LoginViewModel viewModel)
+        private readonly LoginViewModel _viewModel;
+        private readonly NavigationService<AccountViewModel> _navigationService;
+
+        public LoginCommand(LoginViewModel viewModel, NavigationService<AccountViewModel> navigationService)
         {
-            mainProgramWindow = new MainScreen();
-            this.viewModel = viewModel;
+            _viewModel = viewModel;
+            _navigationService = navigationService;
         }
 
-        protected override async Task ExecuteAsync(object? parameter)
+        public override void Execute(object? parameter)
         {
-            await Login();
-            
+            MessageBox.Show($"Logging in {_viewModel.Username}");
+            _navigationService.Navigate();
         }
 
         private async Task Login ()
@@ -37,8 +41,8 @@ namespace VacationPlannerWPFApp.Command.Login
 
                    var data = new StringContent(JsonConvert.SerializeObject(new
                    {
-                       username = $"{viewModel.Username}",
-                       password = $"{viewModel.Password}"
+                       username = $"{_viewModel.Username}",
+                       password = $"{_viewModel.Password}"
                    }));
 
                    data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -46,10 +50,6 @@ namespace VacationPlannerWPFApp.Command.Login
                    var claimsResponse = await response.Content.ReadAsStringAsync();
                    var json = JsonConvert.DeserializeObject<ClaimsToWPF>(claimsResponse);
                    File.WriteAllText("save.txt", claimsResponse);
-                   if(json.Message == "Logged in")
-                   {
-                       mainProgramWindow.Dispatcher.Invoke(() => mainProgramWindow.ShowDialog());
-                   }
                }
            });
         }

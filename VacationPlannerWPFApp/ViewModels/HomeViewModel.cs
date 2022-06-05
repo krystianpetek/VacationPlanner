@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using VacationPlannerWPFApp.Command;
+using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
 
 namespace VacationPlannerWPFApp.ViewModels
@@ -10,7 +11,9 @@ namespace VacationPlannerWPFApp.ViewModels
 
         public HomeViewModel(NavigationStore navigationStore)
         {
-            NavigateCommand = new NavigateCommand<AccountViewModel>(navigationStore, () => new AccountViewModel(navigationStore));
+            NavigateCommand = new NavigateCommand<LoginViewModel>(
+                new NavigationService<LoginViewModel>(navigationStore, 
+                () => new LoginViewModel(navigationStore)));
         }
     }
 }
