@@ -3,10 +3,10 @@ using VacationPlannerWPFApp.Command.Login;
 
 namespace VacationPlannerWPFApp.ViewModels.Login
 {
-    public class LoginScreenViewModels : BaseViewModels
+    public class LoginScreenViewModels : ViewModelBase
     {
-        private BaseViewModels _selectedViewModel = new LoginViewModel();
-        public BaseViewModels SelectedViewModel
+        private ViewModelBase _selectedViewModel = new LoginViewModel();
+        public ViewModelBase SelectedViewModel
         {
             get
             {

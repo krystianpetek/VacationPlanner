@@ -2,6 +2,8 @@
 using System;
 using System.Windows;
 using VacationPlannerWPFApp.Models.HomeApp;
+using VacationPlannerWPFApp.Stores;
+using VacationPlannerWPFApp.ViewModels;
 
 namespace VacationPlannerWPFApp
 {
@@ -11,18 +13,17 @@ namespace VacationPlannerWPFApp
     public partial class App : Application
     {
         public const string key = "mojSekretnyKluczAPI";
-        //private ServiceProvider _serviceProvider;
-        //public App()
-        //{
-        //    ServiceCollection services = new ServiceCollection();
-        //    ConfigureServices(services);
-        //    _serviceProvider = services.BuildServiceProvider();
-        //}
-
-        //private void ConfigureServices(ServiceCollection services)
-        //{
-        //    services.AddSingleton<ClaimsToWPF>();
-        //}
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            NavigationStore navigationStore = new NavigationStore();
+            navigationStore.CurrentViewModel = new HomeViewModel(navigationStore);
+            MainWindow = new MainScreen()
+            {
+                DataContext = new MainViewModel(navigationStore)
+            };
+            MainWindow.Show();
+            
+        }
     }
 
 }

@@ -9,10 +9,13 @@ using VacationPlannerWPFApp.Models.Login;
 
 namespace VacationPlannerWPFApp.ViewModels
 {
-    public class BaseViewModels : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
         public ClaimsToWPF claims = new ClaimsToWPF() { Id = Guid.NewGuid(),Message = "Not logged", Role = null, Username = null};
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public virtual void Dispose() { }
+
         protected void OnPropertyChanged(string propertyName)
         {
              PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(propertyName));

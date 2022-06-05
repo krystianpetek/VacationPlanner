@@ -2,9 +2,9 @@
 using VacationPlannerWPFApp.Command.Login;
 using VacationPlannerWPFApp.Models.Login;
 
-namespace VacationPlannerWPFApp.ViewModels.Login
+namespace VacationPlannerWPFApp.ViewModels
 {
-    public class RegisterViewModel : BaseViewModels
+    public class RegisterViewModel : ViewModelBase
     {
         private RegisterModel registerModel;
 

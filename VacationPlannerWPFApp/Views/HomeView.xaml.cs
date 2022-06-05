@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VacationPlannerWPFApp.Views.HomeApp
+namespace VacationPlannerWPFApp.Views
 {
     /// <summary>
     /// Interaction logic for EmployeeAppView.xaml
     /// </summary>
-    public partial class HomeAppView : UserControl
+    public partial class HomeView : UserControl
     {
-        public HomeAppView()
+        public HomeView()
         {
             InitializeComponent();
         }
