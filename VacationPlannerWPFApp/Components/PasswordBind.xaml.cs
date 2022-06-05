@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VacationPlannerWPFApp.Component
+namespace VacationPlannerWPFApp.Components
 {
     /// <summary>
     /// Interaction logic for PasswordBind.xaml

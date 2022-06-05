@@ -16,17 +16,17 @@ namespace VacationPlannerWPFApp.ViewModels
         private readonly AccountStore _accountStore;
         public ICommand NavigateCommand { get; }
 
-        public Guid Id => _accountStore.CurrentAccount.Id;
+        public Guid Id => _accountStore.CurrentAccount.Id = default;
         public string Username => _accountStore.CurrentAccount?.Username;
         public string Role => _accountStore.CurrentAccount?.Role;
+        public NavigationBarViewModel NavigationBarViewModel { get; }
 
-        public AccountViewModel(AccountStore accountStore, NavigationStore navigationStore)
+        public AccountViewModel(NavigationBarViewModel navigationBarViewModel, AccountStore accountStore, NavigationService<HomeViewModel> homeNavigationService)
         {
             _accountStore = accountStore;
+            NavigationBarViewModel = navigationBarViewModel;
 
-            NavigateCommand = new NavigateCommand<HomeViewModel>(
-                new NavigationService<HomeViewModel>(navigationStore,
-                () => new HomeViewModel(accountStore, navigationStore)));
+            NavigateCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
         }
     }
 }
