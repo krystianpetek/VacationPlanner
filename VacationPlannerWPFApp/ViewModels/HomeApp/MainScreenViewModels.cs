@@ -1,11 +1,15 @@
-﻿using System.Windows.Input;
+﻿using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Windows.Input;
 using VacationPlannerWPFApp.Command.HomeApp;
+using VacationPlannerWPFApp.Models.HomeApp;
 
 namespace VacationPlannerWPFApp.ViewModels.HomeApp
 {
     public class MainScreenViewModels : BaseViewModels
     {
-        private BaseViewModels _selectedViewModel = new HomeAppViewModel();
+        private BaseViewModels _selectedViewModel;
         public BaseViewModels SelectedViewModel
         {
             get
@@ -14,7 +18,18 @@ namespace VacationPlannerWPFApp.ViewModels.HomeApp
             }
             set
             {
-                _selectedViewModel = value;
+                try
+                {
+                    var file = File.ReadAllText("save.txt");
+                    claims = JsonConvert.DeserializeObject<ClaimsToWPF>(file);
+                    if (claims.Role.ToString() == "Administrator")
+                        _selectedViewModel = new AdministratorViewModel();
+                    else
+                        _selectedViewModel = new HomeAppViewModel();
+
+                }
+                catch (Exception ex)
+                { }
                 OnPropertyChanged(nameof(SelectedViewModel));
             }
         }
@@ -23,6 +38,7 @@ namespace VacationPlannerWPFApp.ViewModels.HomeApp
         public MainScreenViewModels()
         {
             UpdateViewCommand = new HomeAppViewCommand(this);
+            
         }
     }
 }

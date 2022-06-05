@@ -1,30 +1,22 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using VacationPlannerWPFApp.Command.HomeApp;
 using VacationPlannerWPFApp.Models.HomeApp;
 
 namespace VacationPlannerWPFApp.ViewModels.HomeApp
 {
-    public class HomeAppViewModel :  BaseViewModels
+    internal class HomeAppViewModel : BaseViewModels
     {
-        private HomeModel homeModel;
-
         public HomeAppViewModel()
         {
-            homeModel = new HomeModel();
         }
-
-        public string Role
-        {
-            get => homeModel.Role;
-            set
-            {
-                homeModel.Role = value;
-                OnPropertyChanged(nameof(Role));
-
-            }
-        }
+        public string Emp { get; set; }
+        
     }
 }

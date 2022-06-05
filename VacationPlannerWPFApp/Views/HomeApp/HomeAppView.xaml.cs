@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace VacationPlannerWPFApp.Views.HomeApp
 {
     /// <summary>
-    /// Interaction logic for HomeAppView.xaml
+    /// Interaction logic for EmployeeAppView.xaml
     /// </summary>
     public partial class HomeAppView : UserControl
     {

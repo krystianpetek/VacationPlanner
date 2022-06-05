@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using VacationPlannerWPFApp.Models.HomeApp;
 using VacationPlannerWPFApp.Models.Login;
+using VacationPlannerWPFApp.ViewModels;
 using VacationPlannerWPFApp.ViewModels.Login;
 
 namespace VacationPlannerWPFApp.Command.Login
@@ -12,16 +15,16 @@ namespace VacationPlannerWPFApp.Command.Login
     {
         private LoginViewModel viewModel;
         private MainScreen mainProgramWindow;
-
         public LoginCommand(LoginViewModel viewModel)
         {
-            this.viewModel = viewModel;
             mainProgramWindow = new MainScreen();
+            this.viewModel = viewModel;
         }
 
         protected override async Task ExecuteAsync(object? parameter)
         {
             await Login();
+            
         }
 
         private async Task Login ()
@@ -42,13 +45,11 @@ namespace VacationPlannerWPFApp.Command.Login
                    var response = client.PostAsync("https://localhost:7020/api/user/login", data).Result;
                    var claimsResponse = await response.Content.ReadAsStringAsync();
                    var json = JsonConvert.DeserializeObject<ClaimsToWPF>(claimsResponse);
-
+                   File.WriteAllText("save.txt", claimsResponse);
                    if(json.Message == "Logged in")
                    {
                        mainProgramWindow.Dispatcher.Invoke(() => mainProgramWindow.ShowDialog());
-                       mainProgramWindow.claims = json;
                    }
-                   
                }
            });
         }

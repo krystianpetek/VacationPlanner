@@ -35,7 +35,7 @@ namespace VacationPlannerAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register(RestEmployeeRequest request)
+        public async Task<ActionResult> Register(Guid companyId, [FromBody] RestEmployeeRequest request)
         {
             if (request is null || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
                 return BadRequest("Wrong data from request.");
@@ -44,6 +44,7 @@ namespace VacationPlannerAPI.Controllers
                 return BadRequest("User name already exist.");
 
             var newEmployee = RestEmployeeRegister(request);
+            newEmployee.CompanyId = companyId;
 
             context.Employees.Add(newEmployee);
             await context.SaveChangesAsync();
@@ -52,7 +53,7 @@ namespace VacationPlannerAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> ChangePassword(Guid id, [FromBody] RestPasswordChange request)
+        public async Task<ActionResult> ChangePassword([FromRoute] Guid id, [FromBody] RestPasswordChange request)
         {
             if (request == null)
                 return BadRequest();

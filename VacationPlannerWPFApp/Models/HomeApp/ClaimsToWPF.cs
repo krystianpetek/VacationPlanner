@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VacationPlannerWPFApp.Models.Login
+namespace VacationPlannerWPFApp.Models.HomeApp
 {
     public class ClaimsToWPF
     {

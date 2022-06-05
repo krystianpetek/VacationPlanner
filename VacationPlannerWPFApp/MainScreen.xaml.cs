@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using VacationPlannerWPFApp.Models.Login;
+using VacationPlannerWPFApp.ViewModels;
 using VacationPlannerWPFApp.ViewModels.HomeApp;
 
 namespace VacationPlannerWPFApp
@@ -11,7 +13,6 @@ namespace VacationPlannerWPFApp
     /// </summary>
     public partial class MainScreen : Window
     {
-        public ClaimsToWPF claims = new ClaimsToWPF() { Id = Guid.NewGuid(), Message = "Not logged", Role = null, Username = null };
         public MainScreen()
         {
             InitializeComponent();
