@@ -18,7 +18,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <components:LoginNavigationBar Grid.Row="0" DataContext="{Binding LoginNavigationBarViewModel}" />
+        <components:LoginNavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}" />
         <Grid
             Grid.Row="1"
             MaxWidth="1000"
@@ -94,8 +94,9 @@
                 <Button
                     HorizontalAlignment="Center"
                     Command="{Binding LoginCommand}"
-                    Content="LOGIN" Style="{StaticResource LogReg}"
-                    Foreground="White" />
+                    Content="LOGIN"
+                    Foreground="White"
+                    Style="{StaticResource LogReg}" />
 
                 <Label
                     Margin="0,5,0,0"

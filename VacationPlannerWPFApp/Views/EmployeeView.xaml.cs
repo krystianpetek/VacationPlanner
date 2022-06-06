@@ -3,11 +3,11 @@
 namespace VacationPlannerWPFApp.Views
 {
     /// <summary>
-    /// Interaction logic for AccountView.xaml
+    /// Interaction logic for EmployeeAppView.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class EmployeeView : UserControl
     {
-        public HomeView()
+        public EmployeeView()
         {
             InitializeComponent();
         }

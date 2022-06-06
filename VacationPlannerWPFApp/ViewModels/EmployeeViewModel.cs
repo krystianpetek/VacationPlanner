@@ -5,13 +5,13 @@ using VacationPlannerWPFApp.ViewModels.NavigationBars;
 
 namespace VacationPlannerWPFApp.ViewModels
 {
-    public class HomeViewModel : ViewModelBase
+    public class EmployeeViewModel : ViewModelBase
     {
         public ICommand NavigateCommand { get; }
 
-        public HomeNavigationBarViewModel NavigationBarViewModel { get; }
+        public EmployeeNavigationBarViewModel NavigationBarViewModel { get; }
 
-        public HomeViewModel(HomeNavigationBarViewModel navigationBarViewModel, NavigationService<LoginViewModel> loginNavigationService)
+        public EmployeeViewModel(EmployeeNavigationBarViewModel navigationBarViewModel, NavigationService<LoginViewModel> loginNavigationService)
         {
             NavigationBarViewModel = navigationBarViewModel;
 

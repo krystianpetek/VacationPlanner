@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using VacationPlannerWPFApp.Command;
-using VacationPlannerWPFApp.Models.HomeApp;
 using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
+using VacationPlannerWPFApp.ViewModels.NavigationBars;
 
 namespace VacationPlannerWPFApp.ViewModels
 {
@@ -19,14 +15,17 @@ namespace VacationPlannerWPFApp.ViewModels
         public Guid Id => _accountStore.CurrentAccount.Id = default;
         public string Username => _accountStore.CurrentAccount?.Username;
         public string Role => _accountStore.CurrentAccount?.Role;
-        public HomeNavigationBarViewModel NavigationBarViewModel { get; }
+        public INavigationBar NavigationBarViewModel { get; }
 
-        public AccountViewModel(HomeNavigationBarViewModel navigationBarViewModel, AccountStore accountStore, NavigationService<HomeViewModel> homeNavigationService)
+        public AccountViewModel(AdminNavigationBarViewModel aNavigationBarViewModel, EmployeeNavigationBarViewModel eNavigationBarViewModel, AccountStore accountStore, NavigationService<EmployeeViewModel> homeNavigationService)
         {
             _accountStore = accountStore;
-            NavigationBarViewModel = navigationBarViewModel;
+            if(_accountStore.CurrentAccount.Role == "Administrator")
+                NavigationBarViewModel = aNavigationBarViewModel;
+            else
+                NavigationBarViewModel = eNavigationBarViewModel;
 
-            NavigateCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
+            NavigateCommand = new NavigateCommand<EmployeeViewModel>(homeNavigationService);
         }
     }
 }

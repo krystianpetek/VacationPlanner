@@ -3,7 +3,7 @@ using System.Windows.Input;
 using VacationPlannerWPFApp.Command;
 using VacationPlannerWPFApp.Services;
 
-namespace VacationPlannerWPFApp.ViewModels
+namespace VacationPlannerWPFApp.ViewModels.NavigationBars
 {
     public class RegisterNavigationBarViewModel : ViewModelBase
     {

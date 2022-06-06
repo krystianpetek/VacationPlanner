@@ -1,9 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO;
-using System.Windows;
-using VacationPlannerWPFApp.Models.Login;
-using VacationPlannerWPFApp.ViewModels;
+﻿using System.Windows;
 
 namespace VacationPlannerWPFApp
 {

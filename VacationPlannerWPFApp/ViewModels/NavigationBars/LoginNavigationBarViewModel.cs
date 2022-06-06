@@ -3,13 +3,13 @@ using System.Windows.Input;
 using VacationPlannerWPFApp.Command;
 using VacationPlannerWPFApp.Services;
 
-namespace VacationPlannerWPFApp.ViewModels
+namespace VacationPlannerWPFApp.ViewModels.NavigationBars
 {
     public class LoginNavigationBarViewModel : ViewModelBase
     {
         public ICommand NavigateHomeCommand { get; }
         public ICommand NavigateRegisterCommand { get; }
-    
+
         public LoginNavigationBarViewModel(
             NavigationService<HomeViewModel> homeNavigationService,
             NavigationService<RegisterViewModel> registerNavigationService

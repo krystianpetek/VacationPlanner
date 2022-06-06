@@ -3,8 +3,7 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Windows;
-using VacationPlannerWPFApp.Models.HomeApp;
+using VacationPlannerWPFApp.Models;
 using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
 using VacationPlannerWPFApp.ViewModels;
@@ -15,13 +14,15 @@ namespace VacationPlannerWPFApp.Command.Login
     {
         private readonly LoginViewModel _viewModel;
         private readonly AccountStore _accountStore;
-        private readonly NavigationService<AccountViewModel> _navigationService;
+        private readonly NavigationService<EmployeeViewModel> _navigationService;
+        private readonly NavigationService<AdminViewModel> _adminNavigationService;
 
-        public LoginCommand(LoginViewModel viewModel, AccountStore accountStore, NavigationService<AccountViewModel> navigationService)
+        public LoginCommand(LoginViewModel viewModel, AccountStore accountStore, NavigationService<EmployeeViewModel> navigationService, NavigationService<AdminViewModel> adminNavigationService)
         {
             _viewModel = viewModel;
             _accountStore = accountStore;
             _navigationService = navigationService;
+            _adminNavigationService = adminNavigationService;
         }
 
         protected override async Task ExecuteAsync(object? parameter)
@@ -36,11 +37,15 @@ namespace VacationPlannerWPFApp.Command.Login
                     return;
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
             }
 
-                _accountStore.CurrentAccount = account;
-            _navigationService.Navigate();
+            _accountStore.CurrentAccount = account;
+            if (_accountStore.CurrentAccount.Role == "Administrator")
+                _adminNavigationService.Navigate();
+            else
+                _navigationService.Navigate();
         }
 
         private async Task<AccountModel> Login()

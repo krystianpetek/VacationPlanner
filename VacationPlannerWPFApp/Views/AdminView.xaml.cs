@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VacationPlannerWPFApp.Components
+namespace VacationPlannerWPFApp.Views
 {
     /// <summary>
-    /// Interaction logic for NavigationBar.xaml
+    /// Interaction logic for AdminHomeView.xaml
     /// </summary>
-    public partial class NavigationBar : UserControl
+    public partial class AdminView : UserControl
     {
-        public NavigationBar()
+        public AdminView()
         {
             InitializeComponent();
         }

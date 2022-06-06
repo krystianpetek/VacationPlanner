@@ -1,14 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VacationPlannerWPFApp.Models.HomeApp;
+﻿using VacationPlannerWPFApp.Models;
 
 namespace VacationPlannerWPFApp.Stores
 {
     public class AccountStore
     {
-        public AccountModel CurrentAccount { get; set; }
+        private AccountModel _currentAccount;
+
+        public AccountModel CurrentAccount
+        {
+            get => _currentAccount;
+            set
+            {
+                _currentAccount = value;
+            }
+        }
+
+        public bool IsLoggedIn => CurrentAccount != null;
+        public bool IsLoggedOut => CurrentAccount == null;
+
+        public void Logout()
+        {
+            CurrentAccount = null;
+        }
+
     }
 }
