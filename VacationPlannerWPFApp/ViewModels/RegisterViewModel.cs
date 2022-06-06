@@ -1,8 +1,9 @@
 ﻿using System.Windows.Input;
 using VacationPlannerWPFApp.Command;
 using VacationPlannerWPFApp.Command.Login;
-using VacationPlannerWPFApp.Models.Login;
+using VacationPlannerWPFApp.Models;
 using VacationPlannerWPFApp.Services;
+using VacationPlannerWPFApp.ViewModels.NavigationBars;
 
 namespace VacationPlannerWPFApp.ViewModels
 {
@@ -13,15 +14,15 @@ namespace VacationPlannerWPFApp.ViewModels
         public ICommand NavigateCommand { get; set; }
         public ICommand RegisterCommand { get; set; }
 
-        public RegisterViewModel(RegisterNavigationBarViewModel _registerNavigationBarViewModel, NavigationService<HomeViewModel> homeNavigationService)
+        public RegisterViewModel(RegisterNavigationBarViewModel _registerNavigationBarViewModel, NavigationService<EmployeeViewModel> homeNavigationService)
         {
             RegisterNavigationBarViewModel = _registerNavigationBarViewModel;
 
             RegisterCommand = new RegisterCommand(this);
 
-            NavigateCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
+            NavigateCommand = new NavigateCommand<EmployeeViewModel>(homeNavigationService);
         }
-        
+
         public string CompanyName
         {
             get => registerModel.CompanyName!;
@@ -31,7 +32,7 @@ namespace VacationPlannerWPFApp.ViewModels
                 OnPropertyChanged(nameof(CompanyName));
             }
         }
-        
+
         public string Username
         {
             get => registerModel.Username!;
@@ -41,7 +42,7 @@ namespace VacationPlannerWPFApp.ViewModels
                 OnPropertyChanged(nameof(Username));
             }
         }
-        
+
         public string Password
         {
             get => registerModel.Password!;

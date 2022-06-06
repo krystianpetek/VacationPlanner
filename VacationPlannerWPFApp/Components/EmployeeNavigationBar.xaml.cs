@@ -5,9 +5,9 @@ namespace VacationPlannerWPFApp.Components
     /// <summary>
     /// Interaction logic for NavigationBar.xaml
     /// </summary>
-    public partial class LoginNavigationBar : UserControl
+    public partial class EmployeeNavigationBar : UserControl
     {
-        public LoginNavigationBar()
+        public EmployeeNavigationBar()
         {
             InitializeComponent();
         }

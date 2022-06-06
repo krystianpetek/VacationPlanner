@@ -1,17 +1,23 @@
 ﻿<UserControl
-    x:Class="VacationPlannerWPFApp.Components.NavigationBar"
+    x:Class="VacationPlannerWPFApp.Components.EmployeeNavigationBar"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:VacationPlannerWPFApp.Components"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:VacationPlannerWPFApp.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="White"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterLogin" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterLogout" />
+    </UserControl.Resources>
     <Grid MaxWidth="1000" Margin="20,10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
@@ -22,16 +28,23 @@
             FontSize="14"
             Foreground="Black" />
         <Button
-            Grid.Column="2"
-            Command="{Binding NavigateLoginCommand}"
-            Content="Login" />
+            Grid.Column="1"
+            Command="{Binding LogoutCommand}"
+            Content="Logout"
+            Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverterLogout}}" />
         <Button
             Grid.Column="3"
+            Command="{Binding NavigateLoginCommand}"
+            Content="Login"
+            Visibility="{Binding IsLoggedOut, Converter={StaticResource BooleanToVisibilityConverterLogout}}" />
+        <Button
+            Grid.Column="4"
             Command="{Binding NavigateHomeCommand}"
             Content="Home" />
         <Button
-            Grid.Column="1"
+            Grid.Column="2"
             Command="{Binding NavigateAccountCommand}"
-            Content="Account" />
+            Content="Account"
+            Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverterLogin}}" />
     </Grid>
 </UserControl>

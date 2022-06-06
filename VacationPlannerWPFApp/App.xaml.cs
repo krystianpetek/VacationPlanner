@@ -1,10 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Windows;
-using VacationPlannerWPFApp.Models.HomeApp;
+﻿using System.Windows;
 using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
 using VacationPlannerWPFApp.ViewModels;
+using VacationPlannerWPFApp.ViewModels.NavigationBars;
 
 namespace VacationPlannerWPFApp
 {
@@ -14,19 +12,28 @@ namespace VacationPlannerWPFApp
     public partial class App : Application
     {
         public const string key = "mojSekretnyKluczAPI";
-        
+
         private readonly AccountStore _accountStore;
         private readonly NavigationStore _navigationStore;
-        private readonly HomeNavigationBarViewModel _navigationBarViewModel;
+        private readonly EmployeeNavigationBarViewModel _employeeNavigationBarViewModel;
         private readonly LoginNavigationBarViewModel _loginNavigationBarViewModel;
         private readonly RegisterNavigationBarViewModel _registerNavigationBarViewModel;
+        private readonly AdminNavigationBarViewModel _adminNavigationBarViewModel;
 
         public App()
         {
             _accountStore = new AccountStore();
             _navigationStore = new NavigationStore();
 
-            _navigationBarViewModel = new HomeNavigationBarViewModel(
+            _employeeNavigationBarViewModel = new EmployeeNavigationBarViewModel(
+                _accountStore,
+                CreateHomeNavigationService(),
+                CreateAccountNavigationService(),
+                CreateLoginNavigationService()
+                );
+
+            _adminNavigationBarViewModel = new AdminNavigationBarViewModel(
+                _accountStore,
                 CreateHomeNavigationService(),
                 CreateAccountNavigationService(),
                 CreateLoginNavigationService()
@@ -52,16 +59,23 @@ namespace VacationPlannerWPFApp
             };
             MainWindow.Show();
 
-            base.OnStartup(e);            
+            base.OnStartup(e);
         }
 
-        private NavigationService<HomeViewModel> CreateHomeNavigationService()
+        private NavigationService<EmployeeViewModel> CreateHomeNavigationService()
         {
-            return new NavigationService<HomeViewModel>(
+            return new NavigationService<EmployeeViewModel>(
                 _navigationStore,
-                () => new HomeViewModel(_navigationBarViewModel, CreateLoginNavigationService()));
-        } 
-        
+                () => new EmployeeViewModel(_employeeNavigationBarViewModel, CreateLoginNavigationService()));
+        }
+
+        private NavigationService<AdminViewModel> CreateAdminHomeNavigationService()
+        {
+            return new NavigationService<AdminViewModel>(
+                _navigationStore,
+                () => new AdminViewModel(_employeeNavigationBarViewModel, _accountStore));
+        }
+
         private NavigationService<RegisterViewModel> CreateRegisterNavigationService()
         {
             return new NavigationService<RegisterViewModel>(
@@ -73,14 +87,14 @@ namespace VacationPlannerWPFApp
         {
             return new NavigationService<LoginViewModel>(
                 _navigationStore,
-                () => new LoginViewModel(_loginNavigationBarViewModel, _accountStore, CreateAccountNavigationService())); ;
+                () => new LoginViewModel(_loginNavigationBarViewModel, _accountStore, CreateHomeNavigationService(),CreateAdminHomeNavigationService()));
         }
 
         private NavigationService<AccountViewModel> CreateAccountNavigationService()
         {
             return new NavigationService<AccountViewModel>(
                 _navigationStore,
-                () => new AccountViewModel(_navigationBarViewModel, _accountStore, CreateHomeNavigationService()));
+                () => new AccountViewModel(_employeeNavigationBarViewModel, _accountStore, CreateHomeNavigationService()));
         }
     }
 

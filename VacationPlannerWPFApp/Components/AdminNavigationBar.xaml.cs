@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace VacationPlannerWPFApp.Components
 {
     /// <summary>
-    /// Interaction logic for NavigationBar.xaml
+    /// Interaction logic for AdminNavigationBar.xaml
     /// </summary>
-    public partial class NavigationBar : UserControl
+    public partial class AdminNavigationBar : UserControl
     {
-        public NavigationBar()
+        public AdminNavigationBar()
         {
             InitializeComponent();
         }

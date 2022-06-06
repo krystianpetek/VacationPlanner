@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VacationPlannerWPFApp.ViewModels;
 
 namespace VacationPlannerWPFApp.Stores
@@ -10,7 +6,7 @@ namespace VacationPlannerWPFApp.Stores
     public class NavigationStore
     {
         public event Action CurrentViewModelChanged;
-        
+
         private ViewModelBase _currentViewModel;
         public ViewModelBase CurrentViewModel
         {
