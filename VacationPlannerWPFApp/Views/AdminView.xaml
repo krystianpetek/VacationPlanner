@@ -15,7 +15,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <components:EmployeeNavigationBar Grid.Row="0" DataContext="{Binding EmployeeNavigationBarViewModel}" />
+        <components:EmployeeNavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}" />
         <Grid
             Grid.Row="1"
             MaxWidth="1000"

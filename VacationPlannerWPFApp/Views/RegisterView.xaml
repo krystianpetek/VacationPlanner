@@ -19,7 +19,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <components:RegisterNavigationBar Grid.Row="0" DataContext="{Binding RegisterNavigationBarViewModel}" />
+        <components:RegisterNavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}" />
         <Grid
             Grid.Row="1"
             MaxWidth="1000"

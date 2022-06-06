@@ -1,11 +1,12 @@
 ﻿using System.Windows.Input;
+using System.Windows.Input;
 using VacationPlannerWPFApp.Command;
 using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
 
 namespace VacationPlannerWPFApp.ViewModels.NavigationBars
 {
-    public class EmployeeNavigationBarViewModel : ViewModelBase
+    public class EmployeeNavigationBarViewModel : ViewModelBase, INavigationBar
     {
         private readonly AccountStore _accountStore;
         public ICommand NavigateHomeCommand { get; }
@@ -18,16 +19,16 @@ namespace VacationPlannerWPFApp.ViewModels.NavigationBars
 
         public EmployeeNavigationBarViewModel(
             AccountStore accountStore,
-            NavigationService<EmployeeViewModel> homeNavigationService,
+            NavigationService<EmployeeViewModel> employeeNavigationService,
             NavigationService<AccountViewModel> accountNavigationService,
             NavigationService<LoginViewModel> loginNavigationService
             )
         {
             _accountStore = accountStore;
-            NavigateHomeCommand = new NavigateCommand<EmployeeViewModel>(homeNavigationService);
+            NavigateHomeCommand = new NavigateCommand<EmployeeViewModel>(employeeNavigationService);
             NavigateAccountCommand = new NavigateCommand<AccountViewModel>(accountNavigationService);
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
-            LogoutCommand = new LogoutCommand(_accountStore, homeNavigationService);
+            LogoutCommand = new LogoutCommand(_accountStore,loginNavigationService);
         }
     }
 

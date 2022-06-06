@@ -8,9 +8,9 @@ using VacationPlannerWPFApp.Command;
 using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
 
-namespace VacationPlannerWPFApp.ViewModels
+namespace VacationPlannerWPFApp.ViewModels.NavigationBars
 {
-    public class AdminNavigationBarViewModel : ViewModelBase
+    public class AdminNavigationBarViewModel : ViewModelBase, INavigationBar
     {
         private readonly AccountStore _accountStore;
         public ICommand NavigateHomeCommand { get; }
@@ -23,16 +23,16 @@ namespace VacationPlannerWPFApp.ViewModels
 
         public AdminNavigationBarViewModel(
             AccountStore accountStore,
-            NavigationService<EmployeeViewModel> homeNavigationService,
+            NavigationService<AdminViewModel> adminNavigationService,
             NavigationService<AccountViewModel> accountNavigationService,
             NavigationService<LoginViewModel> loginNavigationService
             )
         {
             _accountStore = accountStore;
-            NavigateHomeCommand = new NavigateCommand<EmployeeViewModel>(homeNavigationService);
+            NavigateHomeCommand = new NavigateCommand<AdminViewModel>(adminNavigationService);
             NavigateAccountCommand = new NavigateCommand<AccountViewModel>(accountNavigationService);
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
-            LogoutCommand = new LogoutCommand(_accountStore, homeNavigationService);
+            LogoutCommand = new LogoutCommand(_accountStore, loginNavigationService);
         }
     }
 }

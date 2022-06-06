@@ -33,6 +33,9 @@
                 <DataTemplate DataType="{x:Type viewModels:AdminViewModel}">
                     <viewsApp:AdminView />
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
+                    <viewsApp:HomeView />
+                </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
 

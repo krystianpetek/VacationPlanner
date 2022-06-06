@@ -6,10 +6,10 @@ namespace VacationPlannerWPFApp.Command
 {
     public class LogoutCommand : CommandBase
     {
-        private readonly NavigationService<EmployeeViewModel> _navigationService;
+        private readonly INavigationService _navigationService;
         private readonly AccountStore _accountStore;
 
-        public LogoutCommand(AccountStore accountStore, NavigationService<EmployeeViewModel> navigationService)
+        public LogoutCommand(AccountStore accountStore, INavigationService navigationService)
         {
             _navigationService = navigationService;
             _accountStore = accountStore;
@@ -17,8 +17,8 @@ namespace VacationPlannerWPFApp.Command
 
         public override void Execute(object? parameter)
         {
-            _accountStore.Logout();
             _navigationService.Navigate();
+            _accountStore.Logout();
         }
 
     }

@@ -11,11 +11,11 @@ namespace VacationPlannerWPFApp.ViewModels.NavigationBars
         public ICommand NavigateRegisterCommand { get; }
 
         public LoginNavigationBarViewModel(
-            NavigationService<EmployeeViewModel> homeNavigationService,
+            NavigationService<HomeViewModel> homeNavigationService,
             NavigationService<RegisterViewModel> registerNavigationService
             )
         {
-            NavigateHomeCommand = new NavigateCommand<EmployeeViewModel>(homeNavigationService);
+            NavigateHomeCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
             NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(registerNavigationService);
         }
     }

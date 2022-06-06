@@ -10,7 +10,7 @@ namespace VacationPlannerWPFApp.ViewModels
     public class LoginViewModel : ViewModelBase
     {
         private LoginModel loginModel = new LoginModel();
-        public LoginNavigationBarViewModel LoginNavigationBarViewModel { get; }
+        public LoginNavigationBarViewModel NavigationBarViewModel { get; }
         public ICommand LoginCommand { get; set; }
 
         public LoginViewModel(
@@ -18,7 +18,7 @@ namespace VacationPlannerWPFApp.ViewModels
             AccountStore accountStore,
             NavigationService<EmployeeViewModel> homeNavigationService, NavigationService<AdminViewModel> adminHomeNavigationService)
         {
-            LoginNavigationBarViewModel = loginNavigationBarViewModel;
+            NavigationBarViewModel = loginNavigationBarViewModel;
             LoginCommand = new LoginCommand(this, accountStore, homeNavigationService, adminHomeNavigationService);
         }
 
