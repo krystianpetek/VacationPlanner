@@ -1,6 +1,12 @@
-﻿namespace VacationPlannerAPI.RestModels
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace VacationPlannerWPFApp.Models
 {
-    public class RestEmployeeResponse
+    public class EmployeeResponseModel
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }

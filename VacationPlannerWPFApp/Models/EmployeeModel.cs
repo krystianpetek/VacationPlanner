@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VacationPlannerWPFApp.Models
 {
-    public class HomeModel
+    public class EmployeeModel
     {
         public Guid Id { get; set; }
 

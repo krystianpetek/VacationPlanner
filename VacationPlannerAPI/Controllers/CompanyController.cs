@@ -29,9 +29,16 @@ namespace VacationPlannerAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<RestCompanyResponse>>> GetById([FromRoute] Guid id)
+        public async Task<ActionResult<RestCompanyResponse>> GetById([FromRoute] Guid id)
         {
-            return await context.Companies.Where(q => q.Id == id).Select(q => new RestCompanyResponse() { CompanyName = q.CompanyName }).ToListAsync();
+            return await context.Companies.Where(q => q.Id == id).Select(q => new RestCompanyResponse() { CompanyName = q.CompanyName }).FirstOrDefaultAsync();
+        }
+
+        [HttpGet("user/{id}")]
+        public async Task<ActionResult<RestCompanyResponse>> GetByIdUser(Guid id)
+        {
+            return await context.Companies.Where(q => q.AdministratorId == id).Select(q => new RestCompanyResponse() { CompanyName = q.CompanyName } ).FirstOrDefaultAsync();
+
         }
 
         [HttpPost]

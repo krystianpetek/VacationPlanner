@@ -16,10 +16,12 @@ namespace VacationPlannerWPFApp.ViewModels
         public LoginViewModel(
             LoginNavigationBarViewModel loginNavigationBarViewModel,
             AccountStore accountStore,
+            AdminStore adminStore,
+            EmployeeStore employeeStore,
             NavigationService<EmployeeViewModel> homeNavigationService, NavigationService<AdminViewModel> adminHomeNavigationService)
         {
             NavigationBarViewModel = loginNavigationBarViewModel;
-            LoginCommand = new LoginCommand(this, accountStore, homeNavigationService, adminHomeNavigationService);
+            LoginCommand = new LoginCommand(this, accountStore, homeNavigationService, adminHomeNavigationService, adminStore, employeeStore);
         }
 
         public string Username

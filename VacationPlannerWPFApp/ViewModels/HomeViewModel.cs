@@ -7,15 +7,17 @@ namespace VacationPlannerWPFApp.ViewModels
 {
     public class HomeViewModel : ViewModelBase
     {
-        public ICommand NavigateCommand { get; }
+        public ICommand NavigateLoginCommand { get; }
+        public ICommand NavigateRegisterCommand { get; }
 
         public HomeNavigationBarViewModel NavigationBarViewModel { get; }
 
-        public HomeViewModel(HomeNavigationBarViewModel navigationBarViewModel, NavigationService<LoginViewModel> loginNavigationService)
+        public HomeViewModel(HomeNavigationBarViewModel navigationBarViewModel, NavigationService<LoginViewModel> loginNavigationService, NavigationService<RegisterViewModel> registerNavigationService)
         {
             NavigationBarViewModel = navigationBarViewModel;
 
-            NavigateCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
+            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
+            NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(registerNavigationService);
         }
     }
 }

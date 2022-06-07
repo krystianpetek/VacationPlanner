@@ -7,15 +7,15 @@ using VacationPlannerWPFApp.Models;
 
 namespace VacationPlannerWPFApp.Stores
 {
-    public class HomeStore
+    public class EmployeeStore
     {
-        private HomeModel _aboutUser;
-        public HomeModel AboutUser
+        private EmployeeModel _aboutEmployee;
+        public EmployeeModel AboutEmployee
         {
-            get => _aboutUser;
+            get => _aboutEmployee;
             set
             {
-                _aboutUser = value;
+                _aboutEmployee = value;
             }
         }
     }
