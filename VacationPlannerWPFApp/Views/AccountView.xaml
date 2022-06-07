@@ -34,44 +34,44 @@
                         FontSize="26"
                         Foreground="#6200EE" />
 
-                </StackPanel>
-                <StackPanel>
+                    <StackPanel>
 
-                    <TextBlock Foreground="#039BE5" Text="Account information" />
-                    <StackPanel Margin="20">
-                        <WrapPanel>
-                            <TextBlock
-                                Margin="0,0,70,0"
-                                FontSize="18"
-                                Foreground="#6200EE"
-                                Text="ID: " />
-                            <TextBox
-                                BorderThickness="0"
-                                FontSize="18"
-                                Text="{Binding Id, Mode=OneWay}" />
-                        </WrapPanel>
-                        <WrapPanel>
-                            <TextBlock
-                                Margin="0,0,5,0"
-                                FontSize="18"
-                                Foreground="#039BE5"
-                                Text="Username: " />
-                            <TextBox
-                                BorderThickness="0"
-                                FontSize="18"
-                                Text="{Binding Username, Mode=OneWay}" />
-                        </WrapPanel>
-                        <WrapPanel>
-                            <TextBlock
-                                Margin="0,0,51,0"
-                                FontSize="18"
-                                Foreground="#6200EE"
-                                Text="Role: " />
-                            <TextBox
-                                BorderThickness="0"
-                                FontSize="18"
-                                Text="{Binding Role, Mode=OneWay}" />
-                        </WrapPanel>
+                        <TextBlock Foreground="#039BE5" Text="Account information" />
+                        <StackPanel Margin="20">
+                            <WrapPanel>
+                                <TextBlock
+                                    Margin="0,0,70,0"
+                                    FontSize="18"
+                                    Foreground="#6200EE"
+                                    Text="ID: " />
+                                <TextBox
+                                    BorderThickness="0"
+                                    FontSize="18"
+                                    Text="{Binding Id, Mode=OneWay}" />
+                            </WrapPanel>
+                            <WrapPanel>
+                                <TextBlock
+                                    Margin="0,0,5,0"
+                                    FontSize="18"
+                                    Foreground="#039BE5"
+                                    Text="Username: " />
+                                <TextBox
+                                    BorderThickness="0"
+                                    FontSize="18"
+                                    Text="{Binding Username, Mode=OneWay}" />
+                            </WrapPanel>
+                            <WrapPanel>
+                                <TextBlock
+                                    Margin="0,0,51,0"
+                                    FontSize="18"
+                                    Foreground="#6200EE"
+                                    Text="Role: " />
+                                <TextBox
+                                    BorderThickness="0"
+                                    FontSize="18"
+                                    Text="{Binding Role, Mode=OneWay}" />
+                            </WrapPanel>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

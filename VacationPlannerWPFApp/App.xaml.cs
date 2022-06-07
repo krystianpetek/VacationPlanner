@@ -17,6 +17,7 @@ namespace VacationPlannerWPFApp
         private readonly AdminStore _adminStore;
         private readonly EmployeeStore _employeeStore;
         private readonly NavigationStore _navigationStore;
+        private readonly DayOffRequestsStore _dayOffRequestsStore;
         private readonly EmployeeNavigationBarViewModel _employeeNavigationBarViewModel;
         private readonly LoginNavigationBarViewModel _loginNavigationBarViewModel;
         private readonly RegisterNavigationBarViewModel _registerNavigationBarViewModel;
@@ -28,6 +29,7 @@ namespace VacationPlannerWPFApp
             _accountStore = new AccountStore();
             _adminStore = new AdminStore();
             _employeeStore = new EmployeeStore();
+            _dayOffRequestsStore = new DayOffRequestsStore();
             _navigationStore = new NavigationStore();
 
             _homeNavigationBarViewModel = new HomeNavigationBarViewModel(
@@ -82,7 +84,7 @@ namespace VacationPlannerWPFApp
         {
             return new NavigationService<EmployeeViewModel>(
                 _navigationStore,
-                () => new EmployeeViewModel(_employeeNavigationBarViewModel, CreateLoginNavigationService(),_employeeStore));
+                () => new EmployeeViewModel(_employeeNavigationBarViewModel, CreateLoginNavigationService(),_employeeStore, _dayOffRequestsStore));
         }
 
         private NavigationService<AdminViewModel> CreateAdminHomeNavigationService()
@@ -103,7 +105,7 @@ namespace VacationPlannerWPFApp
         {
             return new NavigationService<LoginViewModel>(
                 _navigationStore,
-                () => new LoginViewModel(_loginNavigationBarViewModel, _accountStore,_adminStore, _employeeStore, CreateEmployeeNavigationService(),CreateAdminHomeNavigationService()));
+                () => new LoginViewModel(_loginNavigationBarViewModel, _accountStore,_adminStore, _employeeStore, _dayOffRequestsStore, CreateEmployeeNavigationService(),CreateAdminHomeNavigationService()));
         }
 
         private NavigationService<AccountViewModel> CreateAccountNavigationService()

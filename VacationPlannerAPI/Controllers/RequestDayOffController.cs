@@ -46,7 +46,7 @@ namespace VacationPlannerAPI.Controllers
             {
                 EmployeeId = id,
                 RequestDate = DateTime.Now,
-                TypeOfRequest = request.TypeOfRequest,
+                TypeOfLeave = request.TypeOfLeave,
                 DayOffRequestDate = request.DayOffRequestDate,
                 Id = Guid.NewGuid()
             };
@@ -72,7 +72,7 @@ namespace VacationPlannerAPI.Controllers
                 return BadRequest();
 
             dayToChange.DayOffRequestDate = correct.DayOffRequestDate;
-            dayToChange.TypeOfRequest = correct.TypeOfRequest;
+            dayToChange.TypeOfLeave= correct.TypeOfLeave;
 
             await dbContext.SaveChangesAsync();
 

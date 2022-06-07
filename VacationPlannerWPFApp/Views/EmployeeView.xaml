@@ -29,46 +29,66 @@
                     FontSize="26"
                     Foreground="#6200EE" />
 
-                <WrapPanel>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        FontSize="20"
-                        Foreground="#039BE5"
-                        Text="Hello " />
-                    <TextBlock
-                        Margin="0,0,5,0"
-                        Foreground="#6200EE"
-                        Text="{Binding FirstName}" />
-                    <TextBlock Foreground="#6200EE" Text="{Binding LastName}" />
+                <TextBlock Foreground="#039BE5" Text="Employee information" />
+                <StackPanel Margin="20">
+                    <WrapPanel>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="20"
+                            Foreground="#039BE5"
+                            Text="Hello " />
+                        <TextBlock
+                            Margin="0,0,5,0"
+                            Foreground="#6200EE"
+                            Text="{Binding FirstName}" />
+                        <TextBlock Foreground="#6200EE" Text="{Binding LastName}" />
 
-                </WrapPanel>
-                <WrapPanel>
-                    <TextBlock
-                        FontSize="16"
-                        Foreground="#6200EE"
-                        Text="You have " />
-                    <TextBlock
-                        FontSize="16"
-                        Foreground="#039BE5"
-                        Text="{Binding AvailableNumberOfDays}" />
-                    <TextBlock
-                        FontSize="16"
-                        Foreground="#6200EE"
-                        Text=" available days to your disposal." />
-                </WrapPanel>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock
+                            FontSize="16"
+                            Foreground="#6200EE"
+                            Text="You have " />
+                        <TextBlock
+                            FontSize="16"
+                            Foreground="#039BE5"
+                            Text="{Binding AvailableNumberOfDays}" />
+                        <TextBlock
+                            FontSize="16"
+                            Foreground="#6200EE"
+                            Text=" available days to your disposal." />
+                    </WrapPanel>
 
-                <Button
-                    HorizontalAlignment="Center"
-                    Content="Add request for day off"
-                    Foreground="White"
-                    Style="{StaticResource LogReg}"
-                    Visibility="{Binding IsAvailableDays, Converter={StaticResource VisibilityAddRequestButton}}" />
+                    <Button
+                        Margin="0,20,0,0"
+                        HorizontalAlignment="Left"
+                        Content="Add request for day off"
+                        FontSize="14"
+                        Foreground="White"
+                        Style="{StaticResource LogReg}"
+                        Visibility="{Binding IsAvailableDays, Converter={StaticResource VisibilityAddRequestButton}}" />
+
+                    <Button
+                        HorizontalAlignment="Left"
+                        Content="List of all requests"
+                        FontSize="14"
+                        Foreground="White"
+                        Style="{StaticResource LogReg}" />
+
+
+                    <WrapPanel Margin="0,20,0,0">
+                        <Label
+                            Content="Today is:"
+                            FontSize="16"
+                            Foreground="#6200EE" />
+                        <Label
+                            Content="{Binding TodayDate}"
+                            FontSize="16"
+                            Foreground="#039BE5" />
+                    </WrapPanel>
+                </StackPanel>
+
             </StackPanel>
-
         </StackPanel>
-        <WrapPanel>
-            <Label Content="Today is:" />
-            <Label Content="{Binding Today}" />
-        </WrapPanel>
     </Grid>
 </UserControl>

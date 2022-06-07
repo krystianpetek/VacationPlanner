@@ -12,6 +12,7 @@ namespace VacationPlannerAPI.Database
         public DbSet<UserLogin> UsersLogin { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<DayOffRequest> DayOffRequests { get; set; }
+        public DbSet<TypeOfLeaveRequest> TypeOfLeave { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +36,8 @@ namespace VacationPlannerAPI.Database
             modelBuilder.Entity<Employee>().HasOne(x => x.Company).WithMany(q => q.Employees).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Employee>().HasMany(x => x.DayOffRequests).WithOne(q=>q.Employee);
             modelBuilder.Entity<UserLogin>().HasOne(x => x.Role).WithOne(q => q.UserLogin);
+
+            modelBuilder.Entity<DayOffRequest>().HasOne(x => x.TypeOfLeave).WithOne();
 
         }
 

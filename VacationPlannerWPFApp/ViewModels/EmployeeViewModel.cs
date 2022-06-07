@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Input;
 using VacationPlannerWPFApp.Command;
 using VacationPlannerWPFApp.Models;
@@ -11,14 +12,16 @@ namespace VacationPlannerWPFApp.ViewModels
     public class EmployeeViewModel : ViewModelBase
     {
         private EmployeeStore _employeeStore;
+        private DayOffRequestsStore _dayOffRequestsStore;
         public ICommand NavigateCommand { get; }
 
         public EmployeeNavigationBarViewModel NavigationBarViewModel { get; }
 
-        public EmployeeViewModel(EmployeeNavigationBarViewModel navigationBarViewModel, NavigationService<LoginViewModel> loginNavigationService, EmployeeStore employeeInfo)
+        public EmployeeViewModel(EmployeeNavigationBarViewModel navigationBarViewModel, NavigationService<LoginViewModel> loginNavigationService, EmployeeStore employeeInfo, DayOffRequestsStore dayOffRequestsStore)
         {
             NavigationBarViewModel = navigationBarViewModel;
             _employeeStore = employeeInfo;
+            _dayOffRequestsStore = dayOffRequestsStore;
             NavigateCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
         }
 
@@ -48,6 +51,9 @@ namespace VacationPlannerWPFApp.ViewModels
         }
 
         public bool IsAvailableDays => _employeeStore.AboutEmployee.AvailableNumberOfDays > 0;
-        public string Today => DateTime.Now.ToShortDateString();
+
+        public string TodayDate => DateTime.Now.ToShortDateString();
+
+        public bool IsTodayDayOff => _dayOffRequestsStore.dayOffRequests.Where(q=>q.DayOffRequestDate == DateTime.Now).Any();
     }
 }

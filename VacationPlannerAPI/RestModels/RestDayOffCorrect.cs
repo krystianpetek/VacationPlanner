@@ -6,7 +6,7 @@ namespace VacationPlannerAPI.RestModels
     {
         public Guid Id { get; set; }
 
-        public TypeOfLeave TypeOfRequest { get; set; }
+        public TypeOfLeaveRequest TypeOfLeave { get; set; }
 
         public DateTime DayOffRequestDate { get; set; }
 
