@@ -21,13 +21,8 @@
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock
-            Grid.Column="0"
-            FontSize="14"
-            Foreground="Black" />
         <Button
             Grid.Column="1"
             Command="{Binding LogoutCommand}"
@@ -35,11 +30,6 @@
             Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverterLogout}}" />
         <Button
             Grid.Column="3"
-            Command="{Binding NavigateLoginCommand}"
-            Content="Login"
-            Visibility="{Binding IsLoggedOut, Converter={StaticResource BooleanToVisibilityConverterLogout}}" />
-        <Button
-            Grid.Column="4"
             Command="{Binding NavigateHomeCommand}"
             Content="Home" />
         <Button

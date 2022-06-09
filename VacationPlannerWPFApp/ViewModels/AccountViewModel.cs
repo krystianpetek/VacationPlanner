@@ -12,7 +12,7 @@ namespace VacationPlannerWPFApp.ViewModels
         private readonly AccountStore _accountStore;
         public ICommand NavigateCommand { get; }
 
-        public Guid Id => _accountStore.CurrentAccount.Id = default;
+        public Guid Id => _accountStore.CurrentAccount.Id;
         public string Username => _accountStore.CurrentAccount?.Username;
         public string Role => _accountStore.CurrentAccount?.Role;
         public INavigationBar NavigationBarViewModel { get; }

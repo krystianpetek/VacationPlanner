@@ -9,25 +9,41 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
+
+    <Grid Background="White">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <components:EmployeeNavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}" />
-        <Grid
-            Grid.Row="1"
-            MaxWidth="1000"
-            Margin="20">
+        <components:AdminNavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}" />
+        <StackPanel Grid.Row="1" Margin="20">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
+            <StackPanel Margin="0,15,0,0">
+                <Label
+                    HorizontalAlignment="Center"
+                    Content="Vacation Planner"
+                    FontSize="26"
+                    Foreground="#6200EE" />
 
-            <TextBlock Grid.Row="0" Text="ADMIN" />
-        </Grid>
+                <WrapPanel>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="20"
+                        Foreground="#039BE5"
+                        Text="Hello " />
+                    <TextBlock
+                        Margin="0,0,5,0"
+                        Foreground="#6200EE"
+                        Text="{Binding CompanyName}" />
+
+                </WrapPanel>
+
+            </StackPanel>
+
+
+
+        </StackPanel>
     </Grid>
 </UserControl>

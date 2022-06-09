@@ -9,27 +9,86 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
-    <Grid>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityAddRequestButton" />
+    </UserControl.Resources>
+    <Grid Background="White">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <components:EmployeeNavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}" />
-        <Grid
-            Grid.Row="1"
-            MaxWidth="1000"
-            Margin="20">
+        <StackPanel Grid.Row="1" Margin="20">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
+            <StackPanel Margin="0,15,0,0">
+                <Label
+                    HorizontalAlignment="Center"
+                    Content="Vacation Planner"
+                    FontSize="26"
+                    Foreground="#6200EE" />
 
-            <TextBlock Grid.Row="0" Text="Employee" />
+                <TextBlock Foreground="#039BE5" Text="Employee information" />
+                <StackPanel Margin="20">
+                    <WrapPanel>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="20"
+                            Foreground="#039BE5"
+                            Text="Hello " />
+                        <TextBlock
+                            Margin="0,0,5,0"
+                            Foreground="#6200EE"
+                            Text="{Binding FirstName}" />
+                        <TextBlock Foreground="#6200EE" Text="{Binding LastName}" />
 
-            <Button Command="{Binding NavigateCommand}" />
-        </Grid>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock
+                            FontSize="16"
+                            Foreground="#6200EE"
+                            Text="You have " />
+                        <TextBlock
+                            FontSize="16"
+                            Foreground="#039BE5"
+                            Text="{Binding AvailableNumberOfDays}" />
+                        <TextBlock
+                            FontSize="16"
+                            Foreground="#6200EE"
+                            Text=" available days to your disposal." />
+                    </WrapPanel>
+
+                    <Button
+                        Margin="0,20,0,0"
+                        HorizontalAlignment="Left"
+                        Content="Add request for day off"
+                        FontSize="14"
+                        Foreground="White"
+                        Style="{StaticResource LogReg}"
+                        Visibility="{Binding IsAvailableDays, Converter={StaticResource VisibilityAddRequestButton}}" />
+
+                    <Button
+                        HorizontalAlignment="Left"
+                        Content="List of all requests"
+                        FontSize="14"
+                        Foreground="White"
+                        Style="{StaticResource LogReg}" />
+
+
+                    <WrapPanel Margin="0,20,0,0">
+                        <Label
+                            Content="Today is:"
+                            FontSize="16"
+                            Foreground="#6200EE" />
+                        <Label
+                            Content="{Binding TodayDate}"
+                            FontSize="16"
+                            Foreground="#039BE5" />
+                    </WrapPanel>
+                </StackPanel>
+
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

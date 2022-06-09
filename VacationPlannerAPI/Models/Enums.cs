@@ -16,4 +16,12 @@
         Sick_Leave,
         Time_Off_In_Lieu_For_Overtime
     };
+
+    public enum Status
+    {
+        Pending,
+        Accepted,
+        Rejected
+
+    }
 }
