@@ -18,9 +18,7 @@ public class RestEmployeeRequest
            DataType(DataType.Text)]
     public string? LastName { get; set; }
 
-    [Required(ErrorMessage = "Number of days is required"),
-            Display(Name = "Number of days")]
-    public int NumberOfDays { get; set; }
+    public bool WorkMoreThan10Year { get; set; }
 
     [Required(ErrorMessage = "Available number of days is required"),
             Display(Name = "Available number of days")]

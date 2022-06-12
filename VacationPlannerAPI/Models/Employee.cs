@@ -11,9 +11,45 @@ public class Employee
 
     public string? LastName { get; set; }
 
-    public int NumberOfDays { get; set; }
+    bool workMoreThan10Year { get; set; }
+    public bool WorkMoreThan10Year
+    {
+        get => workMoreThan10Year;
+        set
+        {
+            workMoreThan10Year = value;
+            
+            if (value)
+                numberOfDays = 26;
+            else
+                numberOfDays = 20;
+        }
+    }
+    int numberOfDays { get; set; }
 
-    public int AvailableNumberOfDays { get; set; }
+    public int NumberOfDays
+    {
+        get => numberOfDays;
+        set
+        {
+            numberOfDays = value;
+        }
+    }
+
+    int availableNumberOfDays { get; set; }
+    public int AvailableNumberOfDays
+    {
+        get => availableNumberOfDays;
+        set
+        {
+            if (value <= 0)
+                availableNumberOfDays = 0;
+            if (value > NumberOfDays)
+                availableNumberOfDays = NumberOfDays;
+            else
+                availableNumberOfDays = value;
+        }
+    }
 
     public DateTime RegisterDate { get; set; } = DateTime.Now;
 

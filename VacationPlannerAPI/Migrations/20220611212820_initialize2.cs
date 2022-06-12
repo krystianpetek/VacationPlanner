@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VacationPlannerAPI.Migrations
 {
-    public partial class init : Migration
+    public partial class initialize2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,6 +19,19 @@ namespace VacationPlannerAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RolePerson", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TypeOfLeave",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Type = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TypeOfLeave", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,10 +110,11 @@ namespace VacationPlannerAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TypeOfRequest = table.Column<int>(type: "int", nullable: false),
                     DayOffRequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TypeOfLeaveId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,6 +123,12 @@ namespace VacationPlannerAPI.Migrations
                         name: "FK_DayOffRequests_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DayOffRequests_TypeOfLeave_TypeOfLeaveId",
+                        column: x => x.TypeOfLeaveId,
+                        principalTable: "TypeOfLeave",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -123,6 +143,12 @@ namespace VacationPlannerAPI.Migrations
                 name: "IX_DayOffRequests_EmployeeId",
                 table: "DayOffRequests",
                 column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DayOffRequests_TypeOfLeaveId",
+                table: "DayOffRequests",
+                column: "TypeOfLeaveId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_CompanyId",
@@ -156,6 +182,9 @@ namespace VacationPlannerAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "TypeOfLeave");
 
             migrationBuilder.DropTable(
                 name: "Companies");

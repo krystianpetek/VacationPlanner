@@ -32,7 +32,6 @@ namespace VacationPlannerWPFApp.ViewModels
             set
             {
                 loginModel.Username = value;
-                OnPropertyChanged(nameof(Username));
             }
         }
 
@@ -42,7 +41,6 @@ namespace VacationPlannerWPFApp.ViewModels
             set
             {
                 loginModel.Password = value;
-                OnPropertyChanged(nameof(Password));
             }
         }
 

@@ -1,4 +1,4 @@
-﻿namespace VacationPlannerAPI.Authentication
+﻿namespace VacationPlannerAPI.Models
 {
     public class ClaimsToWPF
     {

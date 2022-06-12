@@ -12,6 +12,7 @@ namespace VacationPlannerWPFApp
     public partial class App : Application
     {
         public const string key = "mojSekretnyKluczAPI";
+        public const string URLToAPI = "localhost:7020";
 
         private readonly AccountStore _accountStore;
         private readonly AdminStore _adminStore;
@@ -91,7 +92,7 @@ namespace VacationPlannerWPFApp
         {
             return new NavigationService<AdminViewModel>(
                 _navigationStore,
-                () => new AdminViewModel(_adminNavigationBarViewModel, _accountStore, _adminStore));
+                () => new AdminViewModel(_adminNavigationBarViewModel, CreateAdminAddEmployeeNavigationService(), _adminStore));
         }
 
         private NavigationService<RegisterViewModel> CreateRegisterNavigationService()
@@ -114,6 +115,15 @@ namespace VacationPlannerWPFApp
             return new NavigationService<AccountViewModel>(
                 _navigationStore,
                 () => new AccountViewModel(_adminNavigationBarViewModel, _employeeNavigationBarViewModel, _accountStore, CreateEmployeeNavigationService()));
+        }
+
+
+
+        private NavigationService<AdminAddEmployeeViewModel> CreateAdminAddEmployeeNavigationService()
+        {
+            return new NavigationService<AdminAddEmployeeViewModel>(
+                _navigationStore,
+                () => new AdminAddEmployeeViewModel(_adminNavigationBarViewModel));
         }
     }
 

@@ -29,7 +29,6 @@ namespace VacationPlannerWPFApp.ViewModels
             set
             {
                 registerModel.CompanyName = value;
-                OnPropertyChanged(nameof(CompanyName));
             }
         }
 
@@ -39,7 +38,6 @@ namespace VacationPlannerWPFApp.ViewModels
             set
             {
                 registerModel.Username = value;
-                OnPropertyChanged(nameof(Username));
             }
         }
 
@@ -49,7 +47,6 @@ namespace VacationPlannerWPFApp.ViewModels
             set
             {
                 registerModel.Password = value;
-                OnPropertyChanged(nameof(Password));
             }
         }
         public string Info

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VacationPlannerAPI.Database;
 
@@ -11,9 +12,10 @@ using VacationPlannerAPI.Database;
 namespace VacationPlannerAPI.Migrations
 {
     [DbContext(typeof(VacationPlannerDbContext))]
-    partial class VacationPlannerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220611215527_nextmigration")]
+    partial class nextmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,9 +54,6 @@ namespace VacationPlannerAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CompanyId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("DayOffRequestDate")
                         .HasColumnType("datetime2");
 
@@ -71,8 +70,6 @@ namespace VacationPlannerAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
 
                     b.HasIndex("EmployeeId");
 
@@ -99,9 +96,6 @@ namespace VacationPlannerAPI.Migrations
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfDays")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
@@ -207,12 +201,6 @@ namespace VacationPlannerAPI.Migrations
 
             modelBuilder.Entity("VacationPlannerAPI.Models.DayOffRequest", b =>
                 {
-                    b.HasOne("VacationPlannerAPI.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("VacationPlannerAPI.Models.Employee", "Employee")
                         .WithMany("DayOffRequests")
                         .HasForeignKey("EmployeeId")
@@ -224,8 +212,6 @@ namespace VacationPlannerAPI.Migrations
                         .HasForeignKey("VacationPlannerAPI.Models.DayOffRequest", "TypeOfLeaveId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("Company");
 
                     b.Navigation("Employee");
 

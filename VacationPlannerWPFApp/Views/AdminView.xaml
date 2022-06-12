@@ -27,19 +27,55 @@
                     FontSize="26"
                     Foreground="#6200EE" />
 
-                <WrapPanel>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        FontSize="20"
-                        Foreground="#039BE5"
-                        Text="Hello " />
-                    <TextBlock
-                        Margin="0,0,5,0"
-                        Foreground="#6200EE"
-                        Text="{Binding CompanyName}" />
+                <TextBlock Foreground="#039BE5" Text="Administrator information" />
+                <StackPanel Margin="0,20,0,0">
+                    <WrapPanel>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="20"
+                            Foreground="#039BE5"
+                            Text="Hello " />
+                        <TextBlock
+                            Margin="0,0,5,0"
+                            Foreground="#6200EE"
+                            Text="{Binding CompanyName}" />
 
-                </WrapPanel>
+                    </WrapPanel>
+                    <Button
+                        Margin="0,20,0,0"
+                        HorizontalAlignment="Left"
+                        Command="{Binding NavigateAddEmployeeComand}"
+                        Content="Add employee"
+                        FontSize="14"
+                        Foreground="White"
+                        Style="{StaticResource LogReg}" />
 
+                    <Button
+                        HorizontalAlignment="Left"
+                        Content="Show pending employee requests"
+                        FontSize="14"
+                        Foreground="White"
+                        Style="{StaticResource LogReg}" />
+
+                    <Button
+                        HorizontalAlignment="Left"
+                        Content="Show all employee requests"
+                        FontSize="14"
+                        Foreground="White"
+                        Style="{StaticResource LogReg}" />
+
+
+                    <WrapPanel Margin="0,20,0,0">
+                        <Label
+                            Content="Today is:"
+                            FontSize="16"
+                            Foreground="#6200EE" />
+                        <Label
+                            Content="{Binding TodayDate}"
+                            FontSize="16"
+                            Foreground="#039BE5" />
+                    </WrapPanel>
+                </StackPanel>
             </StackPanel>
 
 

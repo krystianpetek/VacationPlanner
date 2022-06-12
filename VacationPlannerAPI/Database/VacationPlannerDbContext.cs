@@ -37,7 +37,7 @@ namespace VacationPlannerAPI.Database
             modelBuilder.Entity<Employee>().HasMany(x => x.DayOffRequests).WithOne(q=>q.Employee);
             modelBuilder.Entity<UserLogin>().HasOne(x => x.Role).WithOne(q => q.UserLogin);
 
-            modelBuilder.Entity<DayOffRequest>().HasOne(x => x.TypeOfLeave).WithOne();
+            modelBuilder.Entity<DayOffRequest>().HasOne(x => x.TypeOfLeave).WithOne().OnDelete(DeleteBehavior.NoAction);
 
         }
 

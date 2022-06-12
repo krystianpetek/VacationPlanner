@@ -22,26 +22,35 @@ namespace VacationPlannerAPI.Controllers
             this.userService = userService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<RestEmployeeResponse>>> Get()
+        [HttpGet("ByCompany/{id}")]
+        public async Task<ActionResult<IEnumerable<RestEmployeeResponse>>> GetEmployeeByCompany([FromRoute] Guid id)
         {
-            return await context.Employees.Select(q => new RestEmployeeResponse() { FirstName = q.FirstName, LastName = q.LastName} ).ToListAsync();
+            var result = await context.Employees.Where(q=>q.CompanyId == id).Select(q => new RestEmployeeResponse() { FirstName = q.FirstName, LastName = q.LastName, AvailableNumberOfDays = q.AvailableNumberOfDays, NumberOfDays = q.NumberOfDays} ).ToListAsync();
+            if (result is null)
+                return NotFound(id);
+            return Ok(result);
         }
         
         [HttpGet("{id}")]
-        public async Task<ActionResult<RestEmployeeResponse>> GetById(Guid id)
+        public async Task<ActionResult<RestEmployeeResponse>> GetEmployeeById([FromRoute] Guid id)
         {
-            return await context.Employees.Where(q=>q.Id == id).Select(q => new RestEmployeeResponse() { FirstName = q.FirstName, LastName = q.LastName} ).FirstOrDefaultAsync();
+            var result = await context.Employees.Where(q=>q.Id == id).Select(q => new RestEmployeeResponse() { FirstName = q.FirstName, LastName = q.LastName, AvailableNumberOfDays = q.AvailableNumberOfDays, NumberOfDays = q.NumberOfDays }).FirstOrDefaultAsync();
+            if (result is null)
+                return NotFound(id);
+            return Ok(result);
         }
         
-        [HttpGet("user/{id}")]
-        public async Task<ActionResult<RestEmployeeResponse>> GetByIdUser(Guid id)
+        [HttpGet("ByUser/{id}")]
+        public async Task<ActionResult<RestEmployeeResponse>> GetEmployeeByUserId([FromRoute] Guid id)
         {
-            return await context.Employees.Where(q=>q.UserLoginId == id).Select(q => new RestEmployeeResponse() { FirstName = q.FirstName, LastName = q.LastName,  NumberOfDays = q.NumberOfDays, AvailableNumberOfDays = q.AvailableNumberOfDays } ).FirstOrDefaultAsync();
+            var result = await context.Employees.Where(q=>q.UserLoginId == id).Select(q => new RestEmployeeResponse() { FirstName = q.FirstName, LastName = q.LastName, AvailableNumberOfDays = q.AvailableNumberOfDays, NumberOfDays = q.NumberOfDays }).FirstOrDefaultAsync();
+            if (result is null)
+                return NotFound(id);
+            return Ok(result);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register(Guid companyId, [FromBody] RestEmployeeRequest request)
+        public async Task<ActionResult> Register([FromRoute] Guid CompanyId, [FromBody] RestEmployeeRequest request)
         {
             if (request is null || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
                 return BadRequest("Wrong data from request.");
@@ -50,16 +59,16 @@ namespace VacationPlannerAPI.Controllers
                 return BadRequest("User name already exist.");
 
             var newEmployee = RestEmployeeRegister(request);
-            newEmployee.CompanyId = companyId;
+            newEmployee.CompanyId = CompanyId;
 
             context.Employees.Add(newEmployee);
             await context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), "Company", new { id = newEmployee.Id }, $"{newEmployee.UserLogin!.Username}, account created.");
+            return CreatedAtAction(nameof(GetEmployeeById), "Company", new { id = newEmployee.Id }, $"{newEmployee.UserLogin!.Username}, account created.");
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> ChangePassword([FromRoute] Guid id, [FromBody] RestPasswordChange request)
+        [HttpPut("ChangePasswordByUser/{id}")]
+        public async Task<ActionResult> ChangePasswordByUserId([FromRoute] Guid id, [FromBody] RestPasswordChange request)
         {
             if (request == null)
                 return BadRequest();
@@ -97,13 +106,13 @@ namespace VacationPlannerAPI.Controllers
                 Id = Guid.NewGuid(),
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                NumberOfDays = request.NumberOfDays,
+                WorkMoreThan10Year = request.WorkMoreThan10Year,
                 AvailableNumberOfDays = request.AvailableNumberOfDays,
                 UserLogin = new UserLogin()
                 {
                     Id = userId,
                     Username = request.Username,
-                    Role = new RolePerson() { Id = Guid.NewGuid(), Role = Role.Employee },
+                    Role = new RolePerson() { Id = roleId, Role = Role.Employee },
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
                 },

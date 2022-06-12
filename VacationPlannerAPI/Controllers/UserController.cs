@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 using VacationPlannerAPI.Authentication;
 using VacationPlannerAPI.Database;
 using VacationPlannerAPI.Models;
@@ -26,13 +24,14 @@ namespace VacationPlannerAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<object>>> Get()
+        public async Task<ActionResult<IEnumerable<string>>> GetUsers()
         {
-            return await dbContext.UsersLogin.Select(q => q.Username).ToListAsync();
+           return await dbContext.UsersLogin.Select(q => q.Username).ToListAsync();
+
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult<ClaimsToWPF>> Login(RestUserLogin request)
+        [HttpPost("Login")]
+        public async Task<ActionResult<ClaimsToWPF>> Login([FromBody] RestUserLogin request)
         {
             if (request is null || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
                 return BadRequest("Wrong data from request.");

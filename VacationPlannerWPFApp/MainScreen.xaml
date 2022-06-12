@@ -36,6 +36,9 @@
                 <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
                     <viewsApp:HomeView />
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:AdminAddEmployeeViewModel}">
+                    <viewsApp:AdminAddEmployeeView />
+                </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
 

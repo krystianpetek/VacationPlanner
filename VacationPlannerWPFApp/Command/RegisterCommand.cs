@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using VacationPlannerWPFApp.ViewModels;
+using VacationPlannerWPFApp;
 
 namespace VacationPlannerWPFApp.Command.Login
 {
@@ -36,7 +37,7 @@ namespace VacationPlannerWPFApp.Command.Login
                     }));
 
                     data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                    var response = client.PostAsync("https://localhost:7020/api/Company", data).Result;
+                    var response = client.PostAsync($"https://{App.URLToAPI}/api/Company", data).Result;
                     viewModel.Info = await response.Content.ReadAsStringAsync();
                 }
             });

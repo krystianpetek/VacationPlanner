@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace VacationPlannerAPI.Models
 {
@@ -15,10 +16,15 @@ namespace VacationPlannerAPI.Models
 
         
         public Guid EmployeeId { get; set; }
+        [JsonIgnore]
         public virtual Employee? Employee { get; set; }
 
         public int TypeOfLeaveId { get; set; }
         public virtual TypeOfLeaveRequest TypeOfLeave { get; set; }
+
+        public Guid CompanyId { get; set; }
+        [JsonIgnore]
+        public virtual Company Company { get; set; }
 
     }
 }

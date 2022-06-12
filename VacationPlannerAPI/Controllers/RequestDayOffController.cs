@@ -19,31 +19,33 @@ namespace VacationPlannerAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<DayOffRequest>>> GetAll()
+        public async Task<ActionResult<IEnumerable<DayOffRequest>>> GetRequestsByCompanyId([FromRoute] Guid id)
         {
-            var allRequests = await dbContext.DayOffRequests.ToListAsync();
-
-            return Ok(allRequests);
+            var result = await dbContext.DayOffRequests.Where(q=>q.CompanyId == id).ToListAsync();
+            if (result.Count <= 0)
+                return NotFound();
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<RestDayOffRequest>>> GetById(Guid id)
+        public async Task<ActionResult<IEnumerable<RestDayOffRequest>>> GetRequestsByEmployeeId([FromRoute] Guid id)
         {
-            var dayOffRequest = await dbContext.DayOffRequests.Where(x => x.EmployeeId == id).ToListAsync();
-            if (dayOffRequest.Count <= 0)
+            var result = await dbContext.DayOffRequests.Where(x => x.EmployeeId == id).ToListAsync();
+            if (result.Count <= 0)
                 return NotFound();
 
-            return Ok(dayOffRequest);
+            return Ok(result);
         }
 
         [HttpPost("{id}")]
-        public async Task<IActionResult> Post(Guid id, [FromBody] RestDayOffRequest request)
+        public async Task<IActionResult> RegisterRequestByEmployeeId([FromRoute] Guid id, [FromBody] RestDayOffRequest request)
         {
-            if (request == null)
+            if (request is null)
                 return BadRequest();
-
             DayOffRequest dayOffRequest = new DayOffRequest()
             {
+                Status = request.Status,
+                CompanyId = request.CompanyId,
                 EmployeeId = id,
                 RequestDate = DateTime.Now,
                 TypeOfLeave = request.TypeOfLeave,
@@ -73,6 +75,7 @@ namespace VacationPlannerAPI.Controllers
 
             dayToChange.DayOffRequestDate = correct.DayOffRequestDate;
             dayToChange.TypeOfLeave= correct.TypeOfLeave;
+            dayToChange.Status = Status.Pending;
 
             await dbContext.SaveChangesAsync();
 

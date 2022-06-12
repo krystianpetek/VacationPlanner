@@ -1,4 +1,5 @@
-﻿using VacationPlannerAPI.Models;
+﻿using System.Text.Json.Serialization;
+using VacationPlannerAPI.Models;
 
 namespace VacationPlannerAPI.Models
 {
@@ -6,6 +7,8 @@ namespace VacationPlannerAPI.Models
     {
         public int Id { get; set; }
         public TypeOfLeave Type { get; set; }
+        
+        [JsonIgnore]
         public virtual DayOffRequest DayOffRequest { get; set; }
 
         public override string ToString()

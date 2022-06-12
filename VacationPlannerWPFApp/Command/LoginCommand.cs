@@ -70,7 +70,9 @@ namespace VacationPlannerWPFApp.Command.Login
             {
                 client.DefaultRequestHeaders.Add("ApiKey", App.key);
 
-                var response = await client.GetAsync($"https://localhost:7020/api/RequestDayOff/{id}");
+                var response = await client.GetAsync($"https://{App.URLToAPI}/api/RequestDayOff/{id}");
+                if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    return null;
                 var claimsResponse = await response.Content.ReadAsStringAsync();
                 collection = JsonConvert.DeserializeObject<IEnumerable<DayOffRequest>>(claimsResponse);
             }
@@ -85,7 +87,7 @@ namespace VacationPlannerWPFApp.Command.Login
             {
                 client.DefaultRequestHeaders.Add("ApiKey", App.key);
 
-                var response = await client.GetAsync($"https://localhost:7020/api/Company/user/{id}");
+                var response = await client.GetAsync($"https://{App.URLToAPI}/api/Company/ByAdmin/{id}");
                 var claimsResponse = await response.Content.ReadAsStringAsync();
                 temporary = JsonConvert.DeserializeObject<AdminResponseModel>(claimsResponse);
 
@@ -102,7 +104,7 @@ namespace VacationPlannerWPFApp.Command.Login
             {
                 client.DefaultRequestHeaders.Add("ApiKey", App.key);
 
-                var response = await client.GetAsync($"https://localhost:7020/api/Employee/user/{id}");
+                var response = await client.GetAsync($"https://{App.URLToAPI}/api/Employee/user/{id}");
                 var claimsResponse = await response.Content.ReadAsStringAsync();
                 temporary = JsonConvert.DeserializeObject<EmployeeResponseModel>(claimsResponse);
                 
