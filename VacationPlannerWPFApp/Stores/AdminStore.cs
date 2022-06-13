@@ -1,17 +1,8 @@
 ﻿using VacationPlannerWPFApp.Models;
 
-namespace VacationPlannerWPFApp.Stores
+namespace VacationPlannerWPFApp.Stores;
+
+public class AdminStore
 {
-    public class AdminStore
-    {
-        private AdminModel _aboutAdmin;
-        public AdminModel AboutAdmin
-        {
-            get => _aboutAdmin;
-            set
-            {
-                _aboutAdmin = value;
-            }
-        }
-    }
+    public AdminModel AboutAdmin { get; set; }
 }

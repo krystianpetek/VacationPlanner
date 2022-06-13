@@ -5,53 +5,48 @@ using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
 using VacationPlannerWPFApp.ViewModels.NavigationBars;
 
-namespace VacationPlannerWPFApp.ViewModels
+namespace VacationPlannerWPFApp.ViewModels;
+
+public class LoginViewModel : ViewModelBase
 {
-    public class LoginViewModel : ViewModelBase
+    private readonly LoginModel loginModel = new();
+
+    public LoginViewModel(
+        LoginNavigationBarViewModel loginNavigationBarViewModel,
+        AccountStore accountStore,
+        AdminStore adminStore,
+        EmployeeStore employeeStore,
+        DayOffRequestsStore dayOffRequestsStore,
+        NavigationService<EmployeeViewModel> homeNavigationService,
+        NavigationService<AdminViewModel> adminHomeNavigationService)
     {
-        private LoginModel loginModel = new LoginModel();
-        public LoginNavigationBarViewModel NavigationBarViewModel { get; }
-        public ICommand LoginCommand { get; set; }
+        NavigationBarViewModel = loginNavigationBarViewModel;
+        LoginCommand = new LoginCommand(this, accountStore, homeNavigationService, adminHomeNavigationService,
+            adminStore, employeeStore, dayOffRequestsStore);
+    }
 
-        public LoginViewModel(
-            LoginNavigationBarViewModel loginNavigationBarViewModel,
-            AccountStore accountStore,
-            AdminStore adminStore,
-            EmployeeStore employeeStore,
-            DayOffRequestsStore dayOffRequestsStore,
-            NavigationService<EmployeeViewModel> homeNavigationService,
-            NavigationService<AdminViewModel> adminHomeNavigationService)
-        {
-            NavigationBarViewModel = loginNavigationBarViewModel;
-            LoginCommand = new LoginCommand(this, accountStore, homeNavigationService, adminHomeNavigationService, adminStore, employeeStore, dayOffRequestsStore);
-        }
+    public LoginNavigationBarViewModel NavigationBarViewModel { get; }
+    public ICommand LoginCommand { get; set; }
 
-        public string Username
-        {
-            get => loginModel.Username!;
-            set
-            {
-                loginModel.Username = value;
-            }
-        }
+    public string Username
+    {
+        get => loginModel.Username!;
+        set => loginModel.Username = value;
+    }
 
-        public string Password
-        {
-            get => loginModel.Password!;
-            set
-            {
-                loginModel.Password = value;
-            }
-        }
+    public string Password
+    {
+        get => loginModel.Password!;
+        set => loginModel.Password = value;
+    }
 
-        public string Info
+    public string Info
+    {
+        get => loginModel.Info!;
+        set
         {
-            get => loginModel.Info!;
-            set
-            {
-                loginModel.Info = value;
-                OnPropertyChanged(nameof(Info));
-            }
+            loginModel.Info = value;
+            OnPropertyChanged(nameof(Info));
         }
     }
 }

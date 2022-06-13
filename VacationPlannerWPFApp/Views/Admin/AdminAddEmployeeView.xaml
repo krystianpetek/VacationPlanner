@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:components="clr-namespace:VacationPlannerWPFApp.Components"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:VacationPlannerWPFApp.Views.Admin"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -28,7 +27,9 @@
                     FontSize="26"
                     Foreground="#6200EE" />
 
-                <TextBlock Foreground="#039BE5"><Run Language="pl-pl" Text="Adding an employee" /></TextBlock>
+                <TextBlock Foreground="#039BE5">
+                    <Run Language="pl-pl" Text="Adding an employee" />
+                </TextBlock>
                 <Grid Margin="0,20,0,0">
 
                     <Grid.ColumnDefinitions>
@@ -175,7 +176,6 @@
                         Grid.ColumnSpan="4"
                         Margin="15">
                         <Button
-                            Grid.ColumnSpan="2"
                             HorizontalAlignment="Center"
                             Command="{Binding AddEmployeeCommand}"
                             Content="ADD"
@@ -208,7 +208,6 @@
                     </Grid.Resources>
                 </Grid>
             </StackPanel>
-
 
 
         </StackPanel>

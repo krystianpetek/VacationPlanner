@@ -1,6 +1,5 @@
-﻿namespace VacationPlannerWPFApp.ViewModels.NavigationBars
+﻿namespace VacationPlannerWPFApp.ViewModels.NavigationBars;
+
+public interface INavigationBar
 {
-    public interface INavigationBar
-    {
-    }
 }

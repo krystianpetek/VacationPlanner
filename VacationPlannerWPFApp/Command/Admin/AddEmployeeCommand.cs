@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace VacationPlannerWPFApp.Command.Admin
+namespace VacationPlannerWPFApp.Command.Admin;
+
+internal class AddEmployeeCommand : CommandBase
 {
-    internal class AddEmployeeCommand : CommandBase
+    public override void Execute(object? parameter)
     {
-        public override void Execute(object? parameter)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

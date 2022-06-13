@@ -1,15 +1,14 @@
 ﻿using System.Windows.Controls;
 
-namespace VacationPlannerWPFApp.Views
+namespace VacationPlannerWPFApp.Views;
+
+/// <summary>
+///     Interaction logic for AdminHomeView.xaml
+/// </summary>
+public partial class AdminView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for AdminHomeView.xaml
-    /// </summary>
-    public partial class AdminView : UserControl
+    public AdminView()
     {
-        public AdminView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

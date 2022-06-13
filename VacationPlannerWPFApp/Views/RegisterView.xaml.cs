@@ -1,15 +1,14 @@
 ﻿using System.Windows.Controls;
 
-namespace VacationPlannerWPFApp.Views
+namespace VacationPlannerWPFApp.Views;
+
+/// <summary>
+///     Interaction logic for HomeView.xaml
+/// </summary>
+public partial class RegisterView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for HomeView.xaml
-    /// </summary>
-    public partial class RegisterView : UserControl
+    public RegisterView()
     {
-        public RegisterView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,17 +1,8 @@
 ﻿using VacationPlannerWPFApp.Models;
 
-namespace VacationPlannerWPFApp.Stores
+namespace VacationPlannerWPFApp.Stores;
+
+public class EmployeeStore
 {
-    public class EmployeeStore
-    {
-        private EmployeeModel _aboutEmployee;
-        public EmployeeModel AboutEmployee
-        {
-            get => _aboutEmployee;
-            set
-            {
-                _aboutEmployee = value;
-            }
-        }
-    }
+    public EmployeeModel AboutEmployee { get; set; }
 }

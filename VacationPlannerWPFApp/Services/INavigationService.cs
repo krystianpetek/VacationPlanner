@@ -1,7 +1,6 @@
-﻿namespace VacationPlannerWPFApp.Services
+﻿namespace VacationPlannerWPFApp.Services;
+
+public interface INavigationService
 {
-    public interface INavigationService
-    {
-        void Navigate();
-    }
+    void Navigate();
 }

@@ -1,15 +1,14 @@
 ﻿using System.Windows.Controls;
 
-namespace VacationPlannerWPFApp.Components
+namespace VacationPlannerWPFApp.Components;
+
+/// <summary>
+///     Interaction logic for AdminNavigationBar.xaml
+/// </summary>
+public partial class AdminNavigationBar : UserControl
 {
-    /// <summary>
-    /// Interaction logic for AdminNavigationBar.xaml
-    /// </summary>
-    public partial class AdminNavigationBar : UserControl
+    public AdminNavigationBar()
     {
-        public AdminNavigationBar()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

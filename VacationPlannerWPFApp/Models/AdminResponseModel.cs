@@ -1,7 +1,6 @@
-﻿namespace VacationPlannerWPFApp.Models
+﻿namespace VacationPlannerWPFApp.Models;
+
+public class AdminResponseModel
 {
-    public class AdminResponseModel
-    {
-        public string CompanyName { get; set; }
-    }
+    public string CompanyName { get; set; }
 }

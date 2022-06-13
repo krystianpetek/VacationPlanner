@@ -1,20 +1,17 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace VacationPlannerWPFApp.Models.Admin
+namespace VacationPlannerWPFApp.Models.Admin;
+
+public class AdminAddEmployeeModel
 {
-    public class AdminAddEmployeeModel
-    {
-        [Required]
-        public Guid CompanyId { get; set; }
+    [Required] public Guid CompanyId { get; set; }
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string UserName { get; set; }
-        public string GeneratePassword { get; set; }
-        public bool WorkMoreThan10Years { get; set; }
-        public int AvailableNumberOfDays { get; set; }
-        public int NumberOfDays { get; set; } = 20;
-
-    }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string UserName { get; set; }
+    public string GeneratePassword { get; set; }
+    public bool WorkMoreThan10Years { get; set; }
+    public int AvailableNumberOfDays { get; set; }
+    public int NumberOfDays { get; set; } = 20;
 }
