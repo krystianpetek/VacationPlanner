@@ -1,15 +1,14 @@
 ﻿using System.Windows.Controls;
 
-namespace VacationPlannerWPFApp.Components
+namespace VacationPlannerWPFApp.Components;
+
+/// <summary>
+///     Interaction logic for NavigationBar.xaml
+/// </summary>
+public partial class LoginNavigationBar : UserControl
 {
-    /// <summary>
-    /// Interaction logic for NavigationBar.xaml
-    /// </summary>
-    public partial class LoginNavigationBar : UserControl
+    public LoginNavigationBar()
     {
-        public LoginNavigationBar()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

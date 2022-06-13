@@ -1,15 +1,14 @@
 ﻿using System.Windows;
 
-namespace VacationPlannerWPFApp
+namespace VacationPlannerWPFApp;
+
+/// <summary>
+///     Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class LoginScreen : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class LoginScreen : Window
+    public LoginScreen()
     {
-        public LoginScreen()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

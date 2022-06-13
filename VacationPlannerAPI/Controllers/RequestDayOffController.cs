@@ -5,78 +5,82 @@ using VacationPlannerAPI.Database;
 using VacationPlannerAPI.Models;
 using VacationPlannerAPI.RestModels;
 
-namespace VacationPlannerAPI.Controllers
+namespace VacationPlannerAPI.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+[ApiKey]
+public class RequestDayOffController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    [ApiKey]
-    public class RequestDayOffController : ControllerBase
+    private readonly VacationPlannerDbContext dbContext;
+
+    public RequestDayOffController(VacationPlannerDbContext dbContext)
     {
-        private VacationPlannerDbContext dbContext;
-        public RequestDayOffController(VacationPlannerDbContext dbContext)
+        this.dbContext = dbContext;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<DayOffRequest>>> GetRequestsByCompanyId([FromRoute] Guid id)
+    {
+        var result = await dbContext.DayOffRequests.Where(q => q.CompanyId == id).ToListAsync();
+        if (result.Count <= 0)
+            return NotFound();
+        return Ok(result);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<IEnumerable<RestDayOffRequest>>> GetRequestsByEmployeeId([FromRoute] Guid id)
+    {
+        var result = await dbContext.DayOffRequests.Where(x => x.EmployeeId == id).ToListAsync();
+        if (result.Count <= 0)
+            return NotFound();
+
+        return Ok(result);
+    }
+
+    [HttpPost("{id}")]
+    public async Task<IActionResult> RegisterRequestByEmployeeId([FromRoute] Guid id,
+        [FromBody] RestDayOffRequest request)
+    {
+        if (request is null)
+            return BadRequest();
+        var dayOffRequest = new DayOffRequest
         {
-            this.dbContext = dbContext;
-        }
+            Status = request.Status,
+            CompanyId = request.CompanyId,
+            EmployeeId = id,
+            RequestDate = DateTime.Now,
+            TypeOfLeave = request.TypeOfLeave,
+            DayOffRequestDate = request.DayOffRequestDate,
+            Id = Guid.NewGuid()
+        };
 
-        [HttpGet]
-        public async Task<ActionResult<List<DayOffRequest>>> GetAll()
-        {
-            var allRequests = await dbContext.DayOffRequests.ToListAsync();
+        await dbContext.AddAsync(dayOffRequest);
+        await dbContext.SaveChangesAsync();
 
-            return Ok(allRequests);
-        }
+        return Created(dayOffRequest.Id.ToString(), dayOffRequest);
+    }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<RestDayOffRequest>>> GetById(Guid id)
-        {
-            var dayOffRequest = await dbContext.DayOffRequests.Where(x => x.EmployeeId == id).ToListAsync();
-            if (dayOffRequest.Count <= 0)
-                return NotFound();
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] RestDayOffCorrect correct)
+    {
+        if (correct == null)
+            return BadRequest();
 
-            return Ok(dayOffRequest);
-        }
+        var dayToChange = await dbContext.DayOffRequests.SingleOrDefaultAsync(q => q.Id == id);
 
-        [HttpPost("{id}")]
-        public async Task<IActionResult> Post(Guid id, [FromBody] RestDayOffRequest request)
-        {
-            if (request == null)
-                return BadRequest();
+        if (dayToChange == null)
+            return BadRequest();
 
-            DayOffRequest dayOffRequest = new DayOffRequest()
-            {
-                EmployeeId = id,
-                RequestDate = DateTime.Now,
-                TypeOfLeave = request.TypeOfLeave,
-                DayOffRequestDate = request.DayOffRequestDate,
-                Id = Guid.NewGuid()
-            };
+        if (dayToChange.EmployeeId != correct.Id)
+            return BadRequest();
 
-            await dbContext.AddAsync(dayOffRequest);
-            await dbContext.SaveChangesAsync();
+        dayToChange.DayOffRequestDate = correct.DayOffRequestDate;
+        dayToChange.TypeOfLeave = correct.TypeOfLeave;
+        dayToChange.Status = Status.Pending;
 
-            return Created(dayOffRequest.Id.ToString(), dayOffRequest);
-        }
+        await dbContext.SaveChangesAsync();
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] RestDayOffCorrect correct)
-        {
-            if (correct == null)
-                return BadRequest();
-
-            var dayToChange = await dbContext.DayOffRequests.SingleOrDefaultAsync(q => q.Id == id);
-
-            if(dayToChange == null)
-                return BadRequest();
-
-            if (dayToChange.EmployeeId != correct.Id)
-                return BadRequest();
-
-            dayToChange.DayOffRequestDate = correct.DayOffRequestDate;
-            dayToChange.TypeOfLeave= correct.TypeOfLeave;
-
-            await dbContext.SaveChangesAsync();
-
-            return NoContent();
-        }
+        return NoContent();
     }
 }

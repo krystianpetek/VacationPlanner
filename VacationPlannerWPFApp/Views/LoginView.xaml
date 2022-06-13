@@ -85,7 +85,8 @@
                             VerticalAlignment="Center"
                             Content="Password"
                             Foreground="#039BE5" />
-                        <components:PasswordBind Opacity="0.5" Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        <components:PasswordBind Opacity="0.5"
+                                                 Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
                     </Grid>
                 </Border>

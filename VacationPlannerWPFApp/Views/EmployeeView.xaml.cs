@@ -1,15 +1,14 @@
 ﻿using System.Windows.Controls;
 
-namespace VacationPlannerWPFApp.Views
+namespace VacationPlannerWPFApp.Views;
+
+/// <summary>
+///     Interaction logic for EmployeeAppView.xaml
+/// </summary>
+public partial class EmployeeView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for EmployeeAppView.xaml
-    /// </summary>
-    public partial class EmployeeView : UserControl
+    public EmployeeView()
     {
-        public EmployeeView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

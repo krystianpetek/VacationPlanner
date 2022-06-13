@@ -1,23 +1,20 @@
 ﻿using System.Windows.Input;
 using VacationPlannerWPFApp.Command;
 using VacationPlannerWPFApp.Services;
-using VacationPlannerWPFApp.Stores;
 
-namespace VacationPlannerWPFApp.ViewModels.NavigationBars
+namespace VacationPlannerWPFApp.ViewModels.NavigationBars;
+
+public class HomeNavigationBarViewModel : ViewModelBase, INavigationBar
 {
-    public class HomeNavigationBarViewModel : ViewModelBase, INavigationBar
+    public HomeNavigationBarViewModel(
+        NavigationService<HomeViewModel> homeNavigationService,
+        NavigationService<LoginViewModel> loginNavigationService
+    )
     {
-        public ICommand NavigateHomeCommand { get; }
-        public ICommand NavigateLoginCommand { get; }
-
-        public HomeNavigationBarViewModel(
-            NavigationService<HomeViewModel> homeNavigationService,
-            NavigationService<LoginViewModel> loginNavigationService
-            )
-        {
-            NavigateHomeCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
-        }
+        NavigateHomeCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
+        NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
     }
 
+    public ICommand NavigateHomeCommand { get; }
+    public ICommand NavigateLoginCommand { get; }
 }

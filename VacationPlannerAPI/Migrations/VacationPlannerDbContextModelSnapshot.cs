@@ -52,6 +52,9 @@ namespace VacationPlannerAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("DayOffRequestDate")
                         .HasColumnType("datetime2");
 
@@ -61,12 +64,20 @@ namespace VacationPlannerAPI.Migrations
                     b.Property<DateTime>("RequestDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TypeOfRequest")
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypeOfLeaveId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("EmployeeId");
+
+                    b.HasIndex("TypeOfLeaveId")
+                        .IsUnique();
 
                     b.ToTable("DayOffRequests");
                 });
@@ -98,6 +109,9 @@ namespace VacationPlannerAPI.Migrations
                     b.Property<Guid?>("UserLoginId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("WorkMoreThan10Year")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
@@ -121,6 +135,27 @@ namespace VacationPlannerAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RolePerson");
+                });
+
+            modelBuilder.Entity("VacationPlannerAPI.Models.TypeOfLeaveRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<Guid>("DayOffRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DayOffRequestId");
+
+                    b.ToTable("TypeOfLeave");
                 });
 
             modelBuilder.Entity("VacationPlannerAPI.Models.UserLogin", b =>
@@ -172,13 +207,29 @@ namespace VacationPlannerAPI.Migrations
 
             modelBuilder.Entity("VacationPlannerAPI.Models.DayOffRequest", b =>
                 {
+                    b.HasOne("VacationPlannerAPI.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("VacationPlannerAPI.Models.Employee", "Employee")
                         .WithMany("DayOffRequests")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("VacationPlannerAPI.Models.TypeOfLeaveRequest", "TypeOfLeave")
+                        .WithOne()
+                        .HasForeignKey("VacationPlannerAPI.Models.DayOffRequest", "TypeOfLeaveId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
                     b.Navigation("Employee");
+
+                    b.Navigation("TypeOfLeave");
                 });
 
             modelBuilder.Entity("VacationPlannerAPI.Models.Employee", b =>
@@ -196,6 +247,17 @@ namespace VacationPlannerAPI.Migrations
                     b.Navigation("Company");
 
                     b.Navigation("UserLogin");
+                });
+
+            modelBuilder.Entity("VacationPlannerAPI.Models.TypeOfLeaveRequest", b =>
+                {
+                    b.HasOne("VacationPlannerAPI.Models.DayOffRequest", "DayOffRequest")
+                        .WithMany()
+                        .HasForeignKey("DayOffRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DayOffRequest");
                 });
 
             modelBuilder.Entity("VacationPlannerAPI.Models.UserLogin", b =>

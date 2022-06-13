@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace VacationPlannerWPFApp.ViewModels.NavigationBars;
 
-namespace VacationPlannerWPFApp.ViewModels.NavigationBars
+public interface INavigationBar
 {
-    public interface INavigationBar
-    {
-    }
 }

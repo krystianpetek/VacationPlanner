@@ -1,15 +1,14 @@
 ﻿using System;
 
-namespace VacationPlannerWPFApp.Models
+namespace VacationPlannerWPFApp.Models;
+
+public class DayOffRequest
 {
-    public class DayOffRequest
-    {
-        public Guid Id { get; set; }
+    public Guid Id { get; set; }
 
-        public DateTime DayOffRequestDate { get; set; }
+    public DateTime DayOffRequestDate { get; set; }
 
-        public Status Status { get; set; }
+    public Status Status { get; set; }
 
-        public string TypeOfLeave { get; set; }
-    }
+    public string TypeOfLeave { get; set; }
 }

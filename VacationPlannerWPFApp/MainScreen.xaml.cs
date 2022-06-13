@@ -1,18 +1,14 @@
 ﻿using System.Windows;
 
-namespace VacationPlannerWPFApp
+namespace VacationPlannerWPFApp;
+
+/// <summary>
+///     Interaction logic for TwoWindow.xaml
+/// </summary>
+public partial class MainScreen : Window
 {
-    /// <summary>
-    /// Interaction logic for TwoWindow.xaml
-    /// </summary>
-    public partial class MainScreen : Window
+    public MainScreen()
     {
-        public MainScreen()
-        {
-            InitializeComponent();
-
-        }
-
-
+        InitializeComponent();
     }
 }

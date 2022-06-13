@@ -59,22 +59,22 @@
                             Text=" available days to your disposal." />
                     </WrapPanel>
 
-                    <Button
-                        Margin="0,20,0,0"
-                        HorizontalAlignment="Left"
-                        Content="Add request for day off"
-                        FontSize="14"
-                        Foreground="White"
-                        Style="{StaticResource LogReg}"
-                        Visibility="{Binding IsAvailableDays, Converter={StaticResource VisibilityAddRequestButton}}" />
+                    <StackPanel Margin="0,20,0,0">
+                        <Button
+                            HorizontalAlignment="Left"
+                            Content="Add request for day off"
+                            FontSize="14"
+                            Foreground="White"
+                            Style="{StaticResource LogReg}"
+                            Visibility="{Binding IsAvailableDays, Converter={StaticResource VisibilityAddRequestButton}}" />
 
-                    <Button
-                        HorizontalAlignment="Left"
-                        Content="List of all requests"
-                        FontSize="14"
-                        Foreground="White"
-                        Style="{StaticResource LogReg}" />
-
+                        <Button
+                            HorizontalAlignment="Left"
+                            Content="List of all day off requests"
+                            FontSize="14"
+                            Foreground="White"
+                            Style="{StaticResource LogReg}" />
+                    </StackPanel>
 
                     <WrapPanel Margin="0,20,0,0">
                         <Label

@@ -2,22 +2,21 @@
 using VacationPlannerWPFApp.Stores;
 using VacationPlannerWPFApp.ViewModels;
 
-namespace VacationPlannerWPFApp.Services
+namespace VacationPlannerWPFApp.Services;
+
+public class NavigationService<TViewModel> : INavigationService where TViewModel : ViewModelBase
 {
-    public class NavigationService<TViewModel> : INavigationService where TViewModel : ViewModelBase
+    private readonly Func<TViewModel> _createViewModel;
+    private readonly NavigationStore _navigationStore;
+
+    public NavigationService(NavigationStore navigationStore, Func<TViewModel> createViewModel)
     {
-        private readonly NavigationStore _navigationStore;
-        private readonly Func<TViewModel> _createViewModel;
+        _navigationStore = navigationStore;
+        _createViewModel = createViewModel;
+    }
 
-        public NavigationService(NavigationStore navigationStore, Func<TViewModel> createViewModel)
-        {
-            _navigationStore = navigationStore;
-            _createViewModel = createViewModel;
-        }
-
-        public void Navigate()
-        {
-            _navigationStore.CurrentViewModel = _createViewModel();
-        }
+    public void Navigate()
+    {
+        _navigationStore.CurrentViewModel = _createViewModel();
     }
 }

@@ -5,61 +5,51 @@ using VacationPlannerWPFApp.Models;
 using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.ViewModels.NavigationBars;
 
-namespace VacationPlannerWPFApp.ViewModels
+namespace VacationPlannerWPFApp.ViewModels;
+
+public class RegisterViewModel : ViewModelBase
 {
-    public class RegisterViewModel : ViewModelBase
+    private readonly RegisterModel registerModel = new();
+
+    public RegisterViewModel(RegisterNavigationBarViewModel _registerNavigationBarViewModel,
+        NavigationService<EmployeeViewModel> homeNavigationService)
     {
-        private RegisterModel registerModel = new RegisterModel();
-        public RegisterNavigationBarViewModel NavigationBarViewModel { get; }
-        public ICommand NavigateCommand { get; set; }
-        public ICommand RegisterCommand { get; set; }
+        NavigationBarViewModel = _registerNavigationBarViewModel;
 
-        public RegisterViewModel(RegisterNavigationBarViewModel _registerNavigationBarViewModel, NavigationService<EmployeeViewModel> homeNavigationService)
+        RegisterCommand = new RegisterCommand(this);
+
+        NavigateCommand = new NavigateCommand<EmployeeViewModel>(homeNavigationService);
+    }
+
+    public RegisterNavigationBarViewModel NavigationBarViewModel { get; }
+    public ICommand NavigateCommand { get; set; }
+    public ICommand RegisterCommand { get; set; }
+
+    public string CompanyName
+    {
+        get => registerModel.CompanyName!;
+        set => registerModel.CompanyName = value;
+    }
+
+    public string Username
+    {
+        get => registerModel.Username!;
+        set => registerModel.Username = value;
+    }
+
+    public string Password
+    {
+        get => registerModel.Password!;
+        set => registerModel.Password = value;
+    }
+
+    public string Info
+    {
+        get => registerModel.Info!;
+        set
         {
-            NavigationBarViewModel = _registerNavigationBarViewModel;
-
-            RegisterCommand = new RegisterCommand(this);
-
-            NavigateCommand = new NavigateCommand<EmployeeViewModel>(homeNavigationService);
-        }
-
-        public string CompanyName
-        {
-            get => registerModel.CompanyName!;
-            set
-            {
-                registerModel.CompanyName = value;
-                OnPropertyChanged(nameof(CompanyName));
-            }
-        }
-
-        public string Username
-        {
-            get => registerModel.Username!;
-            set
-            {
-                registerModel.Username = value;
-                OnPropertyChanged(nameof(Username));
-            }
-        }
-
-        public string Password
-        {
-            get => registerModel.Password!;
-            set
-            {
-                registerModel.Password = value;
-                OnPropertyChanged(nameof(Password));
-            }
-        }
-        public string Info
-        {
-            get => registerModel.Info!;
-            set
-            {
-                registerModel.Info = value;
-                OnPropertyChanged(nameof(Info));
-            }
+            registerModel.Info = value;
+            OnPropertyChanged(nameof(Info));
         }
     }
 }

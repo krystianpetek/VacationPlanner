@@ -1,27 +1,16 @@
 ﻿using VacationPlannerWPFApp.Models;
 
-namespace VacationPlannerWPFApp.Stores
+namespace VacationPlannerWPFApp.Stores;
+
+public class AccountStore
 {
-    public class AccountStore
+    public AccountModel CurrentAccount { get; set; }
+
+    public bool IsLoggedIn => CurrentAccount != null;
+    public bool IsLoggedOut => CurrentAccount == null;
+
+    public void Logout()
     {
-        private AccountModel _currentAccount;
-
-        public AccountModel CurrentAccount
-        {
-            get => _currentAccount;
-            set
-            {
-                _currentAccount = value;
-            }
-        }
-
-        public bool IsLoggedIn => CurrentAccount != null;
-        public bool IsLoggedOut => CurrentAccount == null;
-
-        public void Logout()
-        {
-            CurrentAccount = null;
-        }
-
+        CurrentAccount = null;
     }
 }

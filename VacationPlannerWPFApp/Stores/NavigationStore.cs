@@ -1,26 +1,26 @@
 ﻿using System;
 using VacationPlannerWPFApp.ViewModels;
 
-namespace VacationPlannerWPFApp.Stores
+namespace VacationPlannerWPFApp.Stores;
+
+public class NavigationStore
 {
-    public class NavigationStore
+    private ViewModelBase _currentViewModel;
+
+    public ViewModelBase CurrentViewModel
     {
-        public event Action CurrentViewModelChanged;
-
-        private ViewModelBase _currentViewModel;
-        public ViewModelBase CurrentViewModel
+        get => _currentViewModel;
+        set
         {
-            get => _currentViewModel;
-            set
-            {
-                _currentViewModel = value;
-                OnCurrentViewModelChanged();
-            }
+            _currentViewModel = value;
+            OnCurrentViewModelChanged();
         }
+    }
 
-        private void OnCurrentViewModelChanged()
-        {
-            CurrentViewModelChanged?.Invoke();
-        }
+    public event Action CurrentViewModelChanged;
+
+    private void OnCurrentViewModelChanged()
+    {
+        CurrentViewModelChanged?.Invoke();
     }
 }
