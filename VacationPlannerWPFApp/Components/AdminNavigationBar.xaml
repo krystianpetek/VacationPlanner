@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:VacationPlannerWPFApp.ViewModels.NavigationBars"
-    d:DataContext="{d:DesignInstance Type=viewmodels:AdminNavigationBarViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="White"

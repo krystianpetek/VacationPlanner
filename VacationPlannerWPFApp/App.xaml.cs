@@ -128,6 +128,6 @@ public partial class App : Application
     {
         return new NavigationService<AdminAddEmployeeViewModel>(
             _navigationStore,
-            () => new AdminAddEmployeeViewModel(_adminNavigationBarViewModel));
+            () => new AdminAddEmployeeViewModel(_adminNavigationBarViewModel,_adminStore));
     }
 }

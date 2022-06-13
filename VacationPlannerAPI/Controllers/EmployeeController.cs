@@ -61,8 +61,8 @@ public class EmployeeController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost]
-    public async Task<ActionResult> Register([FromRoute] Guid CompanyId, [FromBody] RestEmployeeRequest request)
+    [HttpPost("{CompanyId}")]
+    public async Task<ActionResult> Register(Guid CompanyId, [FromBody] RestEmployeeRequest request)
     {
         if (request is null || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
             return BadRequest("Wrong data from request.");
@@ -76,8 +76,7 @@ public class EmployeeController : ControllerBase
         context.Employees.Add(newEmployee);
         await context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetEmployeeById), "Company", new { id = newEmployee.Id },
-            $"{newEmployee.UserLogin!.Username}, account created.");
+        return Created("",$"Employee {newEmployee.UserLogin.Username} created");
     }
 
     [HttpPut("ChangePasswordByUser/{id}")]
@@ -119,7 +118,7 @@ public class EmployeeController : ControllerBase
             Id = Guid.NewGuid(),
             FirstName = request.FirstName,
             LastName = request.LastName,
-            WorkMoreThan10Year = request.WorkMoreThan10Year,
+            WorkMoreThan10Year = request.WorkMoreThan10Years,
             AvailableNumberOfDays = request.AvailableNumberOfDays,
             UserLogin = new UserLogin
             {

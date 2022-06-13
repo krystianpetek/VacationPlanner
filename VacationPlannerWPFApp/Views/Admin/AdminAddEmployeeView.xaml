@@ -185,7 +185,7 @@
                         <Label
                             Margin="0,5,0,0"
                             HorizontalAlignment="Center"
-                            Content="{Binding GeneratePassword, UpdateSourceTrigger=PropertyChanged}"
+                            Content="{Binding Message, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                             Foreground="#039BE5" />
                     </StackPanel>
 

@@ -96,7 +96,7 @@ public class LoginCommand : AsyncCommandBase
             var claimsResponse = await response.Content.ReadAsStringAsync();
             temporary = JsonConvert.DeserializeObject<AdminResponseModel>(claimsResponse);
 
-            json = new AdminModel { Id = id, CompanyName = temporary.CompanyName };
+            json = new AdminModel { Id = id, CompanyName = temporary.CompanyName, CompanyId = temporary.CompanyId };
         }
 
         return json;
