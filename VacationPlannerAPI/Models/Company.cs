@@ -1,21 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VacationPlannerAPI.Models
+namespace VacationPlannerAPI.Models;
+
+public class Company
 {
-    public class Company
-    {
-        [Key]
-        public Guid Id { get; set; }
+    [Key] public Guid Id { get; set; }
 
-        public string CompanyName { get; set; }
+    public string CompanyName { get; set; }
 
-        public DateTime RegisterDate { get; set; } = DateTime.Now;
-        
-        public Guid AdministratorId { get; set; }
+    public DateTime RegisterDate { get; set; } = DateTime.Now;
 
-        public virtual UserLogin? Administrator { get; set; }
+    public Guid AdministratorId { get; set; }
 
-        public virtual ICollection<Employee>? Employees { get; set; }
+    public virtual UserLogin? Administrator { get; set; }
 
-    }
+    public virtual ICollection<Employee>? Employees { get; set; }
 }

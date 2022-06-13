@@ -1,19 +1,16 @@
 ﻿using System.Text.Json.Serialization;
-using VacationPlannerAPI.Models;
 
-namespace VacationPlannerAPI.Models
+namespace VacationPlannerAPI.Models;
+
+public class TypeOfLeaveRequest
 {
-    public class TypeOfLeaveRequest
-    {
-        public int Id { get; set; }
-        public TypeOfLeave Type { get; set; }
-        
-        [JsonIgnore]
-        public virtual DayOffRequest DayOffRequest { get; set; }
+    public int Id { get; set; }
+    public TypeOfLeave Type { get; set; }
 
-        public override string ToString()
-        {
-            return Type.ToString();
-        }
+    [JsonIgnore] public virtual DayOffRequest DayOffRequest { get; set; }
+
+    public override string ToString()
+    {
+        return Type.ToString();
     }
 }

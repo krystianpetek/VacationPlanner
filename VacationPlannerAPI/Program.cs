@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using VacationPlannerAPI.Database;
@@ -15,20 +14,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IUserService, UserService>();
-builder.Services.AddDbContext<VacationPlannerDbContext>(config => config.UseSqlServer(builder.Configuration.GetConnectionString("VP_DbContext")));
+builder.Services.AddDbContext<VacationPlannerDbContext>(config =>
+    config.UseSqlServer(builder.Configuration.GetConnectionString("VP_DbContext")));
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "VacationPlannerAPI", Version = "1.0" });
 
-    c.AddSecurityDefinition(ApiKeyName, new OpenApiSecurityScheme()
+    c.AddSecurityDefinition(ApiKeyName, new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
         Name = ApiKeyName,
         Type = SecuritySchemeType.ApiKey,
-        Description = "Prosze podaæ klucz: mojSekretnyKluczAPI",
+        Description = "Prosze podaæ klucz: mojSekretnyKluczAPI"
     });
 
-    var key = new OpenApiSecurityScheme()
+    var key = new OpenApiSecurityScheme
     {
         Reference = new OpenApiReference
         {
@@ -39,7 +39,7 @@ builder.Services.AddSwaggerGen(c =>
     };
 
     c.AddSecurityRequirement(
-        new OpenApiSecurityRequirement()
+        new OpenApiSecurityRequirement
         {
             {
                 key, new List<string>()

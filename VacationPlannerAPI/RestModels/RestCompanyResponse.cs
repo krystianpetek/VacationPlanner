@@ -1,7 +1,6 @@
-﻿namespace VacationPlannerAPI.RestModels
+﻿namespace VacationPlannerAPI.RestModels;
+
+public class RestCompanyResponse
 {
-    public class RestCompanyResponse
-    {
-        public string? CompanyName { get; set; }
-    }
+    public string? CompanyName { get; set; }
 }

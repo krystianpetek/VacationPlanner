@@ -4,39 +4,38 @@ namespace VacationPlannerAPI.Models;
 
 public class Employee
 {
-    [Key]
-    public Guid Id { get; set; }
-    
+    [Key] public Guid Id { get; set; }
+
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }
 
-    bool workMoreThan10Year { get; set; }
+    private bool workMoreThan10Year { get; set; }
+
     public bool WorkMoreThan10Year
     {
         get => workMoreThan10Year;
         set
         {
             workMoreThan10Year = value;
-            
+
             if (value)
                 numberOfDays = 26;
             else
                 numberOfDays = 20;
         }
     }
-    int numberOfDays { get; set; }
+
+    private int numberOfDays { get; set; }
 
     public int NumberOfDays
     {
         get => numberOfDays;
-        set
-        {
-            numberOfDays = value;
-        }
+        set => numberOfDays = value;
     }
 
-    int availableNumberOfDays { get; set; }
+    private int availableNumberOfDays { get; set; }
+
     public int AvailableNumberOfDays
     {
         get => availableNumberOfDays;
