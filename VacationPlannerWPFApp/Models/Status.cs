@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VacationPlannerWPFApp.Models
+﻿namespace VacationPlannerWPFApp.Models
 {
-        public enum Status
-        {
-            Pending,
-            Accepted,
-            Rejected
+    public enum Status
+    {
+        Pending,
+        Accepted,
+        Rejected
 
-        }
+    }
 }

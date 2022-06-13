@@ -2,6 +2,7 @@
 using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
 using VacationPlannerWPFApp.ViewModels;
+using VacationPlannerWPFApp.ViewModels.Admin;
 using VacationPlannerWPFApp.ViewModels.NavigationBars;
 
 namespace VacationPlannerWPFApp
@@ -85,7 +86,7 @@ namespace VacationPlannerWPFApp
         {
             return new NavigationService<EmployeeViewModel>(
                 _navigationStore,
-                () => new EmployeeViewModel(_employeeNavigationBarViewModel, CreateLoginNavigationService(),_employeeStore, _dayOffRequestsStore));
+                () => new EmployeeViewModel(_employeeNavigationBarViewModel, CreateLoginNavigationService(), _employeeStore, _dayOffRequestsStore));
         }
 
         private NavigationService<AdminViewModel> CreateAdminHomeNavigationService()
@@ -106,12 +107,12 @@ namespace VacationPlannerWPFApp
         {
             return new NavigationService<LoginViewModel>(
                 _navigationStore,
-                () => new LoginViewModel(_loginNavigationBarViewModel, _accountStore,_adminStore, _employeeStore, _dayOffRequestsStore, CreateEmployeeNavigationService(),CreateAdminHomeNavigationService()));
+                () => new LoginViewModel(_loginNavigationBarViewModel, _accountStore, _adminStore, _employeeStore, _dayOffRequestsStore, CreateEmployeeNavigationService(), CreateAdminHomeNavigationService()));
         }
 
         private NavigationService<AccountViewModel> CreateAccountNavigationService()
         {
-            
+
             return new NavigationService<AccountViewModel>(
                 _navigationStore,
                 () => new AccountViewModel(_adminNavigationBarViewModel, _employeeNavigationBarViewModel, _accountStore, CreateEmployeeNavigationService()));

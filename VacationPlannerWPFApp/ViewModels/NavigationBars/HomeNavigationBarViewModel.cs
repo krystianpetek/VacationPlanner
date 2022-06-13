@@ -1,7 +1,6 @@
 ﻿using System.Windows.Input;
 using VacationPlannerWPFApp.Command;
 using VacationPlannerWPFApp.Services;
-using VacationPlannerWPFApp.Stores;
 
 namespace VacationPlannerWPFApp.ViewModels.NavigationBars
 {

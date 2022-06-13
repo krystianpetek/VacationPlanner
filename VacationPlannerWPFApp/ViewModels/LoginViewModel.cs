@@ -19,7 +19,7 @@ namespace VacationPlannerWPFApp.ViewModels
             AdminStore adminStore,
             EmployeeStore employeeStore,
             DayOffRequestsStore dayOffRequestsStore,
-            NavigationService<EmployeeViewModel> homeNavigationService, 
+            NavigationService<EmployeeViewModel> homeNavigationService,
             NavigationService<AdminViewModel> adminHomeNavigationService)
         {
             NavigationBarViewModel = loginNavigationBarViewModel;

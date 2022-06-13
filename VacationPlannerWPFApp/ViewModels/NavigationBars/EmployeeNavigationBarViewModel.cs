@@ -27,7 +27,7 @@ namespace VacationPlannerWPFApp.ViewModels.NavigationBars
             NavigateHomeCommand = new NavigateCommand<EmployeeViewModel>(employeeNavigationService);
             NavigateAccountCommand = new NavigateCommand<AccountViewModel>(accountNavigationService);
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
-            LogoutCommand = new LogoutCommand(_accountStore,loginNavigationService);
+            LogoutCommand = new LogoutCommand(_accountStore, loginNavigationService);
         }
     }
 

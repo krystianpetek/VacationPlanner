@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using VacationPlannerWPFApp.Command;
-using VacationPlannerWPFApp.Models;
-using VacationPlannerWPFApp.Stores;
+﻿using System.Windows.Input;
+using VacationPlannerWPFApp.Command.Admin;
+using VacationPlannerWPFApp.Models.Admin;
 using VacationPlannerWPFApp.ViewModels.NavigationBars;
 
-namespace VacationPlannerWPFApp.ViewModels
+namespace VacationPlannerWPFApp.ViewModels.Admin
 {
     public class AdminAddEmployeeViewModel : ViewModelBase
     {
@@ -26,22 +19,27 @@ namespace VacationPlannerWPFApp.ViewModels
         }
 
 
-        public string FirstName { 
+        public string FirstName
+        {
             get => adminAddEmployee.FirstName;
             set => adminAddEmployee.FirstName = value;
         }
-        public string LastName { 
+        public string LastName
+        {
             get => adminAddEmployee.LastName;
             set => adminAddEmployee.LastName = value;
         }
-        public string Username { 
+        public string Username
+        {
             get => adminAddEmployee.UserName;
             set => adminAddEmployee.UserName = value;
         }
 
-        public int NumberOfDays { 
-            get => adminAddEmployee.NumberOfDays; 
-            set => adminAddEmployee.NumberOfDays = value; }
+        public int NumberOfDays
+        {
+            get => adminAddEmployee.NumberOfDays;
+            set => adminAddEmployee.NumberOfDays = value;
+        }
 
 
         public bool WorkMoreThan10Years
@@ -52,12 +50,12 @@ namespace VacationPlannerWPFApp.ViewModels
                 adminAddEmployee.WorkMoreThan10Years = value;
 
                 if (value)
-                        NumberOfDays = 26;
-                    else
+                    NumberOfDays = 26;
+                else
                     NumberOfDays = 20;
                 OnPropertyChanged(nameof(NumberOfDays));
-                }
             }
+        }
 
         public int AvailableNumberOfDays
         {

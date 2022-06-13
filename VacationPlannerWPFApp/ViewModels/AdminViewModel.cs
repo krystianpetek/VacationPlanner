@@ -3,6 +3,7 @@ using System.Windows.Input;
 using VacationPlannerWPFApp.Command;
 using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
+using VacationPlannerWPFApp.ViewModels.Admin;
 using VacationPlannerWPFApp.ViewModels.NavigationBars;
 
 namespace VacationPlannerWPFApp.ViewModels

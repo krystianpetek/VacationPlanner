@@ -20,7 +20,7 @@ namespace VacationPlannerWPFApp.ViewModels
         public AccountViewModel(AdminNavigationBarViewModel aNavigationBarViewModel, EmployeeNavigationBarViewModel eNavigationBarViewModel, AccountStore accountStore, NavigationService<EmployeeViewModel> homeNavigationService)
         {
             _accountStore = accountStore;
-            if(_accountStore.CurrentAccount.Role == "Administrator")
+            if (_accountStore.CurrentAccount.Role == "Administrator")
                 NavigationBarViewModel = aNavigationBarViewModel;
             else
                 NavigationBarViewModel = eNavigationBarViewModel;

@@ -1,6 +1,5 @@
 ﻿using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
-using VacationPlannerWPFApp.ViewModels;
 
 namespace VacationPlannerWPFApp.Command
 {

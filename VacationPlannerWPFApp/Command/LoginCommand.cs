@@ -107,8 +107,8 @@ namespace VacationPlannerWPFApp.Command.Login
                 var response = await client.GetAsync($"https://{App.URLToAPI}/api/Employee/user/{id}");
                 var claimsResponse = await response.Content.ReadAsStringAsync();
                 temporary = JsonConvert.DeserializeObject<EmployeeResponseModel>(claimsResponse);
-                
-                json = new EmployeeModel() {  Id = id, NumberOfDays = temporary.NumberOfDays, AvailableNumberOfDays = temporary.AvailableNumberOfDays, FirstName = temporary.FirstName, LastName = temporary.LastName };
+
+                json = new EmployeeModel() { Id = id, NumberOfDays = temporary.NumberOfDays, AvailableNumberOfDays = temporary.AvailableNumberOfDays, FirstName = temporary.FirstName, LastName = temporary.LastName };
             }
             return json;
         }
@@ -143,5 +143,5 @@ namespace VacationPlannerWPFApp.Command.Login
 
     }
 
-    
+
 }

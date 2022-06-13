@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Windows.Input;
 using VacationPlannerWPFApp.Command;
-using VacationPlannerWPFApp.Models;
 using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
 using VacationPlannerWPFApp.ViewModels.NavigationBars;
@@ -54,6 +53,6 @@ namespace VacationPlannerWPFApp.ViewModels
 
         public string TodayDate => DateTime.Now.ToShortDateString();
 
-        public bool IsTodayDayOff => _dayOffRequestsStore.dayOffRequests.Where(q=>q.DayOffRequestDate == DateTime.Now).Any();
+        public bool IsTodayDayOff => _dayOffRequestsStore.dayOffRequests.Where(q => q.DayOffRequestDate == DateTime.Now).Any();
     }
 }
