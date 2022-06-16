@@ -16,6 +16,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -75,20 +76,19 @@
                             Foreground="White"
                             Style="{StaticResource LogReg}" />
                     </StackPanel>
-
-                    <WrapPanel Margin="0,20,0,0">
-                        <Label
-                            Content="Today is:"
-                            FontSize="16"
-                            Foreground="#6200EE" />
-                        <Label
-                            Content="{Binding TodayDate}"
-                            FontSize="16"
-                            Foreground="#039BE5" />
-                    </WrapPanel>
                 </StackPanel>
 
             </StackPanel>
         </StackPanel>
+        <WrapPanel HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Bottom" >
+            <Label
+                            Content="Today is:"
+                            FontSize="16"
+                            Foreground="#6200EE" />
+            <Label
+                            Content="{Binding TodayDate}"
+                            FontSize="16"
+                            Foreground="#039BE5" />
+        </WrapPanel>
     </Grid>
 </UserControl>

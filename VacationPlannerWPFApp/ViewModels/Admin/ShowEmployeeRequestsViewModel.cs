@@ -18,7 +18,6 @@ namespace VacationPlannerWPFApp.ViewModels.Admin;
 
 public class ShowEmployeeRequestsViewModel : ViewModelBase
 {
-    private readonly AdminStore _adminStore;
     public AdminNavigationBarViewModel NavigationBarViewModel { get; }
     public ObservableCollection<ShowEmployeeRequestModel> showEmployeeRequests { get; set; }
     public ObservableCollection<string> leaveType { get; set; }
@@ -30,7 +29,8 @@ public class ShowEmployeeRequestsViewModel : ViewModelBase
     public ShowEmployeeRequestsViewModel(AdminNavigationBarViewModel navigationBar, AdminStore adminStore)
     {
         NavigationBarViewModel = navigationBar;
-        showEmployeeRequests = new ObservableCollection<ShowEmployeeRequestModel>(GetDayOffRequestsById(adminStore.AboutAdmin.CompanyId));
+        var result = GetDayOffRequestsById(adminStore.AboutAdmin.CompanyId).ToList();
+        showEmployeeRequests = new ObservableCollection<ShowEmployeeRequestModel>();
         leaveType = new ObservableCollection<string>() { "Pending", "Rejected", "Accepted" };
         Nav = new NavCommand(showEmployeeRequests);
         //ShowEmployeeRequestsCommand = new ShowEmployeeRequestsCommand(this);
@@ -46,7 +46,7 @@ public class ShowEmployeeRequestsViewModel : ViewModelBase
 
             var response = client.GetAsync($"https://{App.URLToAPI}/api/RequestDayOff/{id}/company").Result;
             if (response.StatusCode == HttpStatusCode.NotFound)
-                return null;
+                return new ObservableCollection<ShowEmployeeRequestModel>();
             var claimsResponse = response.Content.ReadAsStringAsync().Result;
             collection = JsonConvert.DeserializeObject<IEnumerable<ShowEmployeeRequestModel>>(claimsResponse);
         }
