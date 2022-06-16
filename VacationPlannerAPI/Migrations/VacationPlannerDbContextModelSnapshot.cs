@@ -145,17 +145,50 @@ namespace VacationPlannerAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<Guid>("DayOffRequestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("TypeOfLeave")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DayOffRequestId");
-
                     b.ToTable("TypeOfLeave");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            TypeOfLeave = "Annual leave"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            TypeOfLeave = "Leave on demand"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            TypeOfLeave = "Ocassional leave"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            TypeOfLeave = "Unpaid leave"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            TypeOfLeave = "Parental leave"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            TypeOfLeave = "Sick leave"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            TypeOfLeave = "Tyime off in lieu for overtime"
+                        });
                 });
 
             modelBuilder.Entity("VacationPlannerAPI.Models.UserLogin", b =>
@@ -220,9 +253,9 @@ namespace VacationPlannerAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("VacationPlannerAPI.Models.TypeOfLeaveRequest", "TypeOfLeave")
-                        .WithOne()
+                        .WithOne("DayOffRequest")
                         .HasForeignKey("VacationPlannerAPI.Models.DayOffRequest", "TypeOfLeaveId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Company");
@@ -249,17 +282,6 @@ namespace VacationPlannerAPI.Migrations
                     b.Navigation("UserLogin");
                 });
 
-            modelBuilder.Entity("VacationPlannerAPI.Models.TypeOfLeaveRequest", b =>
-                {
-                    b.HasOne("VacationPlannerAPI.Models.DayOffRequest", "DayOffRequest")
-                        .WithMany()
-                        .HasForeignKey("DayOffRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DayOffRequest");
-                });
-
             modelBuilder.Entity("VacationPlannerAPI.Models.UserLogin", b =>
                 {
                     b.HasOne("VacationPlannerAPI.Models.RolePerson", "Role")
@@ -284,6 +306,12 @@ namespace VacationPlannerAPI.Migrations
             modelBuilder.Entity("VacationPlannerAPI.Models.RolePerson", b =>
                 {
                     b.Navigation("UserLogin");
+                });
+
+            modelBuilder.Entity("VacationPlannerAPI.Models.TypeOfLeaveRequest", b =>
+                {
+                    b.Navigation("DayOffRequest")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

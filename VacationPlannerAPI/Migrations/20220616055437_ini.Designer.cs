@@ -12,8 +12,8 @@ using VacationPlannerAPI.Database;
 namespace VacationPlannerAPI.Migrations
 {
     [DbContext(typeof(VacationPlannerDbContext))]
-    [Migration("20220611215527_nextmigration")]
-    partial class nextmigration
+    [Migration("20220616055437_ini")]
+    partial class ini
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,9 @@ namespace VacationPlannerAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("DayOffRequestDate")
                         .HasColumnType("datetime2");
 
@@ -70,6 +73,8 @@ namespace VacationPlannerAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("EmployeeId");
 
@@ -96,6 +101,9 @@ namespace VacationPlannerAPI.Migrations
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumberOfDays")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
@@ -139,17 +147,25 @@ namespace VacationPlannerAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<Guid>("DayOffRequestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("TypeOfLeave")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DayOffRequestId");
-
                     b.ToTable("TypeOfLeave");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            TypeOfLeave = "Annual leave"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            TypeOfLeave = "Leave on demand"
+                        });
                 });
 
             modelBuilder.Entity("VacationPlannerAPI.Models.UserLogin", b =>
@@ -201,6 +217,12 @@ namespace VacationPlannerAPI.Migrations
 
             modelBuilder.Entity("VacationPlannerAPI.Models.DayOffRequest", b =>
                 {
+                    b.HasOne("VacationPlannerAPI.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("VacationPlannerAPI.Models.Employee", "Employee")
                         .WithMany("DayOffRequests")
                         .HasForeignKey("EmployeeId")
@@ -208,10 +230,12 @@ namespace VacationPlannerAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("VacationPlannerAPI.Models.TypeOfLeaveRequest", "TypeOfLeave")
-                        .WithOne()
+                        .WithOne("DayOffRequest")
                         .HasForeignKey("VacationPlannerAPI.Models.DayOffRequest", "TypeOfLeaveId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Company");
 
                     b.Navigation("Employee");
 
@@ -233,17 +257,6 @@ namespace VacationPlannerAPI.Migrations
                     b.Navigation("Company");
 
                     b.Navigation("UserLogin");
-                });
-
-            modelBuilder.Entity("VacationPlannerAPI.Models.TypeOfLeaveRequest", b =>
-                {
-                    b.HasOne("VacationPlannerAPI.Models.DayOffRequest", "DayOffRequest")
-                        .WithMany()
-                        .HasForeignKey("DayOffRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DayOffRequest");
                 });
 
             modelBuilder.Entity("VacationPlannerAPI.Models.UserLogin", b =>
@@ -270,6 +283,12 @@ namespace VacationPlannerAPI.Migrations
             modelBuilder.Entity("VacationPlannerAPI.Models.RolePerson", b =>
                 {
                     b.Navigation("UserLogin");
+                });
+
+            modelBuilder.Entity("VacationPlannerAPI.Models.TypeOfLeaveRequest", b =>
+                {
+                    b.Navigation("DayOffRequest")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -39,6 +39,15 @@ public class VacationPlannerDbContext : DbContext
         modelBuilder.Entity<Employee>().HasMany(x => x.DayOffRequests).WithOne(q => q.Employee);
         modelBuilder.Entity<UserLogin>().HasOne(x => x.Role).WithOne(q => q.UserLogin);
 
-        modelBuilder.Entity<DayOffRequest>().HasOne(x => x.TypeOfLeave).WithOne().OnDelete(DeleteBehavior.NoAction);
+        //modelBuilder.Entity<DayOffRequest>().HasOne(x => x.TypeOfLeave).WithOne().OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<TypeOfLeaveRequest>().HasData(
+            new TypeOfLeaveRequest() { Id = 1, TypeOfLeave = "Annual leave" },
+            new TypeOfLeaveRequest() { Id = 2, TypeOfLeave = "Leave on demand" },
+            new TypeOfLeaveRequest() { Id = 3, TypeOfLeave = "Ocassional leave" },
+            new TypeOfLeaveRequest() { Id = 4, TypeOfLeave = "Unpaid leave" },
+            new TypeOfLeaveRequest() { Id = 5, TypeOfLeave = "Parental leave" },
+            new TypeOfLeaveRequest() { Id = 6, TypeOfLeave = "Sick leave" },
+            new TypeOfLeaveRequest() { Id = 7, TypeOfLeave = "Tyime off in lieu for overtime" });
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VacationPlannerAPI.Authentication;
 using VacationPlannerAPI.Database;
@@ -13,33 +14,37 @@ namespace VacationPlannerAPI.Controllers;
 public class RequestDayOffController : ControllerBase
 {
     private readonly VacationPlannerDbContext dbContext;
+    private readonly IMapper _mapper;
 
-    public RequestDayOffController(VacationPlannerDbContext dbContext)
+    public RequestDayOffController(VacationPlannerDbContext dbContext, IMapper mapper)
     {
+        _mapper = mapper;
         this.dbContext = dbContext;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<DayOffRequest>>> GetRequestsByCompanyId([FromRoute] Guid id)
+    [HttpGet("{companyId}/company")]
+    public async Task<ActionResult<IEnumerable<RestDayOffResponse>>> GetRequestsByCompanyId([FromRoute] Guid companyId)
     {
-        var result = await dbContext.DayOffRequests.Where(q => q.CompanyId == id).ToListAsync();
+        var query = dbContext.DayOffRequests.Where(q => q.CompanyId == companyId).Include(x=>x.Employee).Include(x=>x.TypeOfLeave);
+        var result = _mapper.ProjectTo<RestDayOffResponse>(query).ToList();
         if (result.Count <= 0)
             return NotFound();
         return Ok(result);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<IEnumerable<RestDayOffRequest>>> GetRequestsByEmployeeId([FromRoute] Guid id)
+    [HttpGet("{id}/employee")]
+    public async Task<ActionResult<IEnumerable<RestDayOffResponse>>> GetRequestsByEmployeeId([FromRoute] Guid id)
     {
-        var result = await dbContext.DayOffRequests.Where(x => x.EmployeeId == id).ToListAsync();
+        var query = dbContext.DayOffRequests.Where(x => x.EmployeeId == id).Include(x => x.Employee).Include(x => x.TypeOfLeave);
+        
+        var result = _mapper.ProjectTo<RestDayOffResponse>(query).ToList();
         if (result.Count <= 0)
             return NotFound();
-
         return Ok(result);
     }
 
-    [HttpPost("{id}")]
-    public async Task<IActionResult> RegisterRequestByEmployeeId([FromRoute] Guid id,
+    [HttpPost("{employeeId}")]
+    public async Task<IActionResult> RegisterRequestByEmployeeId([FromRoute] Guid employeeId,
         [FromBody] RestDayOffRequest request)
     {
         if (request is null)
@@ -48,7 +53,7 @@ public class RequestDayOffController : ControllerBase
         {
             Status = request.Status,
             CompanyId = request.CompanyId,
-            EmployeeId = id,
+            EmployeeId = employeeId,
             RequestDate = DateTime.Now,
             TypeOfLeave = request.TypeOfLeave,
             DayOffRequestDate = request.DayOffRequestDate,

@@ -27,9 +27,11 @@
                     FontSize="26"
                     Foreground="#6200EE" />
 
-                <TextBlock Foreground="#039BE5">
-                    <Run Language="pl-pl" Text="Adding an employee" />
-                </TextBlock>
+                <TextBlock
+                    FontSize="20"
+                    Foreground="#039BE5"
+                    Text="Adding an employee" />
+
                 <Grid Margin="0,20,0,0">
 
                     <Grid.ColumnDefinitions>

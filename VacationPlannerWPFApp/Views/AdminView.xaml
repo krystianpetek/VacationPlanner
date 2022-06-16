@@ -9,11 +9,40 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+
+        <Style x:Key="adminButton" TargetType="{x:Type Button}">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border
+                            Margin="5"
+                            Padding="15"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#039BE5" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Background" Value="#6200EE" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <components:AdminNavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}" />
@@ -27,7 +56,7 @@
                     Foreground="#6200EE" />
 
                 <TextBlock Foreground="#039BE5" Text="Administrator information" />
-                <StackPanel Margin="0,20,0,0">
+                <StackPanel Margin="20,20,0,0">
                     <WrapPanel>
                         <TextBlock
                             HorizontalAlignment="Center"
@@ -40,30 +69,39 @@
                             Text="{Binding CompanyName}" />
 
                     </WrapPanel>
-                    <Button
-                        Margin="0,20,0,0"
-                        HorizontalAlignment="Left"
-                        Command="{Binding NavigateAddEmployeeComand}"
-                        Content="Add employee"
-                        FontSize="14"
-                        Foreground="White"
-                        Style="{StaticResource LogReg}" />
+                    <Grid Margin="0,20,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Command="{Binding NavigateAddEmployeeComand}"
+                            Content="Add employee"
+                            Style="{StaticResource adminButton}" />
 
-                    <Button
-                        HorizontalAlignment="Left"
-                        Content="Show pending employee requests"
-                        FontSize="14"
-                        Foreground="White"
-                        Style="{StaticResource LogReg}" />
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Command="{Binding NavigateShowEmployeeRequestsCommand}"
+                            Content="Show all employee requests"
+                            Style="{StaticResource adminButton}" />
 
-                    <Button
-                        HorizontalAlignment="Left"
-                        Content="Show all employee requests"
-                        FontSize="14"
-                        Foreground="White"
-                        Style="{StaticResource LogReg}" />
+                        <!--<Button
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Command="{Binding NavigateShowPendingRequests}"
+                            Content="Show pending employee requests"
+                            Style="{StaticResource adminButton}" />-->
 
-
+                    </Grid>
                     <WrapPanel Margin="0,20,0,0">
                         <Label
                             Content="Today is:"
@@ -76,8 +114,6 @@
                     </WrapPanel>
                 </StackPanel>
             </StackPanel>
-
-
         </StackPanel>
     </Grid>
 </UserControl>
