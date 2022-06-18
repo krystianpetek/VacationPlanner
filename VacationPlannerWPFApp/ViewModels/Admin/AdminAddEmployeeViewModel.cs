@@ -1,6 +1,9 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Windows.Input;
 using VacationPlannerWPFApp.Command.Admin;
 using VacationPlannerWPFApp.Models.Admin;
+using VacationPlannerWPFApp.Stores;
 using VacationPlannerWPFApp.ViewModels.NavigationBars;
 
 namespace VacationPlannerWPFApp.ViewModels.Admin;
@@ -9,17 +12,27 @@ public class AdminAddEmployeeViewModel : ViewModelBase
 {
     private readonly AdminAddEmployeeModel adminAddEmployee;
 
-    public AdminAddEmployeeViewModel(AdminNavigationBarViewModel navigationBar)
+    public AdminAddEmployeeViewModel(AdminNavigationBarViewModel navigationBar, AdminStore adminStore)
     {
         NavigationBarViewModel = navigationBar;
-        AddEmployeeCommand = new AddEmployeeCommand();
         adminAddEmployee = new AdminAddEmployeeModel();
+        adminAddEmployee.CompanyId = adminStore.AboutAdmin.CompanyId;
+        adminAddEmployee.GeneratedPassword = this.GeneratePassword;
+        AddEmployeeCommand = new AddEmployeeCommand(adminAddEmployee,this); 
     }
 
     public AdminNavigationBarViewModel NavigationBarViewModel { get; }
+
     public ICommand AddEmployeeCommand { get; }
 
-
+    public Guid CompanyId
+    {
+        get => adminAddEmployee.CompanyId;
+        set
+        {
+            adminAddEmployee.CompanyId = value;
+        }
+    }
     public string FirstName
     {
         get => adminAddEmployee.FirstName;
@@ -65,10 +78,59 @@ public class AdminAddEmployeeViewModel : ViewModelBase
         get => adminAddEmployee.AvailableNumberOfDays;
         set => adminAddEmployee.AvailableNumberOfDays = value;
     }
+    
+    public string Message
+    {
+        get => adminAddEmployee.Info;
+        set 
+        { 
+            adminAddEmployee.Info = value;
+            OnPropertyChanged(nameof(Message));
+            OnPropertyChanged(nameof(adminAddEmployee.Info));
+        } 
+    }
+
+    public string MessagePassword
+    {
+        get => adminAddEmployee.InfoPass;
+        set 
+        { 
+            adminAddEmployee.InfoPass = value;
+            OnPropertyChanged(nameof(MessagePassword));
+            OnPropertyChanged(nameof(adminAddEmployee.InfoPass));
+        } 
+    }
+
+    private string _saveInfo;
+    public string SaveInfo
+    {
+        get => _saveInfo;
+        set 
+        { 
+            _saveInfo = value;
+            OnPropertyChanged(nameof(SaveInfo));
+        } 
+    }
+
 
     public string GeneratePassword
     {
-        get => adminAddEmployee.GeneratePassword;
-        set => adminAddEmployee.GeneratePassword = value;
+        get
+        {
+            if(adminAddEmployee.GeneratedPassword == null)
+            {
+                Random random = new Random();
+                string pass = string.Empty;
+                for (int i = 0; i < 16; i++)
+                {
+                    char c = (char)random.Next(33, 126);
+                    pass += c;
+
+                }
+                adminAddEmployee.GeneratedPassword = pass;
+            }
+
+            return adminAddEmployee.GeneratedPassword;
+        }
     }
 }

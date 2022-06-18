@@ -12,8 +12,8 @@ using VacationPlannerAPI.Database;
 namespace VacationPlannerAPI.Migrations
 {
     [DbContext(typeof(VacationPlannerDbContext))]
-    [Migration("20220611212820_initialize2")]
-    partial class initialize2
+    [Migration("20220616055704_data")]
+    partial class data
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,9 @@ namespace VacationPlannerAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("DayOffRequestDate")
                         .HasColumnType("datetime2");
 
@@ -70,6 +73,8 @@ namespace VacationPlannerAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("EmployeeId");
 
@@ -106,6 +111,9 @@ namespace VacationPlannerAPI.Migrations
                     b.Property<Guid?>("UserLoginId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("WorkMoreThan10Year")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
@@ -139,12 +147,50 @@ namespace VacationPlannerAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("TypeOfLeave")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("TypeOfLeave");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            TypeOfLeave = "Annual leave"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            TypeOfLeave = "Leave on demand"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            TypeOfLeave = "Ocassional leave"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            TypeOfLeave = "Unpaid leave"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            TypeOfLeave = "Parental leave"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            TypeOfLeave = "Sick leave"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            TypeOfLeave = "Tyime off in lieu for overtime"
+                        });
                 });
 
             modelBuilder.Entity("VacationPlannerAPI.Models.UserLogin", b =>
@@ -196,6 +242,12 @@ namespace VacationPlannerAPI.Migrations
 
             modelBuilder.Entity("VacationPlannerAPI.Models.DayOffRequest", b =>
                 {
+                    b.HasOne("VacationPlannerAPI.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("VacationPlannerAPI.Models.Employee", "Employee")
                         .WithMany("DayOffRequests")
                         .HasForeignKey("EmployeeId")
@@ -207,6 +259,8 @@ namespace VacationPlannerAPI.Migrations
                         .HasForeignKey("VacationPlannerAPI.Models.DayOffRequest", "TypeOfLeaveId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Company");
 
                     b.Navigation("Employee");
 

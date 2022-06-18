@@ -48,7 +48,7 @@ public class CompanyController : ControllerBase
     public async Task<ActionResult<RestCompanyResponse>> GetCompanyByAdminId([FromRoute] Guid id)
     {
         var result = await context.Companies.Where(q => q.AdministratorId == id)
-            .Select(q => new RestCompanyResponse { CompanyName = q.CompanyName }).FirstOrDefaultAsync();
+            .Select(q => new RestCompanyResponse { CompanyName = q.CompanyName, CompanyId = q.Id }).FirstOrDefaultAsync();
         if (result is null)
             return NotFound(id);
 

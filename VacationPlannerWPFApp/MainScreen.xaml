@@ -39,6 +39,9 @@
                 <DataTemplate DataType="{x:Type viewModelsAdmin:AdminAddEmployeeViewModel}">
                     <viewsAppAdmin:AdminAddEmployeeView />
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModelsAdmin:ShowEmployeeRequestsViewModel}">
+                    <viewsAppAdmin:AdminShowEmployeeRequestsViews />
+                </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
 

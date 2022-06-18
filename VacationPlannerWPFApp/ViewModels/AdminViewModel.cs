@@ -13,11 +13,14 @@ public class AdminViewModel : ViewModelBase
     private readonly AdminStore _adminStore;
 
     public AdminViewModel(AdminNavigationBarViewModel navigationBarViewModel,
-        NavigationService<AdminAddEmployeeViewModel> adminAddEmployeeViewModel, AdminStore adminStore)
+        NavigationService<AdminAddEmployeeViewModel> adminAddEmployeeViewModel,
+        NavigationService<ShowEmployeeRequestsViewModel> showEmployeeRequestsViewModel, 
+        AdminStore adminStore)
     {
         _adminStore = adminStore;
         NavigationBarViewModel = navigationBarViewModel;
         NavigateAddEmployeeComand = new NavigateCommand<AdminAddEmployeeViewModel>(adminAddEmployeeViewModel);
+        NavigateShowEmployeeRequestsCommand = new NavigateCommand<ShowEmployeeRequestsViewModel>(showEmployeeRequestsViewModel);
     }
 
     public AdminNavigationBarViewModel NavigationBarViewModel { get; }
@@ -27,7 +30,8 @@ public class AdminViewModel : ViewModelBase
         get => _adminStore.AboutAdmin.CompanyName;
         set => _adminStore.AboutAdmin.CompanyName = value;
     }
+    public string TodayDate => DateTime.Now.ToShortDateString();
 
     public ICommand NavigateAddEmployeeComand { get; }
-    public string TodayDate => DateTime.Now.ToShortDateString();
+    public ICommand NavigateShowEmployeeRequestsCommand { get; }
 }

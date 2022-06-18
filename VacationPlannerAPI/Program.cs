@@ -14,6 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContext<VacationPlannerDbContext>(config =>
     config.UseSqlServer(builder.Configuration.GetConnectionString("VP_DbContext")));
 builder.Services.AddSwaggerGen(c =>
