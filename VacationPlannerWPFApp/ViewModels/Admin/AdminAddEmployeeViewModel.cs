@@ -90,6 +90,29 @@ public class AdminAddEmployeeViewModel : ViewModelBase
         } 
     }
 
+    public string MessagePassword
+    {
+        get => adminAddEmployee.InfoPass;
+        set 
+        { 
+            adminAddEmployee.InfoPass = value;
+            OnPropertyChanged(nameof(MessagePassword));
+            OnPropertyChanged(nameof(adminAddEmployee.InfoPass));
+        } 
+    }
+
+    private string _saveInfo;
+    public string SaveInfo
+    {
+        get => _saveInfo;
+        set 
+        { 
+            _saveInfo = value;
+            OnPropertyChanged(nameof(SaveInfo));
+        } 
+    }
+
+
     public string GeneratePassword
     {
         get

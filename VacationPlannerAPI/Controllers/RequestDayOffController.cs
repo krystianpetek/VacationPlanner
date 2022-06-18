@@ -67,22 +67,10 @@ public class RequestDayOffController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] RestDayOffCorrect correct)
+    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] RestDayOffPut status)
     {
-        if (correct == null)
-            return BadRequest();
-
-        var dayToChange = await dbContext.DayOffRequests.SingleOrDefaultAsync(q => q.Id == id);
-
-        if (dayToChange == null)
-            return BadRequest();
-
-        if (dayToChange.EmployeeId != correct.Id)
-            return BadRequest();
-
-        dayToChange.DayOffRequestDate = correct.DayOffRequestDate;
-        dayToChange.TypeOfLeave = correct.TypeOfLeave;
-        dayToChange.Status = Status.Pending;
+        var changeModel = dbContext.DayOffRequests.FirstOrDefault(x => x.Id == id);
+        changeModel.Status = (Status)Enum.Parse(typeof(Status), status.Status);
 
         await dbContext.SaveChangesAsync();
 

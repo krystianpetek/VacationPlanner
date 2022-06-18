@@ -17,6 +17,8 @@ public class AdminAddEmployeeModel
 
     public string Info { get; set; } = string.Empty;
 
+    public string InfoPass { get; set; } = string.Empty;
+
     public bool WorkMoreThan10Years { get; set; } = false;
 
     public int AvailableNumberOfDays { get; set; } = 0;

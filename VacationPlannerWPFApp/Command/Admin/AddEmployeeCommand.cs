@@ -40,6 +40,8 @@ internal class AddEmployeeCommand : CommandBase
             var response = client.PostAsync($"https://{App.URLToAPI}/api/Employee/{viewModel.CompanyId}", data).Result;
             //viewModel.Info = response.Content.ReadAsStringAsync().Result;
             _vm.Message = response.Content.ReadAsStringAsync().Result;
+            _vm.SaveInfo = $"Save password for employee!";
+            _vm.MessagePassword = viewModel.GeneratedPassword;
         }
     }
 }

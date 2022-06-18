@@ -13,6 +13,8 @@ using System.Linq;
 using VacationPlannerWPFApp.Stores;
 using VacationPlannerWPFApp.ViewModels.NavigationBars;
 using VacationPlannerWPFApp.Command;
+using System.Net.Http.Headers;
+using System.Windows.Data;
 
 namespace VacationPlannerWPFApp.ViewModels.Admin;
 
@@ -22,18 +24,44 @@ public class ShowEmployeeRequestsViewModel : ViewModelBase
     public ObservableCollection<ShowEmployeeRequestModel> showEmployeeRequests { get; set; }
     public ObservableCollection<string> leaveType { get; set; }
 
-    //public ICommand ShowEmployeeRequestsCommand { get; }
-
-    public ICommand Nav { get; set; }
+    private ShowEmployeeRequestModel _selectedModel { get; set; } = new ShowEmployeeRequestModel();
+    public ShowEmployeeRequestModel SelectedModel
+    {
+        get => _selectedModel;
+        set
+        {
+            _selectedModel = value;
+            OnPropertyChanged(nameof(SelectedModel));
+            OnPropertyChanged(nameof(ID));
+            OnPropertyChanged(nameof(Statusik));
+        }
+    }
+    public string ID
+    {
+        get => SelectedModel.Id.ToString();
+        set
+        { 
+            SelectedModel.Id= Guid.Parse(value);
+        }
+    }
+    public string Statusik
+    {
+        get => SelectedModel.Status;
+        set
+        {
+            SelectedModel.Status = value;
+            Register(Guid.Parse(ID));
+            showEmployeeRequests.FirstOrDefault(x => x.Id == _selectedModel.Id).Status = _selectedModel.Status;
+            CollectionViewSource.GetDefaultView(showEmployeeRequests).Refresh();
+        }
+    }
 
     public ShowEmployeeRequestsViewModel(AdminNavigationBarViewModel navigationBar, AdminStore adminStore)
     {
         NavigationBarViewModel = navigationBar;
         var result = GetDayOffRequestsById(adminStore.AboutAdmin.CompanyId).ToList();
-        showEmployeeRequests = new ObservableCollection<ShowEmployeeRequestModel>();
-        leaveType = new ObservableCollection<string>() { "Pending", "Rejected", "Accepted" };
-        Nav = new NavCommand(showEmployeeRequests);
-        //ShowEmployeeRequestsCommand = new ShowEmployeeRequestsCommand(this);
+        showEmployeeRequests = new ObservableCollection<ShowEmployeeRequestModel>(result);
+        leaveType = new ObservableCollection<string>() { "Accepted", "Pending", "Rejected" };
     }
 
     private static IEnumerable<ShowEmployeeRequestModel> GetDayOffRequestsById(Guid id)
@@ -53,16 +81,25 @@ public class ShowEmployeeRequestsViewModel : ViewModelBase
         return collection;
     }
 
-    public class NavCommand : CommandBase
+    private void Register(Guid Id)
     {
-        private ObservableCollection<ShowEmployeeRequestModel> showEmployeeRequests;
-        public NavCommand(ObservableCollection<ShowEmployeeRequestModel> emp)
+        using (var client = new HttpClient())
         {
-            showEmployeeRequests = emp;
-        }
-        public override void Execute(object? parameter)
-        {
+            client.DefaultRequestHeaders.Add("ApiKey", App.key);
+            var data = new StringContent(JsonConvert.SerializeObject(new
+            {
+                Status = _selectedModel.Status
+            }));
 
+            data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = client.PutAsync($"https://{App.URLToAPI}/api/RequestDayOff/{Id}", data).Result;
+            var result = response.Content.ReadAsStringAsync().Result;
         }
+    }
+    public enum Status
+    {
+        Pending,
+        Accepted,
+        Rejected
     }
 }

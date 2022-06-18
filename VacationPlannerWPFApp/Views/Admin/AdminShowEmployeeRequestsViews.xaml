@@ -7,14 +7,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:VacationPlannerWPFApp.ViewModels.Admin"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
+    d:DataContext="{d:DesignInstance Type=local:ShowEmployeeRequestsViewModel}"
+    d:DesignHeight="600"
     d:DesignWidth="800"
     FontSize="13"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <CollectionViewSource x:Key="leaveType" Source="{Binding leaveType}" />
-
-    </UserControl.Resources>
+    <!--<UserControl.Resources>
+        <CollectionViewSource x:Key="ShowEmployeeRequests" Source="{Binding showEmployeeRequests}" />
+        <CollectionViewSource x:Key="leaveTypes" Source="{Binding leaveType}" />
+    </UserControl.Resources>-->
 
     <Grid Background="White">
         <Grid.RowDefinitions>
@@ -37,6 +38,51 @@
                     Text="List of all employee requests" />
 
                 <Grid x:Name="root" Margin="20">
+
+                    <ListView
+                        Height="300"
+                        MaxHeight="400"
+                        Margin="5"
+                        ItemsSource="{Binding showEmployeeRequests}"
+                        SelectedItem="{Binding SelectedModel}">
+                        <ListView.View>
+                            <GridView x:Name="ggd">
+                                <GridViewColumn
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding FullName}"
+                                    Header="Fullname" />
+                                <GridViewColumn
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding DayOffRequestDate}"
+                                    Header="Request day" />
+                                <GridViewColumn
+                                    Width="200"
+                                    DisplayMemberBinding="{Binding TypeOfLeave}"
+                                    Header="Type of leave" />
+                                <GridViewColumn
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding Status}"
+                                    Header="Status" />
+
+                                <!--<GridViewColumn x:Name="fsa" Header="Liczba sztuk">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock
+                                                Background="LightGray"
+                                                FontSize="12"
+                                                FontWeight="Bold"
+                                                Foreground="IndianRed"
+                                                Text="{Binding Status}"
+                                                TextAlignment="Right" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>-->
+
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="ID" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
                     <DataGrid
                         Height="300"
                         MaxHeight="400"
@@ -45,8 +91,10 @@
                         AutoGenerateColumns="False"
                         GridLinesVisibility="None"
                         HorizontalScrollBarVisibility="Auto"
-                        IsReadOnly="true"
-                        ItemsSource="{Binding Path=showEmployeeRequests}">
+                        IsReadOnly="True"
+                        Visibility="Hidden">
+                        <!--  ItemsSource="{Binding showEmployeeRequests}"  -->
+
                         <DataGrid.Resources>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -80,23 +128,26 @@
                                 Binding="{Binding Status}"
                                 Header="Status" />
                             <!--<DataGridComboBoxColumn
-                                x:Name="statusList"
                                 Width="100"
+                                DisplayMemberPath="Status"
                                 Header="Status"
                                 IsReadOnly="False"
-                                SelectedItemBinding="{Binding Status}">
+                                SelectedItemBinding="{Binding Status}"
+                                SelectedValueBinding="{Binding Status}"
+                                SelectedValuePath="Status">
                                 <DataGridComboBoxColumn.ElementStyle>
                                     <Style TargetType="ComboBox">
                                         <Setter Property="HorizontalContentAlignment" Value="Center" />
                                     </Style>
                                 </DataGridComboBoxColumn.ElementStyle>
                             </DataGridComboBoxColumn>-->
+
                             <DataGridTextColumn
                                 Width="*"
                                 Binding="{Binding Id}"
                                 Header="Request ID" />
                         </DataGrid.Columns>
-                        <DataGrid.RowDetailsTemplate>
+                        <!--<DataGrid.RowDetailsTemplate>
                             <DataTemplate>
                                 <StackPanel Height="50" Orientation="Horizontal">
                                     <TextBlock
@@ -109,16 +160,48 @@
                                         HorizontalContentAlignment="Center"
                                         VerticalContentAlignment="Center"
                                         FontWeight="Bold"
-                                        ItemsSource="{Binding Source={StaticResource leaveType}}"
+                                        ItemsSource="{Binding Source={StaticResource leaveTypes}}"
                                         SelectedItem="{Binding Status}" />
-                                    <Button />
-                                    <!--<Button Command="{Binding Nav, RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor}}" />-->
-                                    <!--<Button Command="{Binding Path=Nav, RelativeSource={RelativeSource AncestorType=admin:, AncestorLevel=1, Mode=PreviousData}}" />-->
-                                    <!--<Button Command="{Binding Nav, RelativeSource={Binding RelativeSource={RelativeSource AncestorType={x:Type ShowEmployeeRequestsViewModel}}}}" />-->
-                                </StackPanel>
+                                    <Button Click="Button_Click" />
+                                    <!<Button Command="{Binding Nav, RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor}}" />-->
+                        <!--<Button Command="{Binding Path=Nav, RelativeSource={RelativeSource AncestorType=admin:, AncestorLevel=1, Mode=PreviousData}}" />-->
+                        <!--<Button Command="{Binding Nav, RelativeSource={Binding RelativeSource={RelativeSource AncestorType={x:Type ShowEmployeeRequestsViewModel}}}}" />-->
+                        <!--</StackPanel>
                             </DataTemplate>
-                        </DataGrid.RowDetailsTemplate>
+                        </DataGrid.RowDetailsTemplate>-->
                     </DataGrid>
+
+                </Grid>
+                <Grid Margin="20,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Column="0"
+                        Margin="10"
+                        Content="ID:" />
+                    <TextBlock
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Text="{Binding ID}" />
+                    <Label
+                        Grid.Column="2"
+                        Margin="10"
+                        Content="Status: " />
+                    <ComboBox
+                        Grid.Column="3"
+                        Width="90"
+                        Height="30"
+                        HorizontalAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        Background="Aqua"
+                        BorderThickness="0.5"
+                        ItemsSource="{Binding leaveType}"
+                        SelectedItem="{Binding Statusik}" />
                 </Grid>
             </StackPanel>
         </StackPanel>
