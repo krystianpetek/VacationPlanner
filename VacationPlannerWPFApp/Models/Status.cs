@@ -1,6 +1,6 @@
 ﻿namespace VacationPlannerWPFApp.Models;
 
-public enum Enums
+public enum Status
 {
     Pending,
     Accepted,

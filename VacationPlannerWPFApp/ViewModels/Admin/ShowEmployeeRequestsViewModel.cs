@@ -15,6 +15,7 @@ using VacationPlannerWPFApp.ViewModels.NavigationBars;
 using VacationPlannerWPFApp.Command;
 using System.Net.Http.Headers;
 using System.Windows.Data;
+using VacationPlannerWPFApp.Models;
 
 namespace VacationPlannerWPFApp.ViewModels.Admin;
 
@@ -61,7 +62,7 @@ public class ShowEmployeeRequestsViewModel : ViewModelBase
         NavigationBarViewModel = navigationBar;
         var result = GetDayOffRequestsById(adminStore.AboutAdmin.CompanyId).ToList();
         showEmployeeRequests = new ObservableCollection<ShowEmployeeRequestModel>(result);
-        leaveType = new ObservableCollection<string>() { "Accepted", "Pending", "Rejected" };
+        leaveType = new ObservableCollection<string>() { Status.Pending.ToString(), Status.Accepted.ToString(), Status.Rejected.ToString() };
     }
 
     private static IEnumerable<ShowEmployeeRequestModel> GetDayOffRequestsById(Guid id)

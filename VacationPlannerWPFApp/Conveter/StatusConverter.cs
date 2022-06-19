@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VacationPlannerWPFApp.Models;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -13,7 +14,7 @@ namespace VacationPlannerWPFApp.Conveter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value.ToString() == "Pending")
+            if (value.ToString() == Status.Pending.ToString())
                 return new SolidColorBrush(Colors.Red);
             return new SolidColorBrush(Colors.Black);
 
