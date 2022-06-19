@@ -12,6 +12,8 @@ namespace VacationPlannerAPI.RestModels
 
         public string DayOffRequestDate { get; set; }
 
+        public string RequestDate { get; set; }
+
         public string Status { get; set; }
     }
 }

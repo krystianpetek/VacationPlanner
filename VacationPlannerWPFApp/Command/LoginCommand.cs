@@ -42,6 +42,9 @@ public class LoginCommand : AsyncCommandBase
         try
         {
             account = await Login();
+            if (account is null)
+                return;
+
             if (account.Role is null)
             {
                 _viewModel.Info = account.Message;

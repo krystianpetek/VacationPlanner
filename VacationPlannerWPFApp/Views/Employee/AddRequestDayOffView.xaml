@@ -4,12 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:components="clr-namespace:VacationPlannerWPFApp.Components"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:employee="clr-namespace:VacationPlannerWPFApp.ViewModels.Employee"
     xmlns:local="clr-namespace:VacationPlannerWPFApp.Views.Employee"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=employee:AddRequestDayOffViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     FontSize="13"
     mc:Ignorable="d">
+
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -31,165 +34,48 @@
                 <TextBlock
                     FontSize="20"
                     Foreground="#039BE5"
-                    Text="Awork" />
+                    Text="Add request for day off" />
 
                 <Grid Margin="0,20,0,0">
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <StackPanel
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        HorizontalAlignment="Right">
 
+                    <StackPanel Grid.Row="0" Grid.Column="0">
 
                         <Border Style="{StaticResource borderField}">
                             <Grid>
-                                <Label
-                                    Margin="8,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Content="First name"
-                                    Foreground="#039BE5" />
-                                <TextBox
-                                    Width="200"
-                                    Margin="5"
-                                    Padding="5"
-                                    HorizontalAlignment="Center"
-                                    Background="#F1F3F4"
+                                <DatePicker
                                     BorderThickness="0"
-                                    Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                    Focusable="False"
+                                    IsTodayHighlighted="True"
+                                    SelectedDate="{Binding DayOffRequestDate}"
+                                    Text="{Binding DayOffRequestDate}" />
                             </Grid>
                         </Border>
+
                         <Border Style="{StaticResource borderField}">
                             <Grid>
-                                <Label
-                                    Margin="8,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Content="Last name"
-                                    Foreground="#039BE5" />
-                                <TextBox
-                                    Width="200"
-                                    Margin="5"
-                                    Padding="5"
-                                    HorizontalAlignment="Center"
-                                    Background="#F1F3F4"
+                                <ComboBox
                                     BorderThickness="0"
-                                    Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                            </Grid>
-                        </Border>
-
-                        <Border Style="{StaticResource borderField}">
-                            <Grid>
-                                <Label
-                                    Margin="8,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Content="User name"
-                                    Foreground="#039BE5" />
-                                <TextBox
-                                    Width="200"
-                                    Margin="5"
-                                    Padding="5"
-                                    HorizontalAlignment="Center"
-                                    Background="#F1F3F4"
-                                    BorderThickness="0"
-                                    Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                            </Grid>
-                        </Border>
-
-                    </StackPanel>
-                    <StackPanel
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        HorizontalAlignment="Left">
-
-                        <Border Style="{StaticResource borderField}">
-                            <Grid>
-                                <Label
-                                    Margin="8,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Panel.ZIndex="5"
-                                    Content="All vacation days"
-                                    Foreground="#039BE5" />
-                                <TextBlock
-                                    Width="200"
-                                    Margin="5"
-                                    Padding="5"
-                                    Background="#F1F3F4"
-                                    Text="{Binding NumberOfDays, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                    TextAlignment="Right" />
-                            </Grid>
-                        </Border>
-
-                        <Border Style="{StaticResource borderField}">
-                            <Grid>
-                                <Label
-                                    Margin="8,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Panel.ZIndex="5"
-                                    Content="Available vacation days"
-                                    Foreground="#039BE5" />
-                                <TextBox
-                                    Width="35"
-                                    Margin="5"
-                                    Padding="5"
-                                    HorizontalAlignment="Right"
-                                    Background="#F1F3F4"
-                                    BorderThickness="0"
-                                    MaxLength="2"
-                                    Text="{Binding AvailableNumberOfDays, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                    TextAlignment="Right" />
-                            </Grid>
-                        </Border>
-
-                        <Border Style="{StaticResource borderField}">
-                            <Grid>
-                                <Label
-                                    Height="37"
-                                    Margin="8,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    VerticalContentAlignment="Center"
-                                    Content="Work more than 10 years"
-                                    Foreground="#039BE5" />
-                                <CheckBox
-                                    Margin="10"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Center"
-                                    Background="#F1F3F4"
-                                    BorderBrush="#6200EE"
-                                    Foreground="#6200EE"
-                                    IsChecked="{Binding WorkMoreThan10Years, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                    ItemsSource="{Binding typeOfLeave}"
+                                    SelectedItem="{Binding selectedType}" />
                             </Grid>
                         </Border>
                     </StackPanel>
 
-                    <StackPanel
-                        Grid.Row="1"
-                        Grid.ColumnSpan="4"
-                        Margin="15">
+                    <StackPanel Grid.Row="1" Margin="15">
                         <Button
                             HorizontalAlignment="Center"
-                            Command="{Binding AddEmployeeCommand}"
+                            Command="{Binding AddDayOffRequestCommand}"
                             Content="ADD"
                             Foreground="White"
                             Style="{StaticResource LogReg}" />
-
-                        <Label
-                            Margin="0,5,0,0"
-                            HorizontalAlignment="Center"
-                            Content="{Binding Message, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                            Foreground="#039BE5" />
                     </StackPanel>
 
                     <Grid.Resources>

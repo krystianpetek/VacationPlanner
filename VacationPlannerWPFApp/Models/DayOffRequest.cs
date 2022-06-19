@@ -8,6 +8,8 @@ public class DayOffRequest
 
     public string DayOffRequestDate { get; set; }
 
+    public string RequestDate { get; set; }
+
     public Status Status { get; set; }
 
     public string TypeOfLeave { get; set; }

@@ -47,7 +47,7 @@ public class VacationPlannerDbContext : DbContext
             new TypeOfLeaveRequest() { Id = 4, TypeOfLeave = "Unpaid leave" },
             new TypeOfLeaveRequest() { Id = 5, TypeOfLeave = "Parental leave" },
             new TypeOfLeaveRequest() { Id = 6, TypeOfLeave = "Sick leave" },
-            new TypeOfLeaveRequest() { Id = 7, TypeOfLeave = "Tyime off in lieu for overtime" });
+            new TypeOfLeaveRequest() { Id = 7, TypeOfLeave = "Time off in lieu for overtime" });
 
     }
 }

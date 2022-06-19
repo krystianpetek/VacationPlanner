@@ -8,7 +8,7 @@ using VacationPlannerWPFApp.Models;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace VacationPlannerWPFApp.Conveter
+namespace VacationPlannerWPFApp.Converter
 {
     public class StatusConverter : IValueConverter
     {

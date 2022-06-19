@@ -8,14 +8,10 @@ namespace VacationPlannerWPFApp.Models.Employee
 {
     public class AddRequestDayOffModel
     {
-        public Guid Id { get; set; }
+
+        public string TypeOfLeave { get; set; }
 
         public DateTime DayOffRequestDate { get; set; }
 
-        public TypeOfLeave Type { get; set; }
-
-        public Guid EmployeeId { get; set; }
-
-        public DateTime RequestDate { get; set; } = DateTime.Now;
     }
 }
