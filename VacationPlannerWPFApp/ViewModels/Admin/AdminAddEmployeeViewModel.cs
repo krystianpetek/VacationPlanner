@@ -17,7 +17,6 @@ public class AdminAddEmployeeViewModel : ViewModelBase
         NavigationBarViewModel = navigationBar;
         adminAddEmployee = new AdminAddEmployeeModel();
         adminAddEmployee.CompanyId = adminStore.AboutAdmin.CompanyId;
-        adminAddEmployee.GeneratedPassword = this.GeneratePassword;
         AddEmployeeCommand = new AddEmployeeCommand(adminAddEmployee,this); 
     }
 
@@ -113,24 +112,5 @@ public class AdminAddEmployeeViewModel : ViewModelBase
     }
 
 
-    public string GeneratePassword
-    {
-        get
-        {
-            if(adminAddEmployee.GeneratedPassword == null)
-            {
-                Random random = new Random();
-                string pass = string.Empty;
-                for (int i = 0; i < 16; i++)
-                {
-                    char c = (char)random.Next(33, 126);
-                    pass += c;
-
-                }
-                adminAddEmployee.GeneratedPassword = pass;
-            }
-
-            return adminAddEmployee.GeneratedPassword;
-        }
-    }
+    public string GeneratePassword => adminAddEmployee.GeneratedPassword;
 }

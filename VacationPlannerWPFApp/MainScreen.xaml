@@ -9,7 +9,7 @@
     xmlns:viewsApp="clr-namespace:VacationPlannerWPFApp.Views"
     xmlns:viewsAppAdmin="clr-namespace:VacationPlannerWPFApp.Views.Admin"
     Title="Vacation Planner by Krystian Petek"
-    Width="800"
+    Width="920"
     Height="600"
     FontFamily="Microsoft Sans Serif"
     FontSize="20"
@@ -41,6 +41,9 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type viewModelsAdmin:ShowEmployeeRequestsViewModel}">
                     <viewsAppAdmin:AdminShowEmployeeRequestsViews />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModelsAdmin:ShowEmployeesViewModel}">
+                    <viewsAppAdmin:AdminShowEmployeesViews />
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>

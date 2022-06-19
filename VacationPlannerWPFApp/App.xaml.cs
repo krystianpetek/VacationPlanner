@@ -96,8 +96,7 @@ public partial class App : Application
     {
         return new NavigationService<AdminViewModel>(
             _navigationStore,
-            () => new AdminViewModel(_adminNavigationBarViewModel, CreateAdminAddEmployeeNavigationService(), CreateShowEmployeeRequestsNavigationService(),
-                _adminStore));
+            () => new AdminViewModel(_adminNavigationBarViewModel, CreateAdminAddEmployeeNavigationService(), CreateShowEmployeeRequestsNavigationService(), CreateShowEmployeesService(), _adminStore));
     }
 
     private NavigationService<RegisterViewModel> CreateRegisterNavigationService()
@@ -136,5 +135,12 @@ public partial class App : Application
         return new NavigationService<ShowEmployeeRequestsViewModel>(
             _navigationStore,
             () => new ShowEmployeeRequestsViewModel(_adminNavigationBarViewModel,_adminStore));
+    }
+
+    private NavigationService<ShowEmployeesViewModel> CreateShowEmployeesService()
+    {
+        return new NavigationService<ShowEmployeesViewModel>(
+            _navigationStore,
+            () => new ShowEmployeesViewModel(_adminNavigationBarViewModel,_adminStore));
     }
 }

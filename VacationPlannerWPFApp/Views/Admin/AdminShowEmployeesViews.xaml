@@ -1,0 +1,73 @@
+﻿<UserControl
+    x:Class="VacationPlannerWPFApp.Views.Admin.AdminShowEmployeesViews"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:admin="clr-namespace:VacationPlannerWPFApp.ViewModels.Admin"
+    xmlns:components="clr-namespace:VacationPlannerWPFApp.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:VacationPlannerWPFApp.Views.Admin"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=admin:ShowEmployeesViewModel}"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    FontSize="13"
+    mc:Ignorable="d">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <components:AdminNavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}" />
+        <StackPanel Grid.Row="1" Margin="20">
+            <StackPanel Margin="0,15,0,0">
+                <Label
+                    HorizontalAlignment="Center"
+                    Content="Vacation Planner"
+                    FontSize="26"
+                    Foreground="#6200EE" />
+
+                <WrapPanel>
+                    <TextBlock
+                        FontSize="20"
+                        Foreground="#039BE5"
+                        Text="List of employees works in " />
+                    <TextBlock Text="{Binding CompanyName}" />
+                </WrapPanel>
+                <Grid x:Name="root" Margin="20">
+
+                    <ListView
+                        Height="300"
+                        MaxHeight="400"
+                        Margin="5"
+                        ItemsSource="{Binding employees}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn
+                                    Width="auto"
+                                    DisplayMemberBinding="{Binding Id}"
+                                    Header="Employee ID" />
+                                <GridViewColumn
+                                    Width="130"
+                                    DisplayMemberBinding="{Binding FirstName}"
+                                    Header="First name" />
+                                <GridViewColumn
+                                    Width="130"
+                                    DisplayMemberBinding="{Binding LastName}"
+                                    Header="Last name" />
+                                <GridViewColumn
+                                    Width="90"
+                                    DisplayMemberBinding="{Binding NumberOfDays}"
+                                    Header="Possible days" />
+                                <GridViewColumn
+                                    Width="90"
+                                    DisplayMemberBinding="{Binding AvailableNumberOfDays}"
+                                    Header="Available days" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

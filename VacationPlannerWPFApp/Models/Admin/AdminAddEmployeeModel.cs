@@ -13,7 +13,20 @@ public class AdminAddEmployeeModel
 
     public string UserName { get; set; }
 
-    public string GeneratedPassword { get; set; }
+    public string GeneratedPassword
+    {
+        get
+        {
+            Random random = new Random();
+            string pass = string.Empty;
+            for (int i = 0; i < 16; i++)
+            {
+                char c = (char)random.Next(33, 126);
+                pass += c;
+            }
+            return pass;
+        }
+    }
 
     public string Info { get; set; } = string.Empty;
 

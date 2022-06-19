@@ -190,13 +190,19 @@
                             Content="{Binding Message, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                             Foreground="#039BE5" />
 
-                        <Label HorizontalAlignment="Center" Content="{Binding SaveInfo}" />
+                        <Label
+                            Margin="0,20,0,0"
+                            HorizontalAlignment="Center"
+                            Content="{Binding SaveInfo}"
+                            FontSize="15"
+                            Foreground="#6200EE" />
                         <TextBox
                             Margin="0,5,0,0"
                             HorizontalAlignment="Center"
                             BorderThickness="0"
+                            FontSize="20"
                             Foreground="red"
-                            Text="{Binding MessagePassword, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                            Text="{Binding MessagePassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     </StackPanel>
 
                     <Grid.Resources>

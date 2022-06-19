@@ -110,7 +110,7 @@ public class LoginCommand : AsyncCommandBase
         {
             client.DefaultRequestHeaders.Add("ApiKey", App.key);
 
-            var response = await client.GetAsync($"https://{App.URLToAPI}/api/Employee/user/{id}");
+            var response = await client.GetAsync($"https://{App.URLToAPI}/api/Employee/ByUser/{id}");
             var claimsResponse = await response.Content.ReadAsStringAsync();
             temporary = JsonConvert.DeserializeObject<EmployeeResponseModel>(claimsResponse);
 
@@ -138,7 +138,7 @@ public class LoginCommand : AsyncCommandBase
             }));
 
             data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var response = await client.PostAsync("https://localhost:7020/api/user/login", data);
+            var response = await client.PostAsync($"https://{App.URLToAPI}/api/user/login", data);
             var claimsResponse = await response.Content.ReadAsStringAsync();
             try
             {

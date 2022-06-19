@@ -23,12 +23,12 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet("ByCompany/{id}")]
-    public async Task<ActionResult<IEnumerable<RestEmployeeResponse>>> GetEmployeeByCompany([FromRoute] Guid id)
+    public async Task<ActionResult<IEnumerable<SpecialEmployeeResponse>>> GetEmployeeByCompany([FromRoute] Guid id)
     {
-        var result = await context.Employees.Where(q => q.CompanyId == id).Select(q => new RestEmployeeResponse
+        var result = await context.Employees.Where(q => q.CompanyId == id).Select(q => new SpecialEmployeeResponse
         {
             FirstName = q.FirstName, LastName = q.LastName, AvailableNumberOfDays = q.AvailableNumberOfDays,
-            NumberOfDays = q.NumberOfDays
+            NumberOfDays = q.NumberOfDays, Id = q.Id
         }).ToListAsync();
         if (result is null)
             return NotFound(id);
