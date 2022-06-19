@@ -15,6 +15,7 @@ using VacationPlannerWPFApp.ViewModels.NavigationBars;
 using VacationPlannerWPFApp.Command;
 using System.Net.Http.Headers;
 using System.Windows.Data;
+using VacationPlannerWPFApp.Models;
 
 namespace VacationPlannerWPFApp.ViewModels.Admin;
 
@@ -24,34 +25,34 @@ public class ShowEmployeeRequestsViewModel : ViewModelBase
     public ObservableCollection<ShowEmployeeRequestModel> showEmployeeRequests { get; set; }
     public ObservableCollection<string> leaveType { get; set; }
 
-    private ShowEmployeeRequestModel _selectedModel { get; set; } = new ShowEmployeeRequestModel();
-    public ShowEmployeeRequestModel SelectedModel
+    private ShowEmployeeRequestModel _selectedEmployee { get; set; } = new ShowEmployeeRequestModel();
+    public ShowEmployeeRequestModel SelectedEmployee
     {
-        get => _selectedModel;
+        get => _selectedEmployee;
         set
         {
-            _selectedModel = value;
-            OnPropertyChanged(nameof(SelectedModel));
+            _selectedEmployee = value;
+            OnPropertyChanged(nameof(SelectedEmployee));
             OnPropertyChanged(nameof(ID));
             OnPropertyChanged(nameof(Statusik));
         }
     }
     public string ID
     {
-        get => SelectedModel.Id.ToString();
+        get => SelectedEmployee.Id.ToString();
         set
-        { 
-            SelectedModel.Id= Guid.Parse(value);
+        {
+            SelectedEmployee.Id= Guid.Parse(value);
         }
     }
     public string Statusik
     {
-        get => SelectedModel.Status;
+        get => SelectedEmployee.Status;
         set
         {
-            SelectedModel.Status = value;
+            SelectedEmployee.Status = value;
             Register(Guid.Parse(ID));
-            showEmployeeRequests.FirstOrDefault(x => x.Id == _selectedModel.Id).Status = _selectedModel.Status;
+            showEmployeeRequests.FirstOrDefault(x => x.Id == _selectedEmployee.Id).Status = _selectedEmployee.Status;
             CollectionViewSource.GetDefaultView(showEmployeeRequests).Refresh();
         }
     }
@@ -61,7 +62,7 @@ public class ShowEmployeeRequestsViewModel : ViewModelBase
         NavigationBarViewModel = navigationBar;
         var result = GetDayOffRequestsById(adminStore.AboutAdmin.CompanyId).ToList();
         showEmployeeRequests = new ObservableCollection<ShowEmployeeRequestModel>(result);
-        leaveType = new ObservableCollection<string>() { "Accepted", "Pending", "Rejected" };
+        leaveType = new ObservableCollection<string>() { Status.Pending.ToString(), Status.Accepted.ToString(), Status.Rejected.ToString() };
     }
 
     private static IEnumerable<ShowEmployeeRequestModel> GetDayOffRequestsById(Guid id)
@@ -88,18 +89,12 @@ public class ShowEmployeeRequestsViewModel : ViewModelBase
             client.DefaultRequestHeaders.Add("ApiKey", App.key);
             var data = new StringContent(JsonConvert.SerializeObject(new
             {
-                Status = _selectedModel.Status
+                Status = _selectedEmployee.Status
             }));
 
             data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var response = client.PutAsync($"https://{App.URLToAPI}/api/RequestDayOff/{Id}", data).Result;
             var result = response.Content.ReadAsStringAsync().Result;
         }
-    }
-    public enum Status
-    {
-        Pending,
-        Accepted,
-        Rejected
     }
 }

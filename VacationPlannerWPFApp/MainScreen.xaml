@@ -6,10 +6,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:VacationPlannerWPFApp.ViewModels"
     xmlns:viewModelsAdmin="clr-namespace:VacationPlannerWPFApp.ViewModels.Admin"
+    xmlns:viewModelsEmployee="clr-namespace:VacationPlannerWPFApp.ViewModels.Employee"
     xmlns:viewsApp="clr-namespace:VacationPlannerWPFApp.Views"
     xmlns:viewsAppAdmin="clr-namespace:VacationPlannerWPFApp.Views.Admin"
+    xmlns:viewsAppEmployee="clr-namespace:VacationPlannerWPFApp.Views.Employee"
     Title="Vacation Planner by Krystian Petek"
-    Width="800"
+    Width="920"
     Height="600"
     FontFamily="Microsoft Sans Serif"
     FontSize="20"
@@ -41,6 +43,15 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type viewModelsAdmin:ShowEmployeeRequestsViewModel}">
                     <viewsAppAdmin:AdminShowEmployeeRequestsViews />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModelsAdmin:ShowEmployeesViewModel}">
+                    <viewsAppAdmin:AdminShowEmployeesViews />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModelsEmployee:AddRequestDayOffViewModel}">
+                    <viewsAppEmployee:AddRequestDayOffView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModelsEmployee:ShowAllRequestsViewModel}">
+                    <viewsAppEmployee:ShowAllRequestsView />
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>

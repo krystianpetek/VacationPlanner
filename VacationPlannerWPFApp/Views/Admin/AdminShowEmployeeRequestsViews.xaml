@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:admin="clr-namespace:VacationPlannerWPFApp.ViewModels.Admin"
     xmlns:components="clr-namespace:VacationPlannerWPFApp.Components"
+    xmlns:converter="clr-namespace:VacationPlannerWPFApp.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:VacationPlannerWPFApp.ViewModels.Admin"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -12,10 +13,11 @@
     d:DesignWidth="800"
     FontSize="13"
     mc:Ignorable="d">
-    <!--<UserControl.Resources>
-        <CollectionViewSource x:Key="ShowEmployeeRequests" Source="{Binding showEmployeeRequests}" />
-        <CollectionViewSource x:Key="leaveTypes" Source="{Binding leaveType}" />
-    </UserControl.Resources>-->
+    <UserControl.Resources>
+        <!--<CollectionViewSource x:Key="ShowEmployeeRequests" Source="{Binding showEmployeeRequests}" />
+        <CollectionViewSource x:Key="leaveTypes" Source="{Binding leaveType}" />-->
+        <converter:StatusConverter x:Key="statusConverter" />
+    </UserControl.Resources>
 
     <Grid Background="White">
         <Grid.RowDefinitions>
@@ -37,14 +39,14 @@
                     Foreground="#039BE5"
                     Text="List of all employee requests" />
 
-                <Grid x:Name="root" Margin="20">
+                <Grid Margin="20">
 
                     <ListView
                         Height="300"
                         MaxHeight="400"
                         Margin="5"
                         ItemsSource="{Binding showEmployeeRequests}"
-                        SelectedItem="{Binding SelectedModel}">
+                        SelectedItem="{Binding SelectedEmployee}">
                         <ListView.View>
                             <GridView x:Name="ggd">
                                 <GridViewColumn
@@ -59,26 +61,19 @@
                                     Width="200"
                                     DisplayMemberBinding="{Binding TypeOfLeave}"
                                     Header="Type of leave" />
-                                <GridViewColumn
-                                    Width="100"
-                                    DisplayMemberBinding="{Binding Status}"
-                                    Header="Status" />
 
-                                <!--<GridViewColumn x:Name="fsa" Header="Liczba sztuk">
+                                <!--  DisplayMemberBinding="{Binding Status}"  -->
+                                <GridViewColumn Width="100" Header="Status">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock
-                                                Background="LightGray"
-                                                FontSize="12"
-                                                FontWeight="Bold"
-                                                Foreground="IndianRed"
-                                                Text="{Binding Status}"
-                                                TextAlignment="Right" />
+                                            <TextBlock Foreground="{Binding Status, Converter={StaticResource statusConverter}}" Text="{Binding Path=Status}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
-                                </GridViewColumn>-->
-
-                                <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="ID" />
+                                </GridViewColumn>
+                                <GridViewColumn
+                                    Width="auto"
+                                    DisplayMemberBinding="{Binding Id}"
+                                    Header="ID" />
                             </GridView>
                         </ListView.View>
                     </ListView>

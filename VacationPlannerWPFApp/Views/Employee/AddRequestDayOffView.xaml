@@ -1,0 +1,102 @@
+﻿<UserControl
+    x:Class="VacationPlannerWPFApp.Views.Employee.AddRequestDayOffView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:VacationPlannerWPFApp.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:employee="clr-namespace:VacationPlannerWPFApp.ViewModels.Employee"
+    xmlns:local="clr-namespace:VacationPlannerWPFApp.Views.Employee"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=employee:AddRequestDayOffViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    FontSize="13"
+    mc:Ignorable="d">
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <components:EmployeeNavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}" />
+        <StackPanel Grid.Row="1" Margin="20">
+
+            <StackPanel Margin="0,15,0,0">
+                <Label
+                    HorizontalAlignment="Center"
+                    Content="Vacation Planner"
+                    FontSize="26"
+                    Foreground="#6200EE" />
+
+                <TextBlock
+                    FontSize="20"
+                    Foreground="#039BE5"
+                    Text="Add request for day off" />
+
+                <Grid Margin="0,20,0,0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+
+                        <Border Style="{StaticResource borderField}">
+                            <Grid>
+                                <DatePicker
+                                    BorderThickness="0"
+                                    Focusable="False"
+                                    IsTodayHighlighted="True"
+                                    SelectedDate="{Binding DayOffRequestDate}"
+                                    Text="{Binding DayOffRequestDate}" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource borderField}">
+                            <Grid>
+                                <ComboBox
+                                    BorderThickness="0"
+                                    ItemsSource="{Binding typeOfLeave}"
+                                    SelectedItem="{Binding selectedType}" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Margin="15">
+                        <Button
+                            HorizontalAlignment="Center"
+                            Command="{Binding AddDayOffRequestCommand}"
+                            Content="ADD"
+                            Foreground="White"
+                            Style="{StaticResource LogReg}" />
+                    </StackPanel>
+
+                    <Grid.Resources>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Opacity" Value="0.5" />
+                            <Style.Triggers>
+                                <EventTrigger RoutedEvent="KeyDown">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="1"
+                                                Duration="0:0:0.3" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Resources>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -3,6 +3,7 @@ using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
 using VacationPlannerWPFApp.ViewModels;
 using VacationPlannerWPFApp.ViewModels.Admin;
+using VacationPlannerWPFApp.ViewModels.Employee;
 using VacationPlannerWPFApp.ViewModels.NavigationBars;
 
 namespace VacationPlannerWPFApp;
@@ -88,7 +89,7 @@ public partial class App : Application
     {
         return new NavigationService<EmployeeViewModel>(
             _navigationStore,
-            () => new EmployeeViewModel(_employeeNavigationBarViewModel, CreateLoginNavigationService(), _employeeStore,
+            () => new EmployeeViewModel(_employeeNavigationBarViewModel, CreateAddRequestDayOffService(), CreateShowAllRequestsService(), _employeeStore,
                 _dayOffRequestsStore));
     }
 
@@ -96,8 +97,7 @@ public partial class App : Application
     {
         return new NavigationService<AdminViewModel>(
             _navigationStore,
-            () => new AdminViewModel(_adminNavigationBarViewModel, CreateAdminAddEmployeeNavigationService(), CreateShowEmployeeRequestsNavigationService(),
-                _adminStore));
+            () => new AdminViewModel(_adminNavigationBarViewModel, CreateAdminAddEmployeeNavigationService(), CreateShowEmployeeRequestsNavigationService(), CreateShowEmployeesService(), _adminStore));
     }
 
     private NavigationService<RegisterViewModel> CreateRegisterNavigationService()
@@ -136,5 +136,26 @@ public partial class App : Application
         return new NavigationService<ShowEmployeeRequestsViewModel>(
             _navigationStore,
             () => new ShowEmployeeRequestsViewModel(_adminNavigationBarViewModel,_adminStore));
+    }
+
+    private NavigationService<ShowEmployeesViewModel> CreateShowEmployeesService()
+    {
+        return new NavigationService<ShowEmployeesViewModel>(
+            _navigationStore,
+            () => new ShowEmployeesViewModel(_adminNavigationBarViewModel,_adminStore));
+    }
+
+    private NavigationService<AddRequestDayOffViewModel> CreateAddRequestDayOffService()
+    {
+        return new NavigationService<AddRequestDayOffViewModel>(
+            _navigationStore,
+            () => new AddRequestDayOffViewModel(_employeeNavigationBarViewModel,_employeeStore, _dayOffRequestsStore));
+    }
+
+    private NavigationService<ShowAllRequestsViewModel> CreateShowAllRequestsService()
+    {
+        return new NavigationService<ShowAllRequestsViewModel>(
+            _navigationStore,
+            () => new ShowAllRequestsViewModel(_employeeNavigationBarViewModel,_employeeStore, _dayOffRequestsStore));
     }
 }

@@ -18,8 +18,6 @@ internal class ShowEmployeeRequestsCommand : CommandBase
         _employeeRequests = employeeRequests;
         _vm = vm;
     }
-    public override void Execute(object? parameter)
-     {
-    }
+    public override void Execute(object? parameter) { }
 
 }

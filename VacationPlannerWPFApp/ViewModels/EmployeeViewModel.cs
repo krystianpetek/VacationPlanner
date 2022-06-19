@@ -5,6 +5,7 @@ using VacationPlannerWPFApp.Command;
 using VacationPlannerWPFApp.Services;
 using VacationPlannerWPFApp.Stores;
 using VacationPlannerWPFApp.ViewModels.NavigationBars;
+using VacationPlannerWPFApp.ViewModels.Employee;
 
 namespace VacationPlannerWPFApp.ViewModels;
 
@@ -13,17 +14,22 @@ public class EmployeeViewModel : ViewModelBase
     private readonly DayOffRequestsStore _dayOffRequestsStore;
     private readonly EmployeeStore _employeeStore;
 
-    public EmployeeViewModel(EmployeeNavigationBarViewModel navigationBarViewModel,
-        NavigationService<LoginViewModel> loginNavigationService, EmployeeStore employeeInfo,
+    public EmployeeViewModel(
+        EmployeeNavigationBarViewModel navigationBarViewModel,
+        NavigationService<AddRequestDayOffViewModel> addRequestDayOffService, 
+        NavigationService<ShowAllRequestsViewModel> showAllRequestsService,
+        EmployeeStore employeeInfo,
         DayOffRequestsStore dayOffRequestsStore)
     {
         NavigationBarViewModel = navigationBarViewModel;
         _employeeStore = employeeInfo;
         _dayOffRequestsStore = dayOffRequestsStore;
-        NavigateCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
+        NavigateAddRequestDayOffCommand = new NavigateCommand<AddRequestDayOffViewModel>(addRequestDayOffService);
+        NavigateShowAllRequestsCommand = new NavigateCommand<ShowAllRequestsViewModel>(showAllRequestsService);
     }
 
-    public ICommand NavigateCommand { get; }
+    public ICommand NavigateAddRequestDayOffCommand { get; }
+    public ICommand NavigateShowAllRequestsCommand { get; }
 
     public EmployeeNavigationBarViewModel NavigationBarViewModel { get; }
 
@@ -50,5 +56,5 @@ public class EmployeeViewModel : ViewModelBase
     public string TodayDate => DateTime.Now.ToShortDateString();
 
     public bool IsTodayDayOff =>
-        _dayOffRequestsStore.dayOffRequests.Where(q => q.DayOffRequestDate == DateTime.Now).Any();
+        _dayOffRequestsStore.dayOffRequests.Where(q => q.DayOffRequestDate == DateTime.Now.ToString()).Any();
 }

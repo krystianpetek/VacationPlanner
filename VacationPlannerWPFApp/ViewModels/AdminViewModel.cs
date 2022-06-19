@@ -15,11 +15,13 @@ public class AdminViewModel : ViewModelBase
     public AdminViewModel(AdminNavigationBarViewModel navigationBarViewModel,
         NavigationService<AdminAddEmployeeViewModel> adminAddEmployeeViewModel,
         NavigationService<ShowEmployeeRequestsViewModel> showEmployeeRequestsViewModel, 
+        NavigationService<ShowEmployeesViewModel> showEmployeesViewModel, 
         AdminStore adminStore)
     {
         _adminStore = adminStore;
         NavigationBarViewModel = navigationBarViewModel;
         NavigateAddEmployeeComand = new NavigateCommand<AdminAddEmployeeViewModel>(adminAddEmployeeViewModel);
+        NavigateShowEmployeesCommand = new NavigateCommand<ShowEmployeesViewModel>(showEmployeesViewModel);
         NavigateShowEmployeeRequestsCommand = new NavigateCommand<ShowEmployeeRequestsViewModel>(showEmployeeRequestsViewModel);
     }
 
@@ -33,5 +35,6 @@ public class AdminViewModel : ViewModelBase
     public string TodayDate => DateTime.Now.ToShortDateString();
 
     public ICommand NavigateAddEmployeeComand { get; }
+    public ICommand NavigateShowEmployeesCommand { get; }
     public ICommand NavigateShowEmployeeRequestsCommand { get; }
 }

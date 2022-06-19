@@ -70,6 +70,10 @@
                             Text="{Binding CompanyName}" />
 
                     </WrapPanel>
+                    <TextBlock
+                        FontSize="16"
+                        Foreground="#6200EE"
+                        Text="Select what you want to do." />
                     <Grid Margin="0,20,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -91,31 +95,33 @@
                         <Button
                             Grid.Row="1"
                             Grid.Column="1"
+                            Command="{Binding NavigateShowEmployeesCommand}"
+                            Content="Show my employees"
+                            Style="{StaticResource adminButton}" />
+
+                        <Button
+                            Grid.Row="2"
+                            Grid.Column="1"
                             Command="{Binding NavigateShowEmployeeRequestsCommand}"
                             Content="Show all employee requests"
                             Style="{StaticResource adminButton}" />
-
-                        <!--<Button
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Command="{Binding NavigateShowPendingRequests}"
-                            Content="Show pending employee requests"
-                            Style="{StaticResource adminButton}" />-->
-
                     </Grid>
-                    
+
                 </StackPanel>
             </StackPanel>
         </StackPanel>
-        <WrapPanel HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Bottom" >
+        <WrapPanel
+            Grid.Row="4"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom">
             <Label
-                            Content="Today is:"
-                            FontSize="16"
-                            Foreground="#6200EE" />
+                Content="Today is:"
+                FontSize="16"
+                Foreground="#6200EE" />
             <Label
-                            Content="{Binding TodayDate}"
-                            FontSize="16"
-                            Foreground="#039BE5" />
+                Content="{Binding TodayDate}"
+                FontSize="16"
+                Foreground="#039BE5" />
         </WrapPanel>
     </Grid>
 </UserControl>

@@ -26,6 +26,7 @@ internal class AddEmployeeCommand : CommandBase
         using (var client = new HttpClient())
         {
             client.DefaultRequestHeaders.Add("ApiKey", App.key);
+            string pass = viewModel.GeneratedPassword;
             var data = new StringContent(JsonConvert.SerializeObject(new
             {
                 FirstName = $"{viewModel.FirstName}",
@@ -33,15 +34,23 @@ internal class AddEmployeeCommand : CommandBase
                 Username = $"{viewModel.UserName}",
                 AvailableNumberOfDays = $"{viewModel.AvailableNumberOfDays}",
                 NumberOfDays = $"{viewModel.NumberOfDays}",
-                Password = $"{viewModel.GeneratedPassword}"
+                Password = $"{pass}"
             }));
 
             data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var response = client.PostAsync($"https://{App.URLToAPI}/api/Employee/{viewModel.CompanyId}", data).Result;
             //viewModel.Info = response.Content.ReadAsStringAsync().Result;
             _vm.Message = response.Content.ReadAsStringAsync().Result;
-            _vm.SaveInfo = $"Save password for employee!";
-            _vm.MessagePassword = viewModel.GeneratedPassword;
+            if (_vm.Message.Contains("created"))
+            {
+                _vm.SaveInfo = $"Save password for employee!";
+                _vm.MessagePassword = pass;
+            }
+            else
+            {
+                _vm.SaveInfo = String.Empty;
+                _vm.MessagePassword = String.Empty;
+            }
         }
     }
 }

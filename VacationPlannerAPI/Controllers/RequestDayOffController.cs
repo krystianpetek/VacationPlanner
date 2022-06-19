@@ -49,13 +49,16 @@ public class RequestDayOffController : ControllerBase
     {
         if (request is null)
             return BadRequest();
+
+        var typeOfLeave = dbContext.TypeOfLeave.Where(x=>x.TypeOfLeave == request.TypeOfLeave).FirstOrDefault();
+        var companyId = dbContext.Employees.Where(x=> x.Id == employeeId).FirstOrDefault().CompanyId;
         var dayOffRequest = new DayOffRequest
         {
-            Status = request.Status,
-            CompanyId = request.CompanyId,
+            Status = Status.Pending,
+            CompanyId = companyId,
             EmployeeId = employeeId,
             RequestDate = DateTime.Now,
-            TypeOfLeave = request.TypeOfLeave,
+            TypeOfLeave = typeOfLeave,
             DayOffRequestDate = request.DayOffRequestDate,
             Id = Guid.NewGuid()
         };
@@ -76,4 +79,22 @@ public class RequestDayOffController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("exist")]
+    public bool Exists([FromBody] RestExistDayOff model)
+    {
+        var existRequest = dbContext.DayOffRequests.Where(x => x.EmployeeId == model.EmployeeId && x.DayOffRequestDate == model.DayOffRequestDate).Any();
+
+        return existRequest;
+    }
+
+    [HttpGet("typeOfLeave")]
+    public async Task<ActionResult<IEnumerable<string>>> GetAllTypeOfLeave()
+    {
+        var result = dbContext.TypeOfLeave.Select(x => x.TypeOfLeave).ToList();
+        if (result.Count <= 0)
+            return NotFound();
+        return Ok(result);
+    }
+
 }
