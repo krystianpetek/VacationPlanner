@@ -61,7 +61,7 @@ public class LoginCommand : AsyncCommandBase
         else
         {
             _employeeStore.AboutEmployee = await GetEmployeeInfo(account.Id);
-            _dayOffRequestsStore.dayOffRequests = await GetDayOffRequestsById(account.Id);
+            _dayOffRequestsStore.dayOffRequests = await GetDayOffRequestsById(_employeeStore.AboutEmployee.Id);
             _navigationService.Navigate();
         }
     }
@@ -74,7 +74,7 @@ public class LoginCommand : AsyncCommandBase
         {
             client.DefaultRequestHeaders.Add("ApiKey", App.key);
 
-            var response = await client.GetAsync($"https://{App.URLToAPI}/api/RequestDayOff/{id}");
+            var response = await client.GetAsync($"https://{App.URLToAPI}/api/RequestDayOff/{id}/employee");
             if (response.StatusCode == HttpStatusCode.NotFound)
                 return null;
             var claimsResponse = await response.Content.ReadAsStringAsync();
@@ -116,7 +116,7 @@ public class LoginCommand : AsyncCommandBase
 
             json = new EmployeeModel
             {
-                Id = id, NumberOfDays = temporary.NumberOfDays, AvailableNumberOfDays = temporary.AvailableNumberOfDays,
+                Id = temporary.Id, NumberOfDays = temporary.NumberOfDays, AvailableNumberOfDays = temporary.AvailableNumberOfDays,
                 FirstName = temporary.FirstName, LastName = temporary.LastName
             };
         }

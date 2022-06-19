@@ -70,6 +70,10 @@
                             Text="{Binding CompanyName}" />
 
                     </WrapPanel>
+                    <TextBlock
+                        FontSize="16"
+                        Foreground="#6200EE"
+                        Text="Select what you want to do." />
                     <Grid Margin="0,20,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -92,7 +96,7 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             Command="{Binding NavigateShowEmployeesCommand}"
-                            Content="Show employees"
+                            Content="Show my employees"
                             Style="{StaticResource adminButton}" />
 
                         <Button

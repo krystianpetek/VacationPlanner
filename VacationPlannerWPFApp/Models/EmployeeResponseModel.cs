@@ -1,7 +1,10 @@
-﻿namespace VacationPlannerWPFApp.Models;
+﻿using System;
+
+namespace VacationPlannerWPFApp.Models;
 
 public class EmployeeResponseModel
 {
+    public Guid Id { get; set; }
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }

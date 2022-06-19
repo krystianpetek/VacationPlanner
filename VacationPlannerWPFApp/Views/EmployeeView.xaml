@@ -11,6 +11,31 @@
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="VisibilityAddRequestButton" />
+        <Style x:Key="employeeButton" TargetType="{x:Type Button}">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border
+                            Margin="5"
+                            Padding="15"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#039BE5" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Background" Value="#6200EE" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
@@ -60,35 +85,48 @@
                             Text=" available days to your disposal." />
                     </WrapPanel>
 
-                    <StackPanel Margin="0,20,0,0">
+                    <Grid Margin="0,20,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
                         <Button
-                            HorizontalAlignment="Left"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Command="{Binding NavigateAddRequestDayOffCommand}"
                             Content="Add request for day off"
-                            FontSize="14"
-                            Foreground="White"
-                            Style="{StaticResource LogReg}"
+                            Style="{StaticResource employeeButton}"
                             Visibility="{Binding IsAvailableDays, Converter={StaticResource VisibilityAddRequestButton}}" />
 
                         <Button
-                            HorizontalAlignment="Left"
-                            Content="List of all day off requests"
-                            FontSize="14"
-                            Foreground="White"
-                            Style="{StaticResource LogReg}" />
-                    </StackPanel>
-                </StackPanel>
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Command="{Binding NavigateShowAllRequestsCommand}"
+                            Content="Show all day off requests"
+                            Style="{StaticResource employeeButton}" />
 
+                    </Grid>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
-        <WrapPanel HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Bottom" >
+        <WrapPanel
+            Grid.Row="4"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom">
             <Label
-                            Content="Today is:"
-                            FontSize="16"
-                            Foreground="#6200EE" />
+                Content="Today is:"
+                FontSize="16"
+                Foreground="#6200EE" />
             <Label
-                            Content="{Binding TodayDate}"
-                            FontSize="16"
-                            Foreground="#039BE5" />
+                Content="{Binding TodayDate}"
+                FontSize="16"
+                Foreground="#039BE5" />
         </WrapPanel>
     </Grid>
 </UserControl>

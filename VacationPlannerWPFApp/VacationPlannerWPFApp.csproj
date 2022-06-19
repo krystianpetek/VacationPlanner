@@ -47,11 +47,4 @@
 		</Page>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Command\Employee\" />
-	  <Folder Include="Models\Employee\" />
-	  <Folder Include="ViewModels\Employee\" />
-	  <Folder Include="Views\Employee\" />
-	</ItemGroup>
-
 </Project>

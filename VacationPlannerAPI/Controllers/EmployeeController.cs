@@ -53,7 +53,10 @@ public class EmployeeController : ControllerBase
     {
         var result = await context.Employees.Where(q => q.UserLoginId == id).Select(q => new RestEmployeeResponse
         {
-            FirstName = q.FirstName, LastName = q.LastName, AvailableNumberOfDays = q.AvailableNumberOfDays,
+            Id = q.Id, 
+            FirstName = q.FirstName, 
+            LastName = q.LastName, 
+            AvailableNumberOfDays = q.AvailableNumberOfDays,
             NumberOfDays = q.NumberOfDays
         }).FirstOrDefaultAsync();
         if (result is null)

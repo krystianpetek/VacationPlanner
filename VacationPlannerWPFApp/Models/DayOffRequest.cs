@@ -6,7 +6,7 @@ public class DayOffRequest
 {
     public Guid Id { get; set; }
 
-    public DateTime DayOffRequestDate { get; set; }
+    public string DayOffRequestDate { get; set; }
 
     public Status Status { get; set; }
 
