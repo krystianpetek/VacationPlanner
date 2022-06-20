@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VacationPlannerAPI.Migrations
 {
-    public partial class ini : Migration
+    public partial class initial2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -144,12 +144,16 @@ namespace VacationPlannerAPI.Migrations
             migrationBuilder.InsertData(
                 table: "TypeOfLeave",
                 columns: new[] { "Id", "TypeOfLeave" },
-                values: new object[] { 1, "Annual leave" });
-
-            migrationBuilder.InsertData(
-                table: "TypeOfLeave",
-                columns: new[] { "Id", "TypeOfLeave" },
-                values: new object[] { 2, "Leave on demand" });
+                values: new object[,]
+                {
+                    { 1, "Annual leave" },
+                    { 2, "Leave on demand" },
+                    { 3, "Ocassional leave" },
+                    { 4, "Unpaid leave" },
+                    { 5, "Parental leave" },
+                    { 6, "Sick leave" },
+                    { 7, "Time off in lieu for overtime" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Companies_AdministratorId",
@@ -170,8 +174,7 @@ namespace VacationPlannerAPI.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_DayOffRequests_TypeOfLeaveId",
                 table: "DayOffRequests",
-                column: "TypeOfLeaveId",
-                unique: true);
+                column: "TypeOfLeaveId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_CompanyId",

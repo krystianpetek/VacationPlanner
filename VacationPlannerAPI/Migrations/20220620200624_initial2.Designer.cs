@@ -12,8 +12,8 @@ using VacationPlannerAPI.Database;
 namespace VacationPlannerAPI.Migrations
 {
     [DbContext(typeof(VacationPlannerDbContext))]
-    [Migration("20220616055704_data")]
-    partial class data
+    [Migration("20220620200624_initial2")]
+    partial class initial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,8 +78,7 @@ namespace VacationPlannerAPI.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.HasIndex("TypeOfLeaveId")
-                        .IsUnique();
+                    b.HasIndex("TypeOfLeaveId");
 
                     b.ToTable("DayOffRequests");
                 });
@@ -189,7 +188,7 @@ namespace VacationPlannerAPI.Migrations
                         new
                         {
                             Id = 7,
-                            TypeOfLeave = "Tyime off in lieu for overtime"
+                            TypeOfLeave = "Time off in lieu for overtime"
                         });
                 });
 
@@ -255,8 +254,8 @@ namespace VacationPlannerAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("VacationPlannerAPI.Models.TypeOfLeaveRequest", "TypeOfLeave")
-                        .WithOne("DayOffRequest")
-                        .HasForeignKey("VacationPlannerAPI.Models.DayOffRequest", "TypeOfLeaveId")
+                        .WithMany()
+                        .HasForeignKey("TypeOfLeaveId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -308,12 +307,6 @@ namespace VacationPlannerAPI.Migrations
             modelBuilder.Entity("VacationPlannerAPI.Models.RolePerson", b =>
                 {
                     b.Navigation("UserLogin");
-                });
-
-            modelBuilder.Entity("VacationPlannerAPI.Models.TypeOfLeaveRequest", b =>
-                {
-                    b.Navigation("DayOffRequest")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
