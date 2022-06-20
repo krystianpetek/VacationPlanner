@@ -33,18 +33,27 @@ public class EmployeeViewModel : ViewModelBase
 
     public EmployeeNavigationBarViewModel NavigationBarViewModel { get; }
 
+    /// <summary>
+    /// Store Employee First name
+    /// </summary>
     public string FirstName
     {
         get => _employeeStore.AboutEmployee.FirstName;
         set => _employeeStore.AboutEmployee.FirstName = value;
     }
 
+    /// <summary>
+    /// Store Employee Last name
+    /// </summary>
     public string LastName
     {
         get => _employeeStore.AboutEmployee.LastName;
         set => _employeeStore.AboutEmployee.LastName = value;
     }
 
+    /// <summary>
+    /// Store Available days for employee
+    /// </summary>
     public int AvailableNumberOfDays
     {
         get => _employeeStore.AboutEmployee.AvailableNumberOfDays;

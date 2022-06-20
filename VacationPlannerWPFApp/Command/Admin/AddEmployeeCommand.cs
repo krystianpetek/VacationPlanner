@@ -7,7 +7,7 @@ using VacationPlannerWPFApp.ViewModels.Admin;
 
 namespace VacationPlannerWPFApp.Command.Admin;
 
-internal class AddEmployeeCommand : CommandBase
+public class AddEmployeeCommand : CommandBase
 {
     private AdminAddEmployeeModel viewModel;
     private AdminAddEmployeeViewModel _vm;
