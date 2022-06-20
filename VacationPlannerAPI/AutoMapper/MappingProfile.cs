@@ -16,7 +16,7 @@ namespace VacationPlannerAPI.AutoMapper
                     x.Employee.LastName[0].ToString().ToUpper() +
                     x.Employee.LastName.Substring(1, x.Employee.LastName.Length)))
                 .ForMember(x => x.TypeOfLeave, x => x.MapFrom(x => x.TypeOfLeave.TypeOfLeave))
-                .ForMember(x => x.DayOffRequestDate, x => x.MapFrom(x => x.DayOffRequestDate.ToShortDateString()))
+                .ForMember(x => x.DayOffRequestDate, x => x.MapFrom(x => x.DayOffRequestDate))
                 .ForMember(x => x.Status, x => x.MapFrom(x => x.Status.ToString()));
         }
     }

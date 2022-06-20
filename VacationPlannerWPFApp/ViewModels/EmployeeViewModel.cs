@@ -56,5 +56,5 @@ public class EmployeeViewModel : ViewModelBase
     public string TodayDate => DateTime.Now.ToShortDateString();
 
     public bool IsTodayDayOff =>
-        _dayOffRequestsStore.dayOffRequests.Where(q => q.DayOffRequestDate == DateTime.Now.ToString()).Any();
+        _dayOffRequestsStore.dayOffRequests.Where(q => q.DayOffRequestDate.ToShortDateString() == DateTime.Now.ToShortDateString()).Any();
 }

@@ -37,24 +37,13 @@ namespace VacationPlannerWPFApp.Command.Employee
                 var data = new StringContent(JsonConvert.SerializeObject(new
                 {
                     TypeOfLeave = $"{_viewModel.selectedType}",
-                    DayOffRequestDate = _viewModel.parseDate
+                    DayOffRequestDate = _viewModel.DayOffRequestDate
                 }));
 
                 data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var response = client.PostAsync($"https://{App.URLToAPI}/api/RequestDayOff/{_employeeStore.AboutEmployee.Id}", data).Result;
-                var result = response.Content.ReadAsStringAsync().Result;
-
-                //if (_vm.Message.Contains("created"))
-                //{
-                //    _vm.SaveInfo = $"Save password for employee!";
-                //    _vm.MessagePassword = pass;
-                //}
-                //else
-                //{
-                //    _vm.SaveInfo = String.Empty;
-                //    _vm.MessagePassword = String.Empty;
-                //}
-            }
+                _viewModel.Message = response.Content.ReadAsStringAsync().Result;
+             }
         }
     }
 }

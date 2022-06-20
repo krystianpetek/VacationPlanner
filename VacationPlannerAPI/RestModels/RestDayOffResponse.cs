@@ -10,9 +10,9 @@ namespace VacationPlannerAPI.RestModels
 
         public string TypeOfLeave { get; set; }
 
-        public string DayOffRequestDate { get; set; }
+        public DateTime DayOffRequestDate { get; set; }
 
-        public string RequestDate { get; set; }
+        public DateTime RequestDate { get; set; }
 
         public string Status { get; set; }
     }

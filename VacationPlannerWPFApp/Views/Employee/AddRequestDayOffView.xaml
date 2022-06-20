@@ -54,8 +54,7 @@
                                     BorderThickness="0"
                                     Focusable="False"
                                     IsTodayHighlighted="True"
-                                    SelectedDate="{Binding DayOffRequestDate}"
-                                    Text="{Binding DayOffRequestDate}" />
+                                    SelectedDate="{Binding DayOffRequestDate}" />
                             </Grid>
                         </Border>
 
@@ -64,6 +63,7 @@
                                 <ComboBox
                                     BorderThickness="0"
                                     ItemsSource="{Binding typeOfLeave}"
+                                    SelectedIndex="0"
                                     SelectedItem="{Binding selectedType}" />
                             </Grid>
                         </Border>
@@ -76,6 +76,8 @@
                             Content="ADD"
                             Foreground="White"
                             Style="{StaticResource LogReg}" />
+
+                        <Label Content="{Binding Message, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="15" />
                     </StackPanel>
 
                     <Grid.Resources>
