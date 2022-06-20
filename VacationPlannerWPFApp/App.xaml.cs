@@ -27,6 +27,9 @@ public partial class App : Application
     private readonly NavigationStore _navigationStore;
     private readonly RegisterNavigationBarViewModel _registerNavigationBarViewModel;
 
+    /// <summary>
+    /// Application base, run application
+    /// </summary>
     public App()
     {
         _accountStore = new AccountStore();

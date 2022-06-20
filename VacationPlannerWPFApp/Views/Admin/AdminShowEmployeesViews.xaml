@@ -32,7 +32,10 @@
                         FontSize="20"
                         Foreground="#039BE5"
                         Text="List of employees works in " />
-                    <TextBlock Text="{Binding CompanyName}" />
+                    <TextBlock
+                        FontSize="20"
+                        Foreground="#6200EE"
+                        Text="{Binding CompanyName}" />
                 </WrapPanel>
                 <Grid x:Name="root" Margin="20">
 

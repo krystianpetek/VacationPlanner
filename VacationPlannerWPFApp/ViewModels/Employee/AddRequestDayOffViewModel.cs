@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -30,20 +31,17 @@ namespace VacationPlannerWPFApp.ViewModels.Employee
             _employeeStore = employeeStore;
             _dayOffRequestsStore = dayOffRequestsStore;
             typeOfLeave = initialTypeOfLeaveList();
+            selectedType = typeOfLeave[0];
             AddDayOffRequestCommand = new AddRequestDayOffCommand(this, _employeeStore);
         }
 
         public ICommand AddDayOffRequestCommand { get; }
 
+        public string Message { get; set; }
+
         public string selectedType { get; set; }
 
-        private string dayOffRequestDate { get; set; }
-        public string DayOffRequestDate
-        {
-            get => dayOffRequestDate;
-            set => dayOffRequestDate = value;
-        }
-        public DateTime parseDate => DateTime.Parse(DayOffRequestDate);
+        public DateTime DayOffRequestDate { get; set; } = DateTime.Now;
 
         private List<string>? initialTypeOfLeaveList()
         {
